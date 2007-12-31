@@ -5,27 +5,19 @@ from .NN_params import NN_params   # импортруем параметры с�
 from .Lay import Lay   # импортируем слой
 from .work_with_arr import copy_vector
 from .operations import operations, softmax_ret_vec
-def calc_out_error_k1_dCdZ0(nn_params:NN_params,objLay:Lay, targets:list):
+def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list):
+    assert("find_k1_as_dCdZ0","find_k1_as_dCdZ0")
     if objLay.act_func!=SOFTMAX and nn_params.loss_func==MODIF_MSE:
       for row in range(objLay.out):
         nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(objLay.act_fu + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
     elif objLay.act_func==SOFTMAX and nn_params.loss_func==CROS_ENTROPY:
         for row in range(objLay.out):
             nn_params.out_errors[row] = (objLay.hidden[row] - targets[row])
-def calc_hid_error_use_errors_ork1_k2_dXdZ(nn_params:NN_params,prev_lef_lay:Lay, objLay:Lay, errors):
-  try:
+def calc_hid_error(nn_params:NN_params,prev_lef_lay:Lay, objLay:Lay, errors):
+    assert("find_drowCdelemW_usingK1_and_prororc_dXdZ","find_drowCdelemW_usingK1_and_prororc_dXdZ")
     for elem in range(objLay.in_):
         for row in range(objLay.out):
-            if nn_params.with_bias:
-                if elem==0:
-                  objLay.errors[elem]+=errors[row] * objLay.matrix[row][elem]
-                else:
-                    objLay.errors[elem]+=errors[row] * objLay.matrix[row][elem]  * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
-            else:
-                objLay.errors[elem] += errors[row] * objLay.matrix[row][elem] * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
-  except Exception as e:
-      print("in calc hid err Exc")
-      print("el",elem)
+              objLay.errors[elem] += errors[row] * objLay.matrix[row][elem] * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
 def get_min_square_err(out_nn:list,teacher_answ:list,n):
     sum=0
     for row in range(n):
@@ -46,7 +38,8 @@ def calc_hid_zero_lay_use_errors(zeroLay:Lay,past_right_lay:Lay):
     for elem in range(zeroLay.in_):
         for row in range(zeroLay.out):
             zeroLay.errors[elem]+=past_right_lay.errors[row] * zeroLay.matrix[row][elem]
-def upd_matrix_use_errors_k3_as_dZdW(nn_params:NN_params, objLay:Lay, entered_vals):
+def upd_matrix(nn_params:NN_params, objLay:Lay, entered_vals):
+    assert ("here_use_dZ0rowdWrow","here_use_dZ0rowdWrow")
     for row in range(objLay.out):
         for elem in range(objLay.in_):
             if nn_params.with_bias:
@@ -112,7 +105,7 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, loger):
                objLay.hidden[row] = val
             tmp_v = 0
         if objLay.act_func==SOFTMAX:
-             objLay.hidden=softmax_ret_vec(objLay.cost_signals,Lay.out)
+             objLay.hidden=softmax_ret_vec(objLay.cost_signals,objLay.out)
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list):
     tmp_v = 0
     val = 0
@@ -131,16 +124,16 @@ def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list):
         objLay.hidden[elem] = val
         tmp_v = 0
 def backpropagate(nn_params:NN_params):
-    calc_out_error_k1_dCdZ0(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
+    calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
     for i in range(nn_params.nl_count - 1, 0, -1):
         if i == nn_params.nl_count - 1:
-           calc_hid_error_use_errors_ork1_k2_dXdZ(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.out_errors)
+           calc_hid_error(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.out_errors)
         else:
-            calc_hid_error_use_errors_ork1_k2_dXdZ(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.net[i+1].errors)
+            calc_hid_error(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.net[i+1].errors)
     calc_hid_zero_lay_use_errors(nn_params.net[0], nn_params.net[1])
     for i in range(nn_params.nl_count - 1, 0, -1):
-        upd_matrix_use_errors_k3_as_dZdW(nn_params, nn_params.net[i],  get_hidden(nn_params.net[i - 1]))
-    upd_matrix_use_errors_k3_as_dZdW(nn_params, nn_params.net[0], nn_params.inputs)
+        upd_matrix(nn_params, nn_params.net[i],  get_hidden(nn_params.net[i - 1]))
+    upd_matrix(nn_params, nn_params.net[0], nn_params.inputs)
 # заполнить матрицу весов рандомными значениями по He, исходя из количесва входов и выходов,
 # записать результат в вектор слоев(параметр matrix), здесь проблема матрица неправильно заполняется
 def set_io(nn_params:NN_params, objLay:Lay, inputs, outputs):
@@ -175,6 +168,7 @@ def cr_lay(loger,nn_params:NN_params, type_='D', in_=0, out=0, act_func=None):
         nn_params.net[i].in_=in_
         nn_params.net[i].out=out
         nn_params.net[i].act_func=act_func
+        set_io(nn_params,nn_params.net[i],in_,out)
         loger.debug(nn_params.net[i])
         # print("",nn_params.net[i])
         return i
