@@ -6,16 +6,19 @@ from brainy.nn_constants import SIGMOID, RELU, TAN, SOFTMAX,MODIF_MSE
 from brainy.learn import answer_nn_direct, answer_nn_direct_on_contrary
 import numpy as np
 from brainy.util import get_logger
-(push_i, push_fl, push_str, send_list, send_obj,test_of_fit_train) = range(6)
+
+
+(push_i, push_fl, push_str, send_list, send_obj,test_of_fit_train, test_serial) = range(7)
 
 def vm(buffer, logger=None, date=None):
+    obj_net=None
+    nn_params_obj=None
     len_ = 25
     if logger:
         logger.info(logger.debug(f'Log started {date}'))
     vm_is_running = True
     ip = 0
     sp = -1
-    sp_str = -1
     steck = [0] * len_
     op = buffer[ip]
     vm_is_running=True
@@ -29,7 +32,7 @@ def vm(buffer, logger=None, date=None):
             ip += 1
             steck[sp] = float(buffer[ip])  # Из строкового параметра
         elif op == push_str:
-            sp_str += 1
+            sp+= 1
             ip += 1
             steck[sp] = buffer[ip]
         elif op==send_obj:
@@ -41,6 +44,12 @@ def vm(buffer, logger=None, date=None):
             arg=buffer[ip]
             nn_params_obj, eps, X, Y, X_eval, Y_eval, acc_shur=arg
             fit(nn_params_obj, eps, X, Y, X_eval, Y_eval, acc_shur, logger)
+            obj_net=nn_params_obj.net
+            nn_params_obj=nn_params_obj
+        elif op==test_serial:
+            filen=steck[sp]
+            sp-=1
+            to_file(nn_params_obj, obj_net, filen, logger)
         ip += 1
         if ip>(len(buffer)-1):
             return
@@ -99,8 +108,10 @@ def vm_test():
     Y_np = np.array(Y, dtype='float32')
     # test_of_fit_train  1-nn_params_obj 2-eps 3-X 4-Y 5-X_eval 6-Y_eval 7-acc_shur
     p1 = (test_of_fit_train,(nn_params, 10, X, Y, X, Y, 75))
-    vm(p1, loger, date)
+    p2=(push_str,'ser_net.my',test_serial)
+    vm(p1 + p2, loger, date)
 
 if __name__ == '__main__':
-   unittest.main()
+   # unittest.main()
+   vm_test()
 

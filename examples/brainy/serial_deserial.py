@@ -5,12 +5,12 @@ from .nn_constants import bc_bufLen, max_in_nn_1000, max_rows_orOut_10, max_stac
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan, determe_in_out
 import struct as st
 from .NN_params import NN_params
-from  .util import  get_logger
-import sys
+import logging
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
-loger=None
-def pack_v(buffer:list, op_i, val_i_or_fl):
+
+
+def pack_v(buffer:list, op_i, val_i_or_fl, loger:logging.Logger):
      """
      Добавляет в buffer буффер байт-комманды и сериализованные матричные числа как байты
      :param op_i: байт-комманда
@@ -62,9 +62,8 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
          loger.debug("Static memory error: in buffer (where we put bytecode to serelialize net)[init in serial_deserial.tofile()])")
          return
 
-def to_file(nn_params:NN_params, net:list, logger, fname):
-    global loger
-    loger=logger
+
+def to_file(nn_params:NN_params, net:list, fname:str, loger:logging.Logger):
     buffer = [0] * max_spec_elems_1000 *1000  # Записываем сетевой байткод сюда подом в файл
 
     in_=0
@@ -75,21 +74,21 @@ def to_file(nn_params:NN_params, net:list, logger, fname):
         with_bias_i = 1
     else:
         with_bias_i = 0
-    pack_v(buffer, push_i, with_bias_i)
-    pack_v(buffer, with_bias, stub)
-    pack_v(buffer, push_i, nn_params.act_fu)
-    pack_v(buffer, determe_act_func, stub)
+    pack_v(buffer, push_i, with_bias_i, loger)
+    pack_v(buffer, with_bias, stub, loger)
+    pack_v(buffer, push_i, nn_params.act_fu, loger)
+    pack_v(buffer, determe_act_func, stub, loger)
     # разбираемся с параметрами активациооных функции - по умолчанию они уже заданы в nn_params
     if nn_params.act_fu == LEAKY_RELU:
-        pack_v(buffer, push_fl, nn_params.alpha_leaky_relu)
-        pack_v(buffer, determe_alpha_leaky_relu, stub)
+        pack_v(buffer, push_fl, nn_params.alpha_leaky_relu, loger)
+        pack_v(buffer, determe_alpha_leaky_relu, stub, loger)
     elif nn_params.act_fu == SIGMOID:
-        pack_v(buffer, push_fl, nn_params.alpha_sigmoid)
-        pack_v(buffer,determe_alpha_sigmoid, stub)
+        pack_v(buffer, push_fl, nn_params.alpha_sigmoid, loger)
+        pack_v(buffer,determe_alpha_sigmoid, stub, loger)
     elif nn_params.act_fu == TAN:
-        pack_v(buffer, push_fl, nn_params.alpha_tan)
-        pack_v(buffer, push_fl, nn_params.beta_tan)
-        pack_v(buffer, determe_alpha_and_beta_tan, stub)
+        pack_v(buffer, push_fl, nn_params.alpha_tan, loger)
+        pack_v(buffer, push_fl, nn_params.beta_tan, loger)
+        pack_v(buffer, determe_alpha_and_beta_tan, stub, loger)
 
     for i in range(nn_params.nl_count):
         in_=net[i].in_
@@ -100,8 +99,10 @@ def to_file(nn_params:NN_params, net:list, logger, fname):
             for elem in range(in_):
                 pack_v(buffer, push_fl,net[i].matrix[row][elem])
         pack_v(buffer, make_kernel, stub)
-    dump_buffer(buffer, fname)
-def dump_buffer(buffer, fname):
+    dump_buffer(buffer, fname, loger)
+
+
+def dump_buffer(buffer, fname, loger):
   global pos_bytecode
   pos_bytecode+=1
   buffer[pos_bytecode] = stop.to_bytes(1,"little")
@@ -111,7 +112,9 @@ def dump_buffer(buffer, fname):
                f.write(buffer[i])
   loger.info("File writed")
   pos_bytecode = -1
-def deserialization_vm(nn_params:NN_params, buffer:list,loger):
+
+
+def deserialization_vm(nn_params:NN_params, buffer:list, loger:logging.Logger):
      loger.debug("- in vm -")
 
      ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
@@ -217,7 +220,9 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
      nn_params.input_neurons = nn_params.net[0].in_ #-1  # -1 зависит от биасов
      # находим количество выходов когда образовали сеть
      nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
-def deserialization(nn_params:NN_params, fname:str, loger):
+
+
+def deserialization(nn_params:NN_params, fname:str, loger:logging.Logger):
     buffer = [0] * max_spec_elems_1000 * 1000
     buf_str = b''
     with open(fname, 'rb') as f:

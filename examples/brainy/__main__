@@ -20,9 +20,11 @@ hidden = <size of <class 'list'> [or list[0] ] is greater 50>
 errors = <size of <class 'list'> [or list[0] ] is greater 50>
 inner_m = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+DEBUG:w:Log started 06/21/20 20:46:50
+INFO:w:None
 INFO:w:-in fit-
 INFO:w:--------------
-INFO:w:| Log started > 06/21/20 17:23:01
+INFO:w:| Log started > 06/21/20 20:46:50
 INFO:w:--------------
 INFO:w:NN_params:
 net = [Dense:
@@ -45,7 +47,7 @@ act_func = 9
 hidden = <size of <class 'list'> [or list[0] ] is greater 50>
 errors = <size of <class 'list'> [or list[0] ] is greater 50>
 inner_m = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-, <brainy.Lay.Lay object at 0x059C3A50>, <brainy.Lay.Lay object at 0x059C3A10>, <brainy.Lay.Lay object at 0x059C3B10>, <brainy.Lay.Lay object at 0x059C3B50>, <brainy.Lay.Lay object at 0x059C3B70>]
+, <brainy.Lay.Lay object at 0x0599FF90>, <brainy.Lay.Lay object at 0x0599FFB0>, <brainy.Lay.Lay object at 0x0599FFD0>, <brainy.Lay.Lay object at 0x059E0130>, <brainy.Lay.Lay object at 0x059E0150>]
 denses = [Dense:
 des = d
 in_ = 2
@@ -2256,3 +2258,5 @@ DEBUG:w:use func: 9
 DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 INFO:w:accuracy 75.0
+DEBUG:w:op_i push_i, 0
+DEBUG:w:op_i with_bias, 0
