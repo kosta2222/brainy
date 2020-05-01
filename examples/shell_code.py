@@ -1,12 +1,11 @@
 import sys
 import os
-print(sys.path)
-from NN_params import NnParams   # импортруем параметры сети
-from serial_deserial_func import deserializ
-from nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
-from lear_func import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary
-from serial_deserial_func import compil_serializ
-from fit import fit
+from brainy.NN_params import NnParams   # импортруем параметры сети
+from brainy.serial_deserial_func import deserializ
+from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
+from brainy.lear_func import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary
+from brainy.serial_deserial_func import compil_serializ
+from brainy.fit import fit
 import numpy as np
 
 # X и Y означают двухмернй список обучения и ответов соответственно

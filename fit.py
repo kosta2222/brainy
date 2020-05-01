@@ -1,5 +1,5 @@
-from cross_val_eval import evaluate
-from lear_func import train, initiate_layers, get_min_square_err, answer_nn_direct, answer_nn_direct_on_contrary,\
+from .cross_val_eval import evaluate
+from .lear_func import train, initiate_layers, get_min_square_err, answer_nn_direct, answer_nn_direct_on_contrary,\
 get_mean
 """
 X и Y - означает матрицы обучения и ответов соответственно(массив с другими просто массивами)

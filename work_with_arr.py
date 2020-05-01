@@ -1,4 +1,4 @@
-from util_func import _0_
+from .util_func import _0_
 def copy_vector(src:list,dest:list,n):
     for i in range(n):
         dest[i] =\

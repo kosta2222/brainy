@@ -1,6 +1,6 @@
-from nn_constants import max_rows_orOut
-from lear_func import answer_nn_direct
-from NN_params import NnParams
+from .nn_constants import max_rows_orOut
+from .lear_func import answer_nn_direct
+from .NN_params import NnParams
 k = 0
 def evaluate(nn_params:NnParams, X_test: list, Y_test: list):
     """

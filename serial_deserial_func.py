@@ -1,12 +1,12 @@
-from work_with_arr import copy_matrixAsStaticSquare_toRibon
-from nn_constants import bc_bufLen, max_in_nn, max_rows_orOut, max_stack_matrEl, max_stack_otherOp,\
+from .work_with_arr import copy_matrixAsStaticSquare_toRibon
+from .nn_constants import bc_bufLen, max_in_nn, max_rows_orOut, max_stack_matrEl, max_stack_otherOp,\
     push_i, push_fl, make_kernel, with_bias, stop,\
     RELU, LEAKY_RELU, SIGMOID, TAN,\
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan
-from Nn_lay import nnLay
+from .Nn_lay import nnLay
 import struct as st
-from NN_params import NnParams
-from util_func import _0_
+from .NN_params import NnParams
+from .util_func import _0_
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=0  # указатель на элементы байт-кода 
 def compil_serializ(nn_params:NnParams, b_c:list, list_:nnLay, kernel_amount, f_name):
