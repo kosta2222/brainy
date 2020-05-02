@@ -37,6 +37,8 @@ def console(prompt):
         par_cmd = '<uninitialized>'
         idex_of_bytecode_is_bytecode = 0
         cmd_in_ops = '<uninitialized>'
+        we_exit = 'exit'
+        we_run = 'r'
         pos_bytecode = -1
         shell_is_running = True
         is_we_didnt_faind_opcode = False
@@ -50,10 +52,10 @@ def console(prompt):
         while shell_is_running:
             input_ = input(prompt)
             # полностью выходим из программы
-            if input_== "exit":
+            if input_== we_exit:
                 break
             # выполняем байткод вирт-машиной
-            elif input_== "r":
+            elif input_== we_run:
                 pos_bytecode+= 1
                 b_c[pos_bytecode] = stop
                 print("b_c",b_c)
@@ -67,8 +69,9 @@ def console(prompt):
             # Ищем код в списке код-строку
             for idex_of_bytecode_is_bytecode in range(len(ops)):
                 cmd_in_ops = ops[idex_of_bytecode_is_bytecode]
-                is_index_inside_arr = idex_of_bytecode_is_bytecode <= (len(ops) - 1)
+                is_index_inside_arr = idex_of_bytecode_is_bytecode < len(ops)
                 if cmd_in_ops == main_cmd and is_index_inside_arr:
+                    print("in cons cmd",cmd_in_ops)
                     pos_bytecode += 1
                     # формируем числовой байт-код и если нужно значения параметра
                     b_c[pos_bytecode] = idex_of_bytecode_is_bytecode
@@ -84,7 +87,7 @@ def console(prompt):
                     continue
                 # Очищаем
             if is_we_didnt_faind_opcode:
-                print("Izvintilyaus Net takogo opcoda")
+                print("Izvintilyaus net takogo opcoda")
                 is_we_didnt_faind_opcode = False
 X=[]
 Y=[]

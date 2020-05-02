@@ -8,7 +8,7 @@ import struct as st
 from .NN_params import NnParams
 from .util_func import _0_
 #----------------------сериализации/десериализации------------------------------
-pos_bytecode=0  # указатель на элементы байт-кода 
+pos_bytecode=-1  # указатель на элементы байт-кода
 def compil_serializ(nn_params:NnParams, b_c:list, list_:nnLay, kernel_amount, f_name):
     print("in compil_serializ")
     in_=0
@@ -68,46 +68,48 @@ def py_pack (b_c:list, op_i, val_i_or_fl):
     try:
         if op_i == push_fl:
           # try:
+            pos_bytecode += 1
             b_c[pos_bytecode] = st.pack('B', push_fl)
-            pos_bytecode+=1
+
             for i in st.pack('<f', val_i_or_fl):
-                b_c[pos_bytecode] = i.to_bytes(1, 'little')
                 pos_bytecode+=1
+                b_c[pos_bytecode] = i.to_bytes(1, 'little')
+
           # except Exception:
           #     print("pos b_c",pos_bytecode)
         elif op_i == push_i:
+            pos_bytecode+=1
             b_c[pos_bytecode] = st.pack('B', push_i)
             pos_bytecode+=1
             b_c[pos_bytecode] = st.pack('B', val_i_or_fl)
-            pos_bytecode+=1
         elif op_i == make_kernel:
+            pos_bytecode+=1
             b_c[pos_bytecode] = st.pack('B', make_kernel)
-            pos_bytecode+=1
         elif op_i == with_bias:
-            b_c[pos_bytecode] = st.pack('B', with_bias)
             pos_bytecode+=1
+            b_c[pos_bytecode] = st.pack('B', with_bias)
         elif op_i == with_bias:
-            b_c[pos_bytecode] = st.pack('B', with_bias)
             pos_bytecode+=1
+            b_c[pos_bytecode] = st.pack('B', with_bias)
         elif op_i == determe_act_func:
+            pos_bytecode+=1
             b_c[pos_bytecode] = st.pack('B', determe_act_func)
-            pos_bytecode+=1
         elif op_i == determe_alpha_leaky_relu:
+            pos_bytecode+=1
             b_c[pos_bytecode] = st.pack('B', determe_alpha_leaky_relu)
-            pos_bytecode+=1
         elif op_i == determe_alpha_sigmoid:
-            b_c[pos_bytecode] = st.pack('B', determe_alpha_sigmoid)
             pos_bytecode+=1
+            b_c[pos_bytecode] = st.pack('B', determe_alpha_sigmoid)
         elif op_i == determe_alpha_and_beta_tan:
+            pos_bytecode += 1
             b_c[pos_bytecode] = st.pack('B', determe_alpha_and_beta_tan)
-        pos_bytecode+=1
     except Exception:
         print("Except")
         print("b_c pos",pos_bytecode)
-def  dump_bc(b_c, f_name):
+def dump_bc(b_c, f_name):
   global pos_bytecode
-  b_c[pos_bytecode] = stop.to_bytes(1,"little")
   pos_bytecode+=1
+  b_c[pos_bytecode] = stop.to_bytes(1,"little")
   # try:
   with open(f_name,'wb') as f:
        print("b_c",b_c)
