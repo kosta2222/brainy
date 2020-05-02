@@ -1,0 +1,12 @@
+*.back
+*.bac
+*.bak
+*.bash
+*.my
+.idea/
+venv/
+__pycache__/
+Makefile
+build/
+dist/
+nbproject/

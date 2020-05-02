@@ -1,5 +1,5 @@
 import sys
-import os
+
 from brainy.NN_params import NnParams   # импортруем параметры сети
 from brainy.serial_deserial_func import deserializ
 from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
@@ -15,6 +15,7 @@ import numpy as np
 def create_nn_params():
     return NnParams()
 len_=10
+
 push_i = 0
 push_fl = 1
 push_str = 2
@@ -26,8 +27,8 @@ what_say_positive = 7
 load = 8
 stop = 9
 ops=["push_i","push_fl", "push_str", "calc_sent_vecs","calc_h_vecs","fit","recogn","what_say_positive","load"]
-def console():
-        b_c = [0] * len_* 3  # байт-код для шелл-кода
+def console(prompt):
+        b_c = [0] * len_* 2  # байт-код для шелл-кода
         input_ = '<uninitialized>'
         # splitted_cmd и splitted_cmd_src - т.к. работаем со статическим массивом
         splitted_cmd: list = [''] * 2
@@ -47,10 +48,9 @@ def console():
             print(c, end=' ')
         print()
         while shell_is_running:
-            input_ = input(">>>")
+            input_ = input(prompt)
             # полностью выходим из программы
             if input_== "exit":
-                # exit_flag = True
                 break
             # выполняем байткод вирт-машиной
             elif input_== "r":
@@ -98,14 +98,17 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_in_amount = 20
    nn_out_amount = 1
    nn_map = (nn_in_amount, 8, nn_out_amount)
+
    initiate_layers(nn_params, nn_map, len(nn_map))
    return nn_params
+
+
 def vm(b_c:list):
     nn_in_amount=20
     nn_out_amount=1
     nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
     nn_params_new = create_nn_params()
-    b_c = [0] * bc_bufLen  # буффер для сериализации матричных элементов и входов
+    b_c_ser = [0] * bc_bufLen * 5  # буффер для сериализации матричных элементов и входов
     say_positive='<uninitialized>'
     say_negative='Izvinite vasha prosba ne opoznana'
     ip=0
@@ -187,10 +190,10 @@ def vm(b_c:list):
            # X_new_fix_np=np.std(X_new_fix_np, axis = 0)
            # Y_new_fix_np=np.std(Y_new_fix_np, axis = 0)
            # print("in calc sent vecs X Y", X_new_fix_np, Y_new_fix_np)
-           fit(b_c, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100)
-           kernel_amount=len(nn_params.list_) - 1
+           fit(b_c_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100)
+           kernel_amount=nn_params.nlCount
            file_save="weight_file.my"
-           compil_serializ(nn_params, b_c, nn_params.list_,kernel_amount,file_save)
+           compil_serializ(nn_params, b_c_ser, nn_params.list_,kernel_amount,file_save)
         elif op == recogn:
             float_x = [0] * nn_in_amount
             str_x = steck_str[sp_str]
@@ -223,4 +226,5 @@ def vm(b_c:list):
         ip+= 1
         op = b_c[ip]
 if __name__ == '__main__':
-    console()
+    console('>>>')
+
