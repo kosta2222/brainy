@@ -3,7 +3,7 @@ from .nn_constants import max_in_nn,max_trainSet_rows,max_validSet_rows,max_rows
     max_am_layer,max_am_epoch,max_am_objMse,max_stack_matrEl,max_stack_otherOp,bc_bufLen, NOP
 from .Nn_lay import nnLay
 # Параметры сети
-class  NnParams:
+class  NN_params:
     def __init__(self):
         self.list_=[]
         for i in range(max_am_layer):

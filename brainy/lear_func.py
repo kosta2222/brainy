@@ -5,14 +5,14 @@ from .nn_constants import max_in_nn, max_trainSet_rows, max_validSet_rows, max_r
 , max_am_epoch, max_am_objMse, max_stack_matrEl, max_stack_otherOp, bc_bufLen
 from .nn_constants import RELU, RELU_DERIV, INIT_W_HE, INIT_W_MY, SIGMOID, SIGMOID_DERIV, TAN, TAN_DERIV, INIT_W_GLOROT_MY,\
 INIT_W_HE_MY
-from .NN_params import NnParams   # импортруем параметры сети
+from .NN_params import NN_params   # импортруем параметры сети
 from .Nn_lay import nnLay   # импортируем слой
 from .work_with_arr import copy_vector
 from .operations_func import operations
 from .util_func import _0_
 # import pdb
 # pdb.set_trace()
-def calc_out_error(nn_params:NnParams,objLay:nnLay, targets:list):
+def calc_out_error(nn_params:NN_params,objLay:nnLay, targets:list):
     """
     Вычислить градиентную ошибку на выходном слое,записать этот параметр-вектор в обьект nnLay выходного слоя
     в параметр errors

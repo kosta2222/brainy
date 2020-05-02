@@ -1,14 +1,14 @@
 from .nn_constants import RELU_DERIV, RELU, TRESHOLD_FUNC, TRESHOLD_FUNC_DERIV, LEAKY_RELU, LEAKY_RELU_DERIV,\
 SIGMOID, SIGMOID_DERIV, DEBUG, DEBUG_STR, INIT_W_HE, INIT_W_GLOROT_MY, INIT_W_HABR, INIT_W_MY, INIT_W_UNIFORM,\
     TAN, TAN_DERIV, INIT_W_HE_MY
-from .NN_params import NnParams
+from .NN_params import NN_params
 import numpy as np
 import math
 np.random.seed(42)
 ready = False
 f=0
 # операции для функций активаций и их производных
-def operations( op , a, b, c, d, str_, nn_params:NnParams):
+def operations( op , a, b, c, d, str_, nn_params:NN_params):
     global ready, f
     alpha_leaky_relu = nn_params.alpha_leaky_relu
     alpha_sigmoid = nn_params.alpha_sigmoid

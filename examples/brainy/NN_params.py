@@ -1,14 +1,14 @@
 #NN_params.[py]
 from .nn_constants import max_in_nn,max_trainSet_rows,max_validSet_rows,max_rows_orOut,\
     max_am_layer,max_am_epoch,max_am_objMse,max_stack_matrEl,max_stack_otherOp,bc_bufLen, NOP
-from .Nn_lay import nnLay
+from .Lay import Lay
 # Параметры сети
-class  NnParams:
+class  NN_params:
     def __init__(self):
-        self.list_=[]
+        self.net=[]
         for i in range(max_am_layer):
-            ob_lay=nnLay()
-            self.list_.append(ob_lay);  # вектор слоев
+            ob_lay=Lay()
+            self.net.append(ob_lay);  # вектор слоев
         self.inputNeurons=0;  # количество
           #выходных
           #нейронов

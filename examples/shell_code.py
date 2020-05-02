@@ -1,21 +1,15 @@
-import sys
-
-from brainy.NN_params import NnParams   # импортруем параметры сети
+from brainy.NN_params import NN_params   # импортруем параметры сети
 from brainy.serial_deserial_func import deserializ
 from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
-from brainy.lear_func import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary
-from brainy.serial_deserial_func import compil_serializ
+from brainy.serial_deserial import compil_serializ
 from brainy.fit import fit
-import numpy as np
-
+from brainy.learn import initiate_layers, answer_nn_direct
 # X и Y означают двухмернй список обучения и ответов соответственно
 # x_* и y_* - просто списки из этих матриц
-
 # создать параметры сети
 def create_nn_params():
-    return NnParams()
+    return NN_params()
 len_=10
-
 push_i = 0
 push_fl = 1
 push_str = 2
@@ -41,7 +35,6 @@ def console(prompt):
         we_run = 'r'
         pos_bytecode = -1
         shell_is_running = True
-        is_we_didnt_faind_opcode = False
         print("Zdravstvuite ya sostavitel bait-coda dla etoi programmi")
         print("r vipolnit")
         print("Naberite exit dlya vihoda")
@@ -58,7 +51,6 @@ def console(prompt):
             elif input_== we_run:
                 pos_bytecode+= 1
                 b_c[pos_bytecode] = stop
-                print("b_c",b_c)
                 vm(b_c)
                 pos_bytecode = -1
             splitted_cmd_src = input_.split()
@@ -70,25 +62,17 @@ def console(prompt):
             for idex_of_bytecode_is_bytecode in range(len(ops)):
                 cmd_in_ops = ops[idex_of_bytecode_is_bytecode]
                 is_index_inside_arr = idex_of_bytecode_is_bytecode < len(ops)
-                if cmd_in_ops == main_cmd and is_index_inside_arr:
-                    print("in cons cmd",cmd_in_ops)
+                if  main_cmd == cmd_in_ops and is_index_inside_arr:
                     pos_bytecode += 1
                     # формируем числовой байт-код и если нужно значения параметра
                     b_c[pos_bytecode] = idex_of_bytecode_is_bytecode
                     if par_cmd != '':
                         pos_bytecode += 1
                         b_c[pos_bytecode] = par_cmd
+                    # очищаем
                     splitted_cmd[0] = ''
                     splitted_cmd[1] = ''
-                    is_we_didnt_faind_opcode = False
                     break
-                else :
-                    is_we_didnt_faind_opcode =True
-                    continue
-                # Очищаем
-            if is_we_didnt_faind_opcode:
-                print("Izvintilyaus net takogo opcoda")
-                is_we_didnt_faind_opcode = False
 X=[]
 Y=[]
 def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
@@ -101,11 +85,8 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_in_amount = 20
    nn_out_amount = 1
    nn_map = (nn_in_amount, 8, nn_out_amount)
-
    initiate_layers(nn_params, nn_map, len(nn_map))
    return nn_params
-
-
 def vm(b_c:list):
     nn_in_amount=20
     nn_out_amount=1
@@ -186,17 +167,10 @@ def vm(b_c:list):
            for row in range(len(Y)):
                for elem in range(nn_out_amount):
                    Y_new_fix[row][elem] = Y[row][elem]
-           # X_new_fix_np=np.array(X_new_fix, dtype='float64')
-           # Y_new_fix_np=np.array(Y_new_fix, dtype='float64')
-           # X_new_fix_np-=np.mean(X_new_fix_np, dtype='float64', axis=0)
-           # Y_new_fix_np-=np.mean(Y_new_fix_np, dtype='float64', axis=0)
-           # X_new_fix_np=np.std(X_new_fix_np, axis = 0)
-           # Y_new_fix_np=np.std(Y_new_fix_np, axis = 0)
-           # print("in calc sent vecs X Y", X_new_fix_np, Y_new_fix_np)
            fit(b_c_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100)
            kernel_amount=nn_params.nlCount
            file_save="weight_file.my"
-           compil_serializ(nn_params, b_c_ser, nn_params.list_,kernel_amount,file_save)
+           compil_serializ(nn_params, b_c_ser, nn_params.net,kernel_amount,file_save)
         elif op == recogn:
             float_x = [0] * nn_in_amount
             str_x = steck_str[sp_str]
@@ -222,7 +196,7 @@ def vm(b_c:list):
         elif op==load:
            file_save = "weight_file.my"
            file_load = file_save
-           deserializ(nn_params_new, nn_params_new.list_, file_load)
+           deserializ(nn_params_new, nn_params_new.net, file_load)
         else:
             print("Unknown bytecode -> %d"%op)
             return

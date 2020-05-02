@@ -1,8 +1,6 @@
-# Nn_lay.[py]
-from .nn_constants import max_in_nn, max_trainSet_rows, max_validSet_rows, max_rows_orOut, \
-max_am_layer, max_am_epoch, max_am_objMse, max_stack_matrEl, max_stack_otherOp, bc_bufLen
+from .nn_constants import max_in_nn, max_rows_orOut
 # Слой сети
-class nnLay:
+class Lay:
     # in_ = None# количество входов слоя
     # out = None# количество выходов слоя
     def __init__(self):# конструктор

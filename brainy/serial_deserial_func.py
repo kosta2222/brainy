@@ -5,11 +5,11 @@ from .nn_constants import bc_bufLen, max_in_nn, max_rows_orOut, max_stack_matrEl
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan
 from .Nn_lay import nnLay
 import struct as st
-from .NN_params import NnParams
+from .NN_params import NN_params
 from .util_func import _0_
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=0  # указатель на элементы байт-кода 
-def compil_serializ(nn_params:NnParams, b_c:list, list_:nnLay, kernel_amount, f_name):
+def compil_serializ(nn_params:NN_params, b_c:list, list_:nnLay, kernel_amount, f_name):
     print("in compil_serializ")
     in_=0
     out=0
@@ -119,7 +119,7 @@ def  dump_bc(b_c, f_name):
   # except Exception:
   #     print("i",i)
   #     return
-def make_kernel_f(nn_params:NnParams, list_:list, lay_pos, matrix_el_st:list,  ops_st:list,  sp_op):
+def make_kernel_f(nn_params:NN_params, list_:list, lay_pos, matrix_el_st:list,  ops_st:list,  sp_op):
     """
     Создает  ядро в векторе слоев
     :param list_: ссылка на вектор слоев
@@ -137,7 +137,7 @@ def make_kernel_f(nn_params:NnParams, list_:list, lay_pos, matrix_el_st:list,  o
         for elem in range(in_):
             list_[lay_pos].matrix[row][elem] = matrix_el_st[row * elem]   # десериализированная матрица
     _0_("make_kernel")
-def vm_to_deserialize(nn_params:NnParams, list_:list, bin_buf:list):
+def vm_to_deserialize(nn_params:NN_params, list_:list, bin_buf:list):
     """
     Элемент виртуальной машины чтобы в вектор list_ матриц весов
     записать десериализированные из файла матрицы весов и смочь
@@ -226,7 +226,7 @@ def vm_to_deserialize(nn_params:NnParams, list_:list, bin_buf:list):
     # находим количество выходов когда образовали сеть
     nn_params.outputNeurons=nn_params.list_[nn_params.nlCount-1].out
     _0_("vm")
-def deserializ(nn_params:NnParams, list_:list, f_name:str):
+def deserializ(nn_params:NN_params, list_:list, f_name:str):
     bin_buf = [0] * bc_bufLen
     buf_str = b''
     with open(f_name, 'rb') as f:
