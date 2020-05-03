@@ -9,19 +9,13 @@ class  NN_params:
         for i in range(max_am_layer):
             ob_lay=Lay()
             self.net.append(ob_lay);  # вектор слоев
-        self.inputNeurons=0;  # количество
-          #выходных
-          #нейронов
-        self.outputNeurons=0;  # количество
-        #входных
-        #нейронов
-        self.nlCount=0;  # количество
-        #слоев
+        self.input_neurons=0;  # количество выходных нейронов
+        self.outpu_neurons=0;  # количество входных нейронов
+        self.nl_count=0;  # количество слоев
         self.inputs=[0]*(max_in_nn);  # входа сети
         self.targets=[0]*(max_rows_orOut);  # ответы от учителя
         self.out_errors = [0] * (max_rows_orOut)  # вектор ошибок слоя
-        self.lr=0;  # коэффициент
-          #обучения
+        self.lr=0;  # коэффициент обучения
         self.with_adap_lr = False
         self.with_bias = False
         self.act_fu = NOP

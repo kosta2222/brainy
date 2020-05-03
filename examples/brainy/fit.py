@@ -1,6 +1,6 @@
 from .cross_val_eval import evaluate
-from .learn import train, initiate_layers, get_min_square_err, answer_nn_direct, answer_nn_direct_on_contrary,\
-get_mean
+from .learn import train, get_min_square_err, get_mean
+import logging
 """
 X и Y - означает матрицы обучения и ответов соответственно(массив с другими просто массивами)
 x*_ и  y*_ - вектор из этих матриц(просто массив)
@@ -24,7 +24,7 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
             x = X[i]
             y = Y[i]
             train(nn_params, x, y, 1)
-            out_nn = nn_params.net[nn_params.nlCount - 1].hidden
+            out_nn = nn_params.net[nn_params.nl_count - 1].hidden
             if nn_params.with_adap_lr:
                 if iteration == 0:
                     E_spec_t_minus_1 = E_spec
@@ -38,7 +38,7 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
                     A_t_minus_1 = A
                     E_spec_t_minus_1 = E_spec
             nn_params.lr = A
-            mse = get_min_square_err(out_nn, y, nn_params.outputNeurons)
+            mse = get_min_square_err(out_nn, y, nn_params.outpu_neurons)
             print("in learn mse",mse)
         acc = evaluate(nn_params, X_eval, Y_eval)
         if acc == accuracy_eval_shureness and mse < 0.001:

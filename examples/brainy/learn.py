@@ -1,8 +1,4 @@
 import math
-import numpy as np
-import struct as st
-from .nn_constants import max_in_nn, max_trainSet_rows, max_validSet_rows, max_rows_orOut, max_am_layer\
-, max_am_epoch, max_am_objMse, max_stack_matrEl, max_stack_otherOp, bc_bufLen
 from .nn_constants import RELU, RELU_DERIV, INIT_W_HE, INIT_W_MY, SIGMOID, SIGMOID_DERIV, TAN, TAN_DERIV, INIT_W_GLOROT_MY,\
 INIT_W_HE_MY
 from .NN_params import NN_params   # импортруем параметры сети
@@ -42,35 +38,35 @@ def upd_matrix(nn_params:NN_params, objLay:Lay, entered_vals):
             objLay.matrix[row][elem]-= nn_params.lr * objLay.errors[elem] * entered_vals[elem]
 def feed_forwarding(nn_params:NN_params,ok:bool, debug:int):
     make_hidden(nn_params, nn_params.net[0], nn_params.inputs, debug)
-    for i in range(1,nn_params.nlCount):
+    for i in range(1,nn_params.nl_count):
         make_hidden(nn_params, nn_params.net[i], get_hidden(nn_params.net[i - 1]), debug)
     if ok:
-        for i in range(nn_params.outputNeurons):
-            print("%d item val %f"%(i + 1,nn_params.net[nn_params.nlCount - 1].hidden[i]))
-        return nn_params.net[nn_params.nlCount - 1].hidden
+        for i in range(nn_params.outpu_neurons):
+            print("%d item val %f"%(i + 1,nn_params.net[nn_params.nl_count - 1].hidden[i]))
+        return nn_params.net[nn_params.nl_count - 1].hidden
     else:
          backpropagate(nn_params)
 def feed_forwarding_on_contrary(nn_params:NN_params, ok:bool, debug:int):
-    make_hidden_on_contrary(nn_params, nn_params.net[nn_params.nlCount - 1 ], nn_params.inputs, debug)
-    for i in range(nn_params.nlCount - 2, -1, -1):
+    make_hidden_on_contrary(nn_params, nn_params.net[nn_params.nl_count - 1 ], nn_params.inputs, debug)
+    for i in range(nn_params.nl_count - 2, -1, -1):
         make_hidden_on_contrary(nn_params, nn_params.net[i], get_hidden(nn_params.net[i + 1]), debug)
     if ok:
-        for i in range(nn_params.inputNeurons):
+        for i in range(nn_params.input_neurons):
             print("%d item val %f"%(i + 1,nn_params.net[0].hidden[i]))
         return nn_params.net[0].hidden
 def train(nn_params:NN_params,in_:list,targ:list, debug):
-    copy_vector(in_,nn_params.inputs,nn_params.inputNeurons)
-    copy_vector(targ,nn_params.targets,nn_params.outputNeurons)
+    copy_vector(in_,nn_params.inputs,nn_params.input_neurons)
+    copy_vector(targ,nn_params.targets,nn_params.outpu_neurons)
     feed_forwarding(nn_params,False, debug)
 def answer_nn_direct(nn_params:NN_params,in_:list, debug):
     out_nn = None
-    copy_vector(in_,nn_params.inputs,nn_params.inputNeurons)
+    copy_vector(in_,nn_params.inputs,nn_params.input_neurons)
     # print("in answer_nn in_ vec",in_)
     out_nn=feed_forwarding(nn_params,True, debug)
     return out_nn
 def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
     out_nn = None
-    copy_vector(in_,nn_params.inputs,nn_params.outputNeurons)
+    copy_vector(in_,nn_params.inputs,nn_params.outpu_neurons)
     out_nn=feed_forwarding_on_contrary(nn_params,True, debug)
     return out_nn
 # Получить вектор входов, сделать матричный продукт и матричный продукт пропустить через функцию активации,
@@ -110,14 +106,14 @@ def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug)
         objLay.hidden[elem] = val
         tmp_v = 0
 def backpropagate(nn_params:NN_params):
-    calc_out_error(nn_params, nn_params.net[nn_params.nlCount - 1],nn_params.targets)
-    for i in range(nn_params.nlCount - 1, 0, -1):
-        if i == nn_params.nlCount - 1:
+    calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
+    for i in range(nn_params.nl_count - 1, 0, -1):
+        if i == nn_params.nl_count - 1:
            calc_hid_error(nn_params, nn_params.net[i], nn_params.out_errors, get_cost_signals(nn_params.net[i - 1]))
         else:
             calc_hid_error(nn_params, nn_params.net[i], get_essential_gradients(nn_params.net[i + 1]), get_cost_signals(nn_params.net[i - 1]))
     calc_hid_zero_lay(nn_params.net[0], get_essential_gradients(nn_params.net[1]))
-    for i in range(nn_params.nlCount - 1, 0, -1):
+    for i in range(nn_params.nl_count - 1, 0, -1):
         upd_matrix(nn_params, nn_params.net[i],  get_cost_signals(nn_params.net[i - 1]))
     upd_matrix(nn_params, nn_params.net[0], nn_params.inputs)
 # заполнить матрицу весов рандомными значениями по He, исходя из количесва входов и выходов,
@@ -131,11 +127,11 @@ def set_io(nn_params:NN_params, objLay:Lay, inputs, outputs):
 def initiate_layers(nn_params:NN_params,network_map:tuple,size):
     in_ = 0
     out = 0
-    nn_params.nlCount = size - 1
-    nn_params.inputNeurons = network_map[0]
-    nn_params.outputNeurons = network_map[nn_params.nlCount]
+    nn_params.nl_count = size - 1
+    nn_params.input_neurons = network_map[0]
+    nn_params.outpu_neurons = network_map[nn_params.nl_count]
     set_io(nn_params, nn_params.net[0],network_map[0],network_map[1])
-    for i in range(1, nn_params.nlCount ):# след. матр. д.б. (3,1) т.е. in(elems)=3 out(rows)=1
+    for i in range(1, nn_params.nl_count ):# след. матр. д.б. (3,1) т.е. in(elems)=3 out(rows)=1
         if nn_params.with_bias:
            in_ = network_map[i] + 1
         else:

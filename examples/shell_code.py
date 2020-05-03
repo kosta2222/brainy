@@ -1,5 +1,5 @@
 from brainy.NN_params import NN_params   # импортруем параметры сети
-from brainy.serial_deserial_func import deserializ
+from brainy.serial_deserial import deserializ
 from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
 from brainy.serial_deserial import to_file
 from brainy.fit import fit
@@ -166,7 +166,7 @@ def vm(buffer:list):
                for elem in range(nn_out_amount):
                    Y_new_fix[row][elem] = Y[row][elem]
            fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100)
-           kernel_amount=nn_params.nlCount
+           kernel_amount=nn_params.nl_count
            file_save="weight_file.my"
            to_file(nn_params, buffer_ser, nn_params.net,kernel_amount,file_save)
         elif op == recogn:
