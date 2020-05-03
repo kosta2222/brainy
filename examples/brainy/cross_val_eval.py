@@ -1,9 +1,7 @@
-from .nn_constants import max_rows_orOut
 from .learn import answer_nn_direct
 from .NN_params import NN_params
 def evaluate(nn_params:NN_params, X_test: list, Y_test: list):
     scores = []
-    res = 0
     out_nn=None
     res_acc = 0
     rows = len(X_test)
@@ -20,24 +18,24 @@ def evaluate(nn_params:NN_params, X_test: list, Y_test: list):
             elem_answer = y_test[elem]
             if (elem_of_out_nn > 0.5):
                 elem_of_out_nn = 1
-                print("output vector elem -> ( %f ) " % 1, end=' ')
+                # print("output vector elem -> ( %f ) " % 1, end=' ')
             else:
                 elem_of_out_nn = 0
-                print("output vector elem -> ( %f ) " % 0, end=' ');
-            print("expected vector elem -> ( %f )" % elem_answer);
+                # print("output vector elem -> ( %f ) " % 0, end=' ');
+            # print("expected vector elem -> ( %f )" % elem_answer);
             if elem_of_out_nn == elem_answer:
                 is_vecs_are_equal = True
             else:
                 is_vecs_are_equal = False
                 break
         if is_vecs_are_equal:
-           print("-Vecs are equal-")
+           # print("-Vecs are equal-")
            scores.append(1)
         else:
-            print("-Vecs are not equal-")
+            # print("-Vecs are not equal-")
             scores.append(0)
-    print("in eval scores",scores)
+    # print("in eval scores",scores)
     res_acc = sum(scores) / rows * 100
-    print("Acсuracy:%f%s"%(res_acc,"%"))
+    # print("Acсuracy:%f%s"%(res_acc,"%"))
     return res_acc
 

@@ -4,24 +4,24 @@ from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
 from brainy.serial_deserial import to_file
 from brainy.fit import fit
 from brainy.learn import initiate_layers, answer_nn_direct
-# X и Y означают двухмернй список обучения и ответов соответственно
-# x_* и y_* - просто списки из этих матриц
-# создать параметры сети
-def create_nn_params():
-    return NN_params()
 len_=10
 push_i = 0
 push_fl = 1
 push_str = 2
 calc_sent_vecs = 3
-calc_h_vecs = 4
-fit_ = 5
-recogn = 6
-what_say_positive = 7
-load = 8
-stop = 9
-ops=["push_i","push_fl", "push_str", "calc_sent_vecs","calc_h_vecs","fit","recogn","what_say_positive","load"]
-def console(prompt):
+fit_ = 4
+predict = 5
+load = 6
+stop = 7
+X=[]
+Y=[]
+ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load"]
+# X и Y означают двухмернй список обучения и ответов соответственно
+# x_* и y_* - просто списки из этих матриц
+# создать параметры сети
+def create_nn_params():
+    return NN_params()
+def console(prompt, level):
         buffer = [0] * len_* 2  # байт-код для шелл-кода
         input_ = '<uninitialized>'
         # splitted_cmd и splitted_cmd_src - т.к. работаем со статическим массивом
@@ -35,10 +35,10 @@ def console(prompt):
         we_run = 'r'
         pos_bytecode = -1
         shell_is_running = True
-        print("Zdravstvuite ya sostavitel bait-coda dla etoi programmi")
-        print("r vipolnit")
-        print("Naberite exit dlya vihoda")
-        print("Dostupnie codi:")
+        print("Здравствуйте я составитель кода этой программы")
+        print("r - выполнить")
+        print("exit - выход")
+        print("Доступные коды:")
         for c in ops:
             print(c, end=' ')
         print()
@@ -51,7 +51,7 @@ def console(prompt):
             elif input_== we_run:
                 pos_bytecode+= 1
                 buffer[pos_bytecode] = stop
-                vm(buffer)
+                vm(buffer, level)
                 pos_bytecode = -1
             splitted_cmd_src = input_.split()
             for pos_to_write in range(len(splitted_cmd_src)):
@@ -73,8 +73,6 @@ def console(prompt):
                     splitted_cmd[0] = ''
                     splitted_cmd[1] = ''
                     break
-X=[]
-Y=[]
 def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_params = create_nn_params()
    nn_params.with_bias = True
@@ -87,14 +85,16 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_map = (nn_in_amount, 8, nn_out_amount)
    initiate_layers(nn_params, nn_map, len(nn_map))
    return nn_params
-def vm(buffer:list):
+def vm(buffer:list, level):
+    print("in vm")
+    print("buff",buffer)
     nn_in_amount=20
     nn_out_amount=1
     nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
     nn_params_new = create_nn_params()
     buffer_ser = [0] * bc_bufLen * 5  # буффер для сериализации матричных элементов и входов
-    say_positive='<uninitialized>'
-    say_negative='Izvinite vasha prosba ne opoznana'
+    say_positive='Понятно. Постараюсь ваполнить вашу просьбу'
+    say_negative='Извините ваша просьба неопознана'
     ip=0
     sp=-1
     sp_str=-1
@@ -131,25 +131,24 @@ def vm(buffer:list):
                 float_x[cn_char]= round(ord_as_devided_val, 2)
                 cn_char+= 1
             X.append(float_x)
-            print("in vm in calc_ve:",X,Y)
-        elif op == calc_h_vecs:
-            splited_par_x:list=None
-            splited_par_y:list=None
-            x = [0] * nn_in_amount
-            y = [0] * nn_out_amount
-            str_par_y = steck_str[sp_str]
-            sp_str-= 1
-            str_par_x = steck_str[sp_str]
-            sp_str-= 1
-            splited_par_x=str_par_x.split("_")
-            splited_par_y=str_par_y.split("_")
-            for i in range(len(splited_par_x)):
-                x[i]=splited_par_x[i]
-            for i in range(len(splited_par_y)):
-                if splited_par_y[i]!='':
-                   y[i]=int(splited_par_y[i])
-            X.append(x)
-            Y.append(y)
+        # elif op == calc_h_vecs:
+        #     splited_par_x:list=None
+        #     splited_par_y:list=None
+        #     x = [0] * nn_in_amount
+        #     y = [0] * nn_out_amount
+        #     str_par_y = steck_str[sp_str]
+        #     sp_str-= 1
+        #     str_par_x = steck_str[sp_str]
+        #     sp_str-= 1
+        #     splited_par_x=str_par_x.split("_")
+        #     splited_par_y=str_par_y.split("_")
+        #     for i in range(len(splited_par_x)):
+        #         x[i]=splited_par_x[i]
+        #     for i in range(len(splited_par_y)):
+        #         if splited_par_y[i]!='':
+        #            y[i]=int(splited_par_y[i])
+        #     X.append(x)
+        #     Y.append(y)
         elif op == fit_:
            X_new_fix =[]
            Y_new_fix =[]
@@ -165,11 +164,11 @@ def vm(buffer:list):
            for row in range(len(Y)):
                for elem in range(nn_out_amount):
                    Y_new_fix[row][elem] = Y[row][elem]
-           fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100)
+           fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100, use_logger=level)
            kernel_amount=nn_params.nl_count
            file_save="weight_file.my"
            to_file(nn_params, buffer_ser, nn_params.net,kernel_amount,file_save)
-        elif op == recogn:
+        elif op == predict:
             float_x = [0] * nn_in_amount
             str_x = steck_str[sp_str]
             sp_str-= 1
@@ -181,16 +180,10 @@ def vm(buffer:list):
             nn_ans = answer_nn_direct(nn_params_new, float_x, 1)
             if nn_ans[0] >  0.559837 and nn_ans[0] <= 1:
                 print(say_positive)
-                print("nn answered", nn_ans)
+                print("Сеть ответила ", nn_ans)
             else:
                 print(say_negative)
-                print("nn answered", nn_ans)
-        elif op==what_say_positive:
-            say_str=steck_str[sp_str]
-            sp_str-=1
-            say_positive = say_str
-            print("Pri negativnom skaju:",end=' ')
-            print(say_negative)
+                print("Сеть ответила ", nn_ans)
         elif op==load:
            file_save = "weight_file.my"
            file_load = file_save
@@ -202,6 +195,19 @@ def vm(buffer:list):
             return
         ip+= 1
         op = buffer[ip]
+import sys
 if __name__ == '__main__':
-    console('>>>')
+  if len(sys.argv)==2:
+    level=sys.argv[1]
+    if level == '-debug':
+        pass
+    elif level == '-release':
+        pass
+    else:
+        print("Unrecognized option ",level)
+        sys.exit(1)
+    console('>>>', level)
+  else:
+      print("Program must have option: -release or -debug")
+      sys.exit(1)
 

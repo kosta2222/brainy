@@ -1,31 +1,16 @@
 from .cross_val_eval import evaluate
 from .learn import train, get_min_square_err, get_mean
 import logging
+from .util import get_logger
 """
 X и Y - означает матрицы обучения и ответов соответственно(массив с другими просто массивами)
 x*_ и  y*_ - вектор из этих матриц(просто массив)
 """
-def log_nn_pars():
-    pass
-    
 def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, use_logger = 'release'):
     """
     X_eval и Y_eval нужны потому что X и Y могут быть 'сжаты', а проверять нужно на 'целых' матрицах
     """
-    logger = None
-    fhandler = None
-    if use_logger == 'debug' or use_logger == 'release':
-        logger=logging.getLogger(__name__)
-        # fhandler=logging.FileHandler('log.txt')
-        if use_logger == 'debug':
-            logging.basicConfig(level=logging.DEBUG, filename='log.txt', filemode='w')
-            # fformat=logging.Formatter('%(name)s-%(message)s')
-            # fhandler.setFormatter(fformat)
-        elif use_logger=='release':
-            logging.basicConfig(level=logging.INFO, filename='log.txt', filemode='w')
-            # fformat=logging.Formatter('%(name)s-%(message)s')
-            # fhandler.setFormatter(fformat)
-        # logger.addHandler(fhandler)
+    logger =  get_logger(use_logger)
     iteration: int = 0
     A = nn_params.lr
     out_nn:list=None
@@ -38,6 +23,7 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
     E_spec = 0
     is_net_learning = True
     while is_net_learning:
+        logging.info(f'iteration {iteration}')
         for i in range(hei_Y):
             x = X[i]
             y = Y[i]
@@ -57,13 +43,13 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
                     A_t_minus_1 = A
                     E_spec_t_minus_1 = E_spec
             nn_params.lr = A
-            logging.debug(f"learning rate {A}")
+            logger.debug(f"learning rate {A}")
             mse = get_min_square_err(out_nn, y, nn_params.outpu_neurons)
-            logging.info(f"mse {mse}")
+            logger.info(f"mse {mse}")
         acc = evaluate(nn_params, X_eval, Y_eval)
         if acc == accuracy_eval_shureness and mse < 0.001:
             break
         iteration+=1
-    print("***CV***")
+    # print("***CV***")
     evaluate(nn_params, X_eval, Y_eval)
     # compil_serializ(b_c, nn_params.net,len(nn_map)-1,"wei_wei")

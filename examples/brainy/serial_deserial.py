@@ -7,7 +7,7 @@ import struct as st
 from .NN_params import NN_params
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
-def to_file(nn_params:NN_params, b_c:list, net:list, kernel_amount, fname):
+def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
     in_=0
     out=0
     with_bias_i = 0
@@ -17,36 +17,36 @@ def to_file(nn_params:NN_params, b_c:list, net:list, kernel_amount, fname):
         with_bias_i = 1
     else:
         with_bias_i = 0
-    py_pack(b_c, push_i, with_bias_i)
-    py_pack(b_c, with_bias, stub)
-    py_pack(b_c, push_i, nn_params.act_fu)
-    py_pack(b_c, determe_act_func, stub)
+    py_pack(buffer, push_i, with_bias_i)
+    py_pack(buffer, with_bias, stub)
+    py_pack(buffer, push_i, nn_params.act_fu)
+    py_pack(buffer, determe_act_func, stub)
     # разбираемся с параметрами активациооных функции - по умолчанию они уже заданы в nn_params
     if nn_params.act_fu == LEAKY_RELU:
-        py_pack(b_c, push_fl, nn_params.alpha_leaky_relu)
-        py_pack(b_c, determe_alpha_leaky_relu, stub)
+        py_pack(buffer, push_fl, nn_params.alpha_leaky_relu)
+        py_pack(buffer, determe_alpha_leaky_relu, stub)
     elif nn_params.act_fu == SIGMOID:
-        py_pack(b_c, push_fl, nn_params.alpha_sigmoid)
-        py_pack(b_c,determe_alpha_sigmoid, stub)
+        py_pack(buffer, push_fl, nn_params.alpha_sigmoid)
+        py_pack(buffer,determe_alpha_sigmoid, stub)
     elif nn_params.act_fu == TAN:
-        py_pack(b_c, push_fl, nn_params.alpha_tan)
-        py_pack(b_c, push_fl, nn_params.beta_tan)
-        py_pack(b_c, determe_alpha_and_beta_tan, stub)
+        py_pack(buffer, push_fl, nn_params.alpha_tan)
+        py_pack(buffer, push_fl, nn_params.beta_tan)
+        py_pack(buffer, determe_alpha_and_beta_tan, stub)
 
     for i in range(kernel_amount):
         in_=net[i].in_
         out=net[i].out
-        py_pack(b_c, push_i,in_)
-        py_pack(b_c, push_i,out)
+        py_pack(buffer, push_i,in_)
+        py_pack(buffer, push_i,out)
         copy_matrixAsStaticSquare_toRibon(net[i].matrix, matrix, in_, out)
         matrix_elems = in_ * out
         for j in range(matrix_elems):
-            py_pack(b_c, push_fl, matrix[j])
-        py_pack(b_c, make_kernel, stub)
-    dump_bc(b_c, fname)
-def py_pack (b_c:list, op_i, val_i_or_fl):
+            py_pack(buffer, push_fl, matrix[j])
+        py_pack(buffer, make_kernel, stub)
+    dump_bc(buffer, fname)
+def py_pack (buffer:list, op_i, val_i_or_fl):
     """
-    Добавляет в b_c буффер байт-комманды и сериализованные матричные числа как байты
+    Добавляет в buffer буффер байт-комманды и сериализованные матричные числа как байты
     :param op_i: байт-комманда
     :param val_i_or_fl: число для серелизации - матричный элемент или количество входов выходов
     :return: следующий индекс куда можно записать команду stop
@@ -56,46 +56,45 @@ def py_pack (b_c:list, op_i, val_i_or_fl):
     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'stop']  # отпечатка команд [для отладки]
     if op_i == push_fl:
         pos_bytecode += 1
-        b_c[pos_bytecode] = st.pack('B', push_fl)
+        buffer[pos_bytecode] = st.pack('B', push_fl)
 
         for i in st.pack('<f', val_i_or_fl):
             pos_bytecode+=1
-            b_c[pos_bytecode] = i.to_bytes(1, 'little')
+            buffer[pos_bytecode] = i.to_bytes(1, 'little')
     elif op_i == push_i:
             pos_bytecode+=1
-            b_c[pos_bytecode] = st.pack('B', push_i)
+            buffer[pos_bytecode] = st.pack('B', push_i)
             pos_bytecode+=1
-            b_c[pos_bytecode] = st.pack('B', val_i_or_fl)
+            buffer[pos_bytecode] = st.pack('B', val_i_or_fl)
     elif op_i == make_kernel:
             pos_bytecode+=1
-            b_c[pos_bytecode] = st.pack('B', make_kernel)
+            buffer[pos_bytecode] = st.pack('B', make_kernel)
     elif op_i == with_bias:
             pos_bytecode+=1
-            b_c[pos_bytecode] = st.pack('B', with_bias)
+            buffer[pos_bytecode] = st.pack('B', with_bias)
     elif op_i == with_bias:
             pos_bytecode+=1
-            b_c[pos_bytecode] = st.pack('B', with_bias)
+            buffer[pos_bytecode] = st.pack('B', with_bias)
     elif op_i == determe_act_func:
             pos_bytecode+=1
-            b_c[pos_bytecode] = st.pack('B', determe_act_func)
+            buffer[pos_bytecode] = st.pack('B', determe_act_func)
     elif op_i == determe_alpha_leaky_relu:
             pos_bytecode+=1
-            b_c[pos_bytecode] = st.pack('B', determe_alpha_leaky_relu)
+            buffer[pos_bytecode] = st.pack('B', determe_alpha_leaky_relu)
     elif op_i == determe_alpha_sigmoid:
             pos_bytecode+=1
-            b_c[pos_bytecode] = st.pack('B', determe_alpha_sigmoid)
+            buffer[pos_bytecode] = st.pack('B', determe_alpha_sigmoid)
     elif op_i == determe_alpha_and_beta_tan:
             pos_bytecode += 1
-            b_c[pos_bytecode] = st.pack('B', determe_alpha_and_beta_tan)
-def dump_bc(b_c, fname):
+            buffer[pos_bytecode] = st.pack('B', determe_alpha_and_beta_tan)
+def dump_bc(buffer, fname):
   global pos_bytecode
   pos_bytecode+=1
-  b_c[pos_bytecode] = stop.to_bytes(1,"little")
+  buffer[pos_bytecode] = stop.to_bytes(1,"little")
   with open(fname,'wb') as f:
        len_bytecode = pos_bytecode
        for i in range(len_bytecode):
-           print("i", b_c[i])
-           f.write(b_c[i])
+           f.write(buffer[i])
   pos_bytecode = 0
 def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  ops_st:list,  sp_op):
     out = ops_st[sp_op]
@@ -106,6 +105,7 @@ def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  op
         for elem in range(in_):
             net[lay_pos].matrix[row][elem] = matrix_el_st[row * elem]   # десериализированная матрица
 def vm_to_deserialize(nn_params:NN_params, net:list, bin_buf:list):
+  try:
     ops_name = ['push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                 'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'stop']  # отпечатка команд [для отладки]
     matrix_el_st = [0] * max_stack_matrEl # стек для временного размещения элементов матриц из файла потом этот стек
@@ -119,6 +119,7 @@ def vm_to_deserialize(nn_params:NN_params, net:list, bin_buf:list):
     n_lay = 0
     op = bin_buf[ip]
     while (op != stop):
+        print("ip",ip)
         # загружаем на стек количество входов и выходов ядра
         # чтение операции с параметром
         print(ops_name[op],end=' ')
@@ -177,21 +178,24 @@ def vm_to_deserialize(nn_params:NN_params, net:list, bin_buf:list):
         # показываем на следующую инструкцию
         ip+=1
         op = bin_buf[ip]
-    # также подсчитаем сколько у наc ядер
-    nn_params.nl_count = n_lay
-    # находим количество входов
-    nn_params.input_neurons = nn_params.net[0].in_ #-1  # -1 зависит от биасов
-    # находим количество выходов когда образовали сеть
-    nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
+  except Exception:
+      print("Exc")
+      print("ip",ip)
+  # также подсчитаем сколько у наc ядер
+  nn_params.nl_count = n_lay
+  # находим количество входов
+  nn_params.input_neurons = nn_params.net[0].in_ #-1  # -1 зависит от биасов
+  # находим количество выходов когда образовали сеть
+  nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
 def deserializ(nn_params:NN_params, net:list, fname:str):
-    bin_buf = [0] * bc_bufLen
+    bin_buf = [0] * bc_bufLen * 10
     buf_str = b''
     with open(fname, 'rb') as f:
         buf_str = f.read()
-    j = 0
+    cn_by = 0
     for i in buf_str:
-        bin_buf[j] = i
-        j+=1
+        bin_buf[cn_by] = i
+        cn_by+=1
     # разборка байт-кода
     vm_to_deserialize(nn_params, net, bin_buf)
 #----------------------------------------------------------------------

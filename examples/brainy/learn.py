@@ -36,24 +36,24 @@ def upd_matrix(nn_params:NN_params, objLay:Lay, entered_vals):
     for row in range(objLay.out):
         for elem in range(objLay.in_):
             objLay.matrix[row][elem]-= nn_params.lr * objLay.errors[elem] * entered_vals[elem]
-def feed_forwarding(nn_params:NN_params,ok:bool, debug:int):
+def feed_forwarding(nn_params:NN_params,ok:bool, debug):
     make_hidden(nn_params, nn_params.net[0], nn_params.inputs, debug)
     for i in range(1,nn_params.nl_count):
         make_hidden(nn_params, nn_params.net[i], get_hidden(nn_params.net[i - 1]), debug)
     if ok:
         for i in range(nn_params.outpu_neurons):
             print("%d item val %f"%(i + 1,nn_params.net[nn_params.nl_count - 1].hidden[i]))
-        return nn_params.net[nn_params.nl_count - 1].hidden
+            return nn_params.net[nn_params.nl_count - 1].hidden
     else:
          backpropagate(nn_params)
-def feed_forwarding_on_contrary(nn_params:NN_params, ok:bool, debug:int):
+def feed_forwarding_on_contrary(nn_params:NN_params, ok:bool, debug):
     make_hidden_on_contrary(nn_params, nn_params.net[nn_params.nl_count - 1 ], nn_params.inputs, debug)
     for i in range(nn_params.nl_count - 2, -1, -1):
         make_hidden_on_contrary(nn_params, nn_params.net[i], get_hidden(nn_params.net[i + 1]), debug)
     if ok:
         for i in range(nn_params.input_neurons):
-            print("%d item val %f"%(i + 1,nn_params.net[0].hidden[i]))
-        return nn_params.net[0].hidden
+            # print("%d item val %f"%(i + 1,nn_params.net[0].hidden[i]))
+            return nn_params.net[0].hidden
 def train(nn_params:NN_params,in_:list,targ:list, debug):
     copy_vector(in_,nn_params.inputs,nn_params.input_neurons)
     copy_vector(targ,nn_params.targets,nn_params.outpu_neurons)
