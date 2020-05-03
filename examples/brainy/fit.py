@@ -5,10 +5,27 @@ import logging
 X и Y - означает матрицы обучения и ответов соответственно(массив с другими просто массивами)
 x*_ и  y*_ - вектор из этих матриц(просто массив)
 """
-def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int):
+def log_nn_pars():
+    pass
+    
+def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, use_logger = 'release'):
     """
     X_eval и Y_eval нужны потому что X и Y могут быть 'сжаты', а проверять нужно на 'целых' матрицах
     """
+    logger = None
+    fhandler = None
+    if use_logger == 'debug' or use_logger == 'release':
+        logger=logging.getLogger(__name__)
+        # fhandler=logging.FileHandler('log.txt')
+        if use_logger == 'debug':
+            logging.basicConfig(level=logging.DEBUG, filename='log.txt', filemode='w')
+            # fformat=logging.Formatter('%(name)s-%(message)s')
+            # fhandler.setFormatter(fformat)
+        elif use_logger=='release':
+            logging.basicConfig(level=logging.INFO, filename='log.txt', filemode='w')
+            # fformat=logging.Formatter('%(name)s-%(message)s')
+            # fhandler.setFormatter(fformat)
+        # logger.addHandler(fhandler)
     iteration: int = 0
     A = nn_params.lr
     out_nn:list=None
@@ -19,10 +36,12 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
     gama = 1.01
     hei_Y = len(Y)
     E_spec = 0
-    while True:
+    is_net_learning = True
+    while is_net_learning:
         for i in range(hei_Y):
             x = X[i]
             y = Y[i]
+            logger.debug(f'x: {x} y: {y}')
             train(nn_params, x, y, 1)
             out_nn = nn_params.net[nn_params.nl_count - 1].hidden
             if nn_params.with_adap_lr:
@@ -38,8 +57,9 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
                     A_t_minus_1 = A
                     E_spec_t_minus_1 = E_spec
             nn_params.lr = A
+            logging.debug(f"learning rate {A}")
             mse = get_min_square_err(out_nn, y, nn_params.outpu_neurons)
-            print("in learn mse",mse)
+            logging.info(f"mse {mse}")
         acc = evaluate(nn_params, X_eval, Y_eval)
         if acc == accuracy_eval_shureness and mse < 0.001:
             break
