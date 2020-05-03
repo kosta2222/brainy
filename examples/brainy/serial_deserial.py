@@ -3,13 +3,11 @@ from .nn_constants import bc_bufLen, max_in_nn, max_rows_orOut, max_stack_matrEl
     push_i, push_fl, make_kernel, with_bias, stop,\
     RELU, LEAKY_RELU, SIGMOID, TAN,\
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan
-from .Lay import Lay
 import struct as st
 from .NN_params import NN_params
-from .util_func import _0_
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
-def compil_serializ(nn_params:NN_params, b_c:list, list_:list, kernel_amount, f_name):
+def to_file(nn_params:NN_params, b_c:list, list_:list, kernel_amount, f_name):
     in_=0
     out=0
     with_bias_i = 0

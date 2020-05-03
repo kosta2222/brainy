@@ -1,7 +1,7 @@
 from brainy.NN_params import NN_params   # импортруем параметры сети
 from brainy.serial_deserial_func import deserializ
 from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
-from brainy.serial_deserial import compil_serializ
+from brainy.serial_deserial import to_file
 from brainy.fit import fit
 from brainy.learn import initiate_layers, answer_nn_direct
 # X и Y означают двухмернй список обучения и ответов соответственно
@@ -22,7 +22,7 @@ load = 8
 stop = 9
 ops=["push_i","push_fl", "push_str", "calc_sent_vecs","calc_h_vecs","fit","recogn","what_say_positive","load"]
 def console(prompt):
-        b_c = [0] * len_* 2  # байт-код для шелл-кода
+        buffer = [0] * len_* 2  # байт-код для шелл-кода
         input_ = '<uninitialized>'
         # splitted_cmd и splitted_cmd_src - т.к. работаем со статическим массивом
         splitted_cmd: list = [''] * 2
@@ -50,8 +50,8 @@ def console(prompt):
             # выполняем байткод вирт-машиной
             elif input_== we_run:
                 pos_bytecode+= 1
-                b_c[pos_bytecode] = stop
-                vm(b_c)
+                buffer[pos_bytecode] = stop
+                vm(buffer)
                 pos_bytecode = -1
             splitted_cmd_src = input_.split()
             for pos_to_write in range(len(splitted_cmd_src)):
@@ -65,10 +65,10 @@ def console(prompt):
                 if  main_cmd == cmd_in_ops and is_index_inside_arr:
                     pos_bytecode += 1
                     # формируем числовой байт-код и если нужно значения параметра
-                    b_c[pos_bytecode] = idex_of_bytecode_is_bytecode
+                    buffer[pos_bytecode] = idex_of_bytecode_is_bytecode
                     if par_cmd != '':
                         pos_bytecode += 1
-                        b_c[pos_bytecode] = par_cmd
+                        buffer[pos_bytecode] = par_cmd
                     # очищаем
                     splitted_cmd[0] = ''
                     splitted_cmd[1] = ''
@@ -87,12 +87,12 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_map = (nn_in_amount, 8, nn_out_amount)
    initiate_layers(nn_params, nn_map, len(nn_map))
    return nn_params
-def vm(b_c:list):
+def vm(buffer:list):
     nn_in_amount=20
     nn_out_amount=1
     nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
     nn_params_new = create_nn_params()
-    b_c_ser = [0] * bc_bufLen * 5  # буффер для сериализации матричных элементов и входов
+    buffer_ser = [0] * bc_bufLen * 5  # буффер для сериализации матричных элементов и входов
     say_positive='<uninitialized>'
     say_negative='Izvinite vasha prosba ne opoznana'
     ip=0
@@ -103,20 +103,20 @@ def vm(b_c:list):
     steck_fl=[0.0]*len_
     steck_str=['']*len_
     op=0
-    op=b_c[ip]
+    op=buffer[ip]
     while True:
         if op==push_i:
             sp+=1
             ip+=1
-            steck[sp]=int(b_c[ip]) # Из строкового параметра
+            steck[sp]=int(buffer[ip]) # Из строкового параметра
         elif op == push_fl:
             sp_fl += 1
             ip += 1
-            steck_fl[sp_fl] = float(b_c[ip])  # Из строкового параметра
+            steck_fl[sp_fl] = float(buffer[ip])  # Из строкового параметра
         elif op==push_str:
             sp_str+= 1
             ip += 1
-            steck_str[sp_str] = b_c[ip]
+            steck_str[sp_str] = buffer[ip]
         #  вычисление векторов это еще добавление к тренировочным матрицам
         elif op==calc_sent_vecs:
             ord_as_devided_val = 0.0
@@ -150,8 +150,6 @@ def vm(b_c:list):
                    y[i]=int(splited_par_y[i])
             X.append(x)
             Y.append(y)
-        elif op==stop:
-            return
         elif op == fit_:
            X_new_fix =[]
            Y_new_fix =[]
@@ -167,10 +165,10 @@ def vm(b_c:list):
            for row in range(len(Y)):
                for elem in range(nn_out_amount):
                    Y_new_fix[row][elem] = Y[row][elem]
-           fit(b_c_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100)
+           fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100)
            kernel_amount=nn_params.nlCount
            file_save="weight_file.my"
-           compil_serializ(nn_params, b_c_ser, nn_params.net,kernel_amount,file_save)
+           to_file(nn_params, buffer_ser, nn_params.net,kernel_amount,file_save)
         elif op == recogn:
             float_x = [0] * nn_in_amount
             str_x = steck_str[sp_str]
@@ -197,11 +195,13 @@ def vm(b_c:list):
            file_save = "weight_file.my"
            file_load = file_save
            deserializ(nn_params_new, nn_params_new.net, file_load)
+        elif op == stop:
+           return
         else:
             print("Unknown bytecode -> %d"%op)
             return
         ip+= 1
-        op = b_c[ip]
+        op = buffer[ip]
 if __name__ == '__main__':
     console('>>>')
 
