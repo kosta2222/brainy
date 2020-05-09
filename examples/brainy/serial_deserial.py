@@ -5,6 +5,7 @@ from .nn_constants import bc_bufLen, max_in_nn, max_rows_orOut, max_stack_matrEl
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan
 import struct as st
 from .NN_params import NN_params
+from  .util import calc_list
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
 def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
@@ -92,9 +93,14 @@ def dump_buffer(buffer, fname):
   global pos_bytecode
   pos_bytecode+=1
   buffer[pos_bytecode] = stop.to_bytes(1,"little")
+  print("in dump buf",buffer)
+  len_bytecode = pos_bytecode + 1
+  print("in dump buf len wi no 0",calc_list(buffer))
   with open(fname,'wb') as f:
-       len_bytecode = pos_bytecode
+       print("in dump len_bc",len_bytecode)
+       print("in dump len lst",calc_list(buffer))
        for i in range(len_bytecode):
+           print("in dump buf i",buffer[i])
            f.write(buffer[i])
   pos_bytecode = 0
 def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  ops_st:list,  sp_op):
