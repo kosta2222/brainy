@@ -77,7 +77,7 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
     for row in range(objLay.out):
         for elem in range(objLay.in_):
             if nn_params.with_bias:
-               if elem==1:
+               if elem==0:
                   tmp_v+=objLay.matrix[row][elem]
                else:
                   tmp_v+=objLay.matrix[row][elem] *\

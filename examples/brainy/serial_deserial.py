@@ -17,34 +17,34 @@ def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
         with_bias_i = 1
     else:
         with_bias_i = 0
-    py_pack(buffer, push_i, with_bias_i)
-    py_pack(buffer, with_bias, stub)
-    py_pack(buffer, push_i, nn_params.act_fu)
-    py_pack(buffer, determe_act_func, stub)
+    pack_v(buffer, push_i, with_bias_i)
+    pack_v(buffer, with_bias, stub)
+    pack_v(buffer, push_i, nn_params.act_fu)
+    pack_v(buffer, determe_act_func, stub)
     # разбираемся с параметрами активациооных функции - по умолчанию они уже заданы в nn_params
     if nn_params.act_fu == LEAKY_RELU:
-        py_pack(buffer, push_fl, nn_params.alpha_leaky_relu)
-        py_pack(buffer, determe_alpha_leaky_relu, stub)
+        pack_v(buffer, push_fl, nn_params.alpha_leaky_relu)
+        pack_v(buffer, determe_alpha_leaky_relu, stub)
     elif nn_params.act_fu == SIGMOID:
-        py_pack(buffer, push_fl, nn_params.alpha_sigmoid)
-        py_pack(buffer,determe_alpha_sigmoid, stub)
+        pack_v(buffer, push_fl, nn_params.alpha_sigmoid)
+        pack_v(buffer,determe_alpha_sigmoid, stub)
     elif nn_params.act_fu == TAN:
-        py_pack(buffer, push_fl, nn_params.alpha_tan)
-        py_pack(buffer, push_fl, nn_params.beta_tan)
-        py_pack(buffer, determe_alpha_and_beta_tan, stub)
+        pack_v(buffer, push_fl, nn_params.alpha_tan)
+        pack_v(buffer, push_fl, nn_params.beta_tan)
+        pack_v(buffer, determe_alpha_and_beta_tan, stub)
 
     for i in range(kernel_amount):
         in_=net[i].in_
         out=net[i].out
-        py_pack(buffer, push_i,in_)
-        py_pack(buffer, push_i,out)
+        pack_v(buffer, push_i,in_)
+        pack_v(buffer, push_i,out)
         copy_matrixAsStaticSquare_toRibon(net[i].matrix, matrix, in_, out)
         matrix_elems = in_ * out
         for j in range(matrix_elems):
-            py_pack(buffer, push_fl, matrix[j])
-        py_pack(buffer, make_kernel, stub)
-    dump_bc(buffer, fname)
-def py_pack (buffer:list, op_i, val_i_or_fl):
+            pack_v(buffer, push_fl, matrix[j])
+        pack_v(buffer, make_kernel, stub)
+    dump_buffer(buffer, fname)
+def pack_v (buffer:list, op_i, val_i_or_fl):
     """
     Добавляет в buffer буффер байт-комманды и сериализованные матричные числа как байты
     :param op_i: байт-комманда
@@ -52,8 +52,9 @@ def py_pack (buffer:list, op_i, val_i_or_fl):
     :return: следующий индекс куда можно записать команду stop
     """
     global pos_bytecode
-    ops_name = ['push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
+    ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'stop']  # отпечатка команд [для отладки]
+    print("op_i",ops_name[op_i], val_i_or_fl)
     if op_i == push_fl:
         pos_bytecode += 1
         buffer[pos_bytecode] = st.pack('B', push_fl)
@@ -87,7 +88,7 @@ def py_pack (buffer:list, op_i, val_i_or_fl):
     elif op_i == determe_alpha_and_beta_tan:
             pos_bytecode += 1
             buffer[pos_bytecode] = st.pack('B', determe_alpha_and_beta_tan)
-def dump_bc(buffer, fname):
+def dump_buffer(buffer, fname):
   global pos_bytecode
   pos_bytecode+=1
   buffer[pos_bytecode] = stop.to_bytes(1,"little")
@@ -104,7 +105,7 @@ def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  op
     for  row in range(out):
         for elem in range(in_):
             net[lay_pos].matrix[row][elem] = matrix_el_st[row * elem]   # десериализированная матрица
-def vm_to_deserialize(nn_params:NN_params, net:list, bin_buf:list):
+def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
   try:
     ops_name = ['push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                 'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'stop']  # отпечатка команд [для отладки]
@@ -117,7 +118,7 @@ def vm_to_deserialize(nn_params:NN_params, net:list, bin_buf:list):
     op = -1
     arg = 0
     n_lay = 0
-    op = bin_buf[ip]
+    op = buffer[ip]
     while (op != stop):
         print("ip",ip)
         # загружаем на стек количество входов и выходов ядра
@@ -126,14 +127,14 @@ def vm_to_deserialize(nn_params:NN_params, net:list, bin_buf:list):
         if  op == push_i:
             sp_op+=1
             ip+=1
-            ops_st[sp_op] = bin_buf[ip]
+            ops_st[sp_op] = buffer[ip]
         # загружаем на стек элементы матриц
         # чтение операции с параметром
         elif op == push_fl:
-            i_0 = bin_buf[ip + 1]
-            i_1 = bin_buf[ip + 2]
-            i_2 = bin_buf[ip + 3]
-            i_3 = bin_buf[ip + 4]
+            i_0 = buffer[ip + 1]
+            i_1 = buffer[ip + 2]
+            i_2 = buffer[ip + 3]
+            i_3 = buffer[ip + 4]
             arg=st.unpack('<f', bytes(list([i_0, i_1, i_2, i_3])))
             sp_ma+=1
             matrix_el_st[sp_ma] = arg[0]
@@ -177,7 +178,7 @@ def vm_to_deserialize(nn_params:NN_params, net:list, bin_buf:list):
             nn_params.alpha_leaky_relu = alpha
         # показываем на следующую инструкцию
         ip+=1
-        op = bin_buf[ip]
+        op = buffer[ip]
   except Exception:
       print("Exc")
       print("ip",ip)
@@ -187,15 +188,15 @@ def vm_to_deserialize(nn_params:NN_params, net:list, bin_buf:list):
   nn_params.input_neurons = nn_params.net[0].in_ #-1  # -1 зависит от биасов
   # находим количество выходов когда образовали сеть
   nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
-def deserializ(nn_params:NN_params, net:list, fname:str):
-    bin_buf = [0] * bc_bufLen * 10
+def deserialization(nn_params:NN_params, net:list, fname:str):
+    buffer = [0] * bc_bufLen * 10
     buf_str = b''
     with open(fname, 'rb') as f:
         buf_str = f.read()
     cn_by = 0
     for i in buf_str:
-        bin_buf[cn_by] = i
+        buffer[cn_by] = i
         cn_by+=1
     # разборка байт-кода
-    vm_to_deserialize(nn_params, net, bin_buf)
+    deserialization_vm(nn_params, net, buffer)
 #----------------------------------------------------------------------
