@@ -93,14 +93,14 @@ def dump_buffer(buffer, fname):
   global pos_bytecode
   pos_bytecode+=1
   buffer[pos_bytecode] = stop.to_bytes(1,"little")
-  print("in dump buf",buffer)
+  # print("in dump buf",buffer)
   len_bytecode = pos_bytecode + 1
-  print("in dump buf len wi no 0",calc_list(buffer))
+  # print("in dump buf len wi no 0",calc_list(buffer))
   with open(fname,'wb') as f:
-       print("in dump len_bc",len_bytecode)
-       print("in dump len lst",calc_list(buffer))
+       # print("in dump len_bc",len_bytecode)
+       # print("in dump len lst",calc_list(buffer))
        for i in range(len_bytecode):
-           print("in dump buf i",buffer[i])
+           # print("in dump buf i",buffer[i])
            f.write(buffer[i])
   pos_bytecode = 0
 def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  ops_st:list,  sp_op):
