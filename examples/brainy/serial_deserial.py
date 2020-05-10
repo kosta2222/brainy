@@ -9,6 +9,7 @@ from  .util import calc_list
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
 def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
+    print("in serialization [to file]")
     in_=0
     out=0
     with_bias_i = 0
@@ -53,10 +54,11 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
     :param val_i_or_fl: число для серелизации - матричный элемент или количество входов выходов
     :return: следующий индекс куда можно записать команду stop
     """
-    print("in serialization [to file]")
+
+
     global pos_bytecode
     ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
-    'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'stop']  # отпечатка команд [для отладки]
+    'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
     print("op_i",ops_name[op_i], val_i_or_fl)
     if op_i == push_fl:
         pos_bytecode += 1
@@ -76,9 +78,9 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
     elif op_i == with_bias:
             pos_bytecode+=1
             buffer[pos_bytecode] = st.pack('B', with_bias)
-    elif op_i == with_bias:
+    elif op_i == determe_in_out:
             pos_bytecode+=1
-            buffer[pos_bytecode] = st.pack('B', with_bias)
+            buffer[pos_bytecode] = st.pack('B', determe_in_out)
     elif op_i == determe_act_func:
             pos_bytecode+=1
             buffer[pos_bytecode] = st.pack('B', determe_act_func)
@@ -114,9 +116,10 @@ def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  op
         for elem in range(in_):
             net[lay_pos].matrix[row][elem] = matrix_el_st[row * elem]   # десериализированная матрица
 def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
-  try:
-    ops_name = ['push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
-                'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'stop']  # отпечатка команд [для отладки]
+    print("in deserialization")
+
+    ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
+                'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
     matrix_el_st = [0] * max_stack_matrEl # стек для временного размещения элементов матриц из файла потом этот стек
     # сворачиваем в матрицу слоя после команды make_kernel
     ops_st = [0] * max_stack_otherOp      # стек для количества входов и выходов (это целые числа)
@@ -128,7 +131,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
     n_lay = 0
     op = buffer[ip]
     while (op != stop):
-        print("ip",ip)
+        # print("ip",ip)
         # загружаем на стек количество входов и выходов ядра
         # чтение операции с параметром
         print(ops_name[op],end=' ')
@@ -136,6 +139,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
             sp_op+=1
             ip+=1
             ops_st[sp_op] = buffer[ip]
+            print(buffer[ip])
         # загружаем на стек элементы матриц
         # чтение операции с параметром
         elif op == push_fl:
@@ -147,6 +151,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
             sp_ma+=1
             matrix_el_st[sp_ma] = arg[0]
             ip += 4
+            print(arg[0])
         elif op==determe_in_out:
             out=ops_st[sp_op]
             sp_op-=1
@@ -195,15 +200,13 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
         # показываем на следующую инструкцию
         ip+=1
         op = buffer[ip]
-  except Exception:
-      print("Exc")
-      print("ip",ip)
-  # также подсчитаем сколько у наc ядер
-  nn_params.nl_count = n_lay
-  # находим количество входов
-  nn_params.input_neurons = nn_params.net[0].in_ #-1  # -1 зависит от биасов
-  # находим количество выходов когда образовали сеть
-  nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
+        print()
+    # также подсчитаем сколько у наc ядер
+    nn_params.nl_count = n_lay
+    # находим количество входов
+    nn_params.input_neurons = nn_params.net[0].in_ #-1  # -1 зависит от биасов
+    # находим количество выходов когда образовали сеть
+    nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
 def deserialization(nn_params:NN_params, net:list, fname:str):
     buffer = [0] * bc_bufLen * 10
     buf_str = b''

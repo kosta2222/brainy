@@ -80,11 +80,11 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
                if elem==0:
                   tmp_v+=objLay.matrix[row][elem]
                else:
-                  tmp_v+=objLay.matrix[row][elem] *\
-                         inputs[elem]
+                  tmp_v+=objLay.matrix[row][elem] * inputs[elem]
+
             else:
-                tmp_v+=objLay.matrix[row][elem] *\
-                       inputs[elem]
+                tmp_v+=objLay.matrix[row][elem] * inputs[elem]
+
         objLay.cost_signals[row] = tmp_v
         val = operations(nn_params.act_fu,tmp_v, 0, 0, 0, "", nn_params)
         objLay.hidden[row] = val
