@@ -40,4 +40,5 @@ determe_act_func = 5
 determe_alpha_leaky_relu = 6
 determe_alpha_sigmoid = 7
 determe_alpha_and_beta_tan = 8
-stop = 9
+determe_in_out = 9
+stop = 10

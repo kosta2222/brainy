@@ -2,7 +2,7 @@ from .work_with_arr import copy_matrixAsStaticSquare_toRibon
 from .nn_constants import bc_bufLen, max_in_nn, max_rows_orOut, max_stack_matrEl, max_stack_otherOp,\
     push_i, push_fl, make_kernel, with_bias, stop,\
     RELU, LEAKY_RELU, SIGMOID, TAN,\
-    determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan
+    determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan, determe_in_out
 import struct as st
 from .NN_params import NN_params
 from  .util import calc_list
@@ -39,19 +39,21 @@ def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
         out=net[i].out
         pack_v(buffer, push_i,in_)
         pack_v(buffer, push_i,out)
+        pack_v(buffer, determe_in_out, stub)
         copy_matrixAsStaticSquare_toRibon(net[i].matrix, matrix, in_, out)
         matrix_elems = in_ * out
         for j in range(matrix_elems):
             pack_v(buffer, push_fl, matrix[j])
         pack_v(buffer, make_kernel, stub)
     dump_buffer(buffer, fname)
-def pack_v (buffer:list, op_i, val_i_or_fl):
+def pack_v(buffer:list, op_i, val_i_or_fl):
     """
     Добавляет в buffer буффер байт-комманды и сериализованные матричные числа как байты
     :param op_i: байт-комманда
     :param val_i_or_fl: число для серелизации - матричный элемент или количество входов выходов
     :return: следующий индекс куда можно записать команду stop
     """
+    print("in serialization [to file]")
     global pos_bytecode
     ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'stop']  # отпечатка команд [для отладки]
@@ -137,14 +139,22 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
         # загружаем на стек элементы матриц
         # чтение операции с параметром
         elif op == push_fl:
-            i_0 = buffer[ip + 1]
-            i_1 = buffer[ip + 2]
-            i_2 = buffer[ip + 3]
-            i_3 = buffer[ip + 4]
-            arg=st.unpack('<f', bytes(list([i_0, i_1, i_2, i_3])))
+            v_0 = buffer[ip + 1]
+            v_1 = buffer[ip + 2]
+            v_2 = buffer[ip + 3]
+            v_3 = buffer[ip + 4]
+            arg=st.unpack('<f', bytes(list([v_0, v_1, v_2, v_3])))
             sp_ma+=1
             matrix_el_st[sp_ma] = arg[0]
             ip += 4
+        elif op==determe_in_out:
+            out=ops_st[sp_op]
+            sp_op-=1
+            in_=ops_st[sp_op]
+            sp_op-=1
+            # увеличивать индекс слоя n_lay будем в операции make_kernel
+            nn_params.net[n_lay].in_=in_
+            nn_params.net[n_lay].out=out
         # создаем одно ядро в массиве
         # пришла команда создать ядро
         elif op == make_kernel:

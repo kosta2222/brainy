@@ -1,5 +1,5 @@
 from brainy.NN_params import NN_params   # импортруем параметры сети
-from brainy.serial_deserial import deserializ
+from brainy.serial_deserial import deserialization
 from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
 from brainy.serial_deserial import to_file
 from brainy.fit import fit
@@ -75,10 +75,10 @@ def console(prompt, level):
                     break
 def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_params = create_nn_params()
-   nn_params.with_bias = True
+   nn_params.with_bias = False
    nn_params.with_adap_lr = True
    nn_params.lr = 0.01
-   nn_params.act_fu = TAN
+   nn_params.act_fu = RELU
    nn_params.alpha_sigmoid = 0.056
    nn_in_amount = 20
    nn_out_amount = 1
@@ -169,6 +169,7 @@ def vm(buffer:list, level):
            file_save="weight_file.my"
            to_file(nn_params, buffer_ser, nn_params.net,kernel_amount,file_save)
         elif op == predict:
+            print("op predict")
             float_x = [0] * nn_in_amount
             str_x = steck_str[sp_str]
             sp_str-= 1
@@ -185,9 +186,10 @@ def vm(buffer:list, level):
                 print(say_negative)
                 print("Сеть ответила ", nn_ans)
         elif op==load:
+           print("op load")
            file_save = "weight_file.my"
            file_load = file_save
-           deserializ(nn_params_new, nn_params_new.net, file_load)
+           deserialization(nn_params_new, nn_params_new.net, file_load)
         elif op == stop:
            return
         else:
