@@ -40,7 +40,7 @@ def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
         out=net[i].out
         pack_v(buffer, push_i,in_)
         pack_v(buffer, push_i,out)
-        pack_v(buffer, determe_in_out, stub)
+        # pack_v(buffer, determe_in_out, stub)
         copy_matrixAsStaticSquare_toRibon(net[i].matrix, matrix, in_, out)
         matrix_elems = in_ * out
         for j in range(matrix_elems):
@@ -153,6 +153,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
             ip += 4
             print(arg[0])
         elif op==determe_in_out:
+            print("op")
             out=ops_st[sp_op]
             sp_op-=1
             in_=ops_st[sp_op]

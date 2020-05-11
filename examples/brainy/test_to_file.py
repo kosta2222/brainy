@@ -20,4 +20,6 @@ class TestTo_file(TestCase):
         print("net", self.nn_params.net[0].matrix)
         to_file(self.nn_params, self.buffer, self.nn_params.net, 1 , 'wei_test.my')
         deserialization(self.nn_params_new,self.nn_params_new.net, 'wei_test.my')
+        print('in',self.nn_params_new.net[0].in_)
+        print('out',self.nn_params_new.net[0].out)
         # self.fail()
