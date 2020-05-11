@@ -178,7 +178,7 @@ def vm(buffer:list, level):
                 ord_as_devided_val = ord(chr) / 255
                 float_x[cn_char] = round(ord_as_devided_val, 2)
                 cn_char+=1
-            nn_ans = answer_nn_direct(nn_params_new, float_x, 1)
+            nn_ans = answer_nn_direct(nn_params, float_x, 1)
             if nn_ans[0] >  0.559837 and nn_ans[0] <= 1:
                 print(say_positive)
                 print("Сеть ответила ", nn_ans)
