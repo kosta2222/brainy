@@ -168,8 +168,8 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
             # переходим к следующему индексу ядра
             n_lay+=1
             # зачищаем стеки
-            sp_op = -1
-            sp_ma = -1
+            sp_op -= 1
+            sp_ma -= 1
         # пришла команда узнать пользуемся ли биасами
         # надо извлечь параметр
         elif op == with_bias:

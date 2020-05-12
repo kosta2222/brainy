@@ -72,6 +72,7 @@ def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
 # Получить вектор входов, сделать матричный продукт и матричный продукт пропустить через функцию активации,
 # записать этот вектор в параметр слоя сети(hidden)
 def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
+  try:
     tmp_v = 0
     val = 0
     for row in range(objLay.out):
@@ -89,6 +90,11 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
         val = operations(nn_params.act_fu,tmp_v, 0, 0, 0, "", nn_params)
         objLay.hidden[row] = val
         tmp_v = 0
+        # print("in make hid net",nn_params.net)
+        # print(nn_params.net)
+  except Exception:
+      print("Exc in make hid")
+      print(objLay)
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug):
     tmp_v = 0
     val = 0

@@ -1,6 +1,8 @@
 from .learn import answer_nn_direct
 from .NN_params import NN_params
+
 def evaluate(nn_params:NN_params, X_test: list, Y_test: list):
+  try:
     scores = []
     out_nn=None
     res_acc = 0
@@ -37,5 +39,9 @@ def evaluate(nn_params:NN_params, X_test: list, Y_test: list):
     # print("in eval scores",scores)
     res_acc = sum(scores) / rows * 100
     # print("Acсuracy:%f%s"%(res_acc,"%"))
-    return res_acc
+  except Exception:
+      print("in evaluate")
+      print("row",row)
+
+  return res_acc
 

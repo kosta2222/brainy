@@ -47,9 +47,11 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
             mse = get_min_square_err(out_nn, y, nn_params.outpu_neurons)
             logger.info(f"mse {mse}")
         acc = evaluate(nn_params, X_eval, Y_eval)
+        logger.debug(f'accuracy {acc}')
         if acc == accuracy_eval_shureness and mse < 0.001:
             break
         iteration+=1
-    # print("***CV***")
-    evaluate(nn_params, X_eval, Y_eval)
+    logger.debug("***CV***")
+    acc=evaluate(nn_params, X_eval, Y_eval)
+    logger.debug(f'accuracy {acc}')
     # compil_serializ(b_c, nn_params.net,len(nn_map)-1,"wei_wei")

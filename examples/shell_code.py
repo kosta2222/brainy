@@ -19,6 +19,8 @@ ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load"]
 # X и Y означают двухмернй список обучения и ответов соответственно
 # x_* и y_* - просто списки из этих матриц
 # создать параметры сети
+# import pdb
+# pdb.set_trace()
 def create_nn_params():
     return NN_params()
 def console(prompt, level):
@@ -165,7 +167,7 @@ def vm(buffer:list, level):
                for elem in range(nn_out_amount):
                    Y_new_fix[row][elem] = Y[row][elem]
            fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100, use_logger=level)
-           kernel_amount=nn_params.nl_count
+           kernel_amount = nn_params.nl_count
            file_save="weight_file.my"
            to_file(nn_params, buffer_ser, nn_params.net,kernel_amount,file_save)
         elif op == predict:
@@ -178,7 +180,8 @@ def vm(buffer:list, level):
                 ord_as_devided_val = ord(chr) / 255
                 float_x[cn_char] = round(ord_as_devided_val, 2)
                 cn_char+=1
-            nn_ans = answer_nn_direct(nn_params, float_x, 1)
+            print("float x",float_x)
+            nn_ans = answer_nn_direct(nn_params_new, float_x, 1)
             if nn_ans[0] >  0.559837 and nn_ans[0] <= 1:
                 print(say_positive)
                 print("Сеть ответила ", nn_ans)
@@ -189,6 +192,7 @@ def vm(buffer:list, level):
            print("op load")
            file_save = "weight_file.my"
            file_load = file_save
+           print(nn_params_new.net)
            deserialization(nn_params_new, nn_params_new.net, file_load)
         elif op == stop:
            return
