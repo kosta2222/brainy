@@ -88,8 +88,6 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    initiate_layers(nn_params, nn_map, len(nn_map))
    return nn_params
 def vm(buffer:list, level):
-    print("in vm")
-    print("buff",buffer)
     nn_in_amount=20
     nn_out_amount=1
     nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
@@ -171,7 +169,6 @@ def vm(buffer:list, level):
            file_save="weight_file.my"
            to_file(nn_params, buffer_ser, nn_params.net,kernel_amount,file_save)
         elif op == predict:
-            print("op predict")
             float_x = [0] * nn_in_amount
             str_x = steck_str[sp_str]
             sp_str-= 1
@@ -180,7 +177,6 @@ def vm(buffer:list, level):
                 ord_as_devided_val = ord(chr) / 255
                 float_x[cn_char] = round(ord_as_devided_val, 2)
                 cn_char+=1
-            print("float x",float_x)
             nn_ans = answer_nn_direct(nn_params_new, float_x, 1)
             if nn_ans[0] >  0.559837 and nn_ans[0] <= 1:
                 print(say_positive)
@@ -189,10 +185,8 @@ def vm(buffer:list, level):
                 print(say_negative)
                 print("Сеть ответила ", nn_ans)
         elif op==load:
-           print("op load")
            file_save = "weight_file.my"
            file_load = file_save
-           print(nn_params_new.net)
            deserialization(nn_params_new, nn_params_new.net, file_load)
         elif op == stop:
            return

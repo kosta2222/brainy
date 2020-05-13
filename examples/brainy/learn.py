@@ -43,7 +43,7 @@ def feed_forwarding(nn_params:NN_params,ok:bool, debug):
     if ok:
         for i in range(nn_params.outpu_neurons):
             print("%d item val %f"%(i + 1,nn_params.net[nn_params.nl_count - 1].hidden[i]))
-            return nn_params.net[nn_params.nl_count - 1].hidden
+        return nn_params.net[nn_params.nl_count - 1].hidden
     else:
          backpropagate(nn_params)
 def feed_forwarding_on_contrary(nn_params:NN_params, ok:bool, debug):
@@ -92,9 +92,13 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
         tmp_v = 0
         # print("in make hid net",nn_params.net)
         # print(nn_params.net)
-  except Exception:
+  except Exception as e:
+      import sys
       print("Exc in make hid")
       print(objLay)
+      print(e.args)
+      print("line {}".format(sys.exc_info()[-1].tb_lineno))
+      print(__file__)
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug):
     tmp_v = 0
     val = 0

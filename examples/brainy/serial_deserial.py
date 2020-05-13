@@ -9,7 +9,6 @@ from  .util import calc_list
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
 def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
-    print("in serialization [to file]")
     in_=0
     out=0
     with_bias_i = 0
@@ -40,7 +39,6 @@ def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
         out=net[i].out
         pack_v(buffer, push_i,in_)
         pack_v(buffer, push_i,out)
-        # pack_v(buffer, determe_in_out, stub)
         copy_matrixAsStaticSquare_toRibon(net[i].matrix, matrix, in_, out)
         matrix_elems = in_ * out
         for j in range(matrix_elems):
@@ -54,16 +52,13 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
     :param val_i_or_fl: число для серелизации - матричный элемент или количество входов выходов
     :return: следующий индекс куда можно записать команду stop
     """
-
-
     global pos_bytecode
     ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
-    print("op_i",ops_name[op_i], val_i_or_fl)
+    # print("op_i",ops_name[op_i], val_i_or_fl)
     if op_i == push_fl:
         pos_bytecode += 1
         buffer[pos_bytecode] = st.pack('B', push_fl)
-
         for i in st.pack('<f', val_i_or_fl):
             pos_bytecode+=1
             buffer[pos_bytecode] = i.to_bytes(1, 'little')
@@ -97,14 +92,9 @@ def dump_buffer(buffer, fname):
   global pos_bytecode
   pos_bytecode+=1
   buffer[pos_bytecode] = stop.to_bytes(1,"little")
-  # print("in dump buf",buffer)
   len_bytecode = pos_bytecode + 1
-  # print("in dump buf len wi no 0",calc_list(buffer))
   with open(fname,'wb') as f:
-       # print("in dump len_bc",len_bytecode)
-       # print("in dump len lst",calc_list(buffer))
        for i in range(len_bytecode):
-           # print("in dump buf i",buffer[i])
            f.write(buffer[i])
   pos_bytecode = 0
 def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  ops_st:list,  sp_op):
@@ -116,7 +106,6 @@ def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  op
         for elem in range(in_):
             net[lay_pos].matrix[row][elem] = matrix_el_st[row * elem]   # десериализированная матрица
 def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
-    print("in deserialization")
 
     ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                 'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
@@ -134,12 +123,12 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
         # print("ip",ip)
         # загружаем на стек количество входов и выходов ядра
         # чтение операции с параметром
-        print(ops_name[op],end=' ')
+        # print(ops_name[op],end=' ')
         if  op == push_i:
             sp_op+=1
             ip+=1
             ops_st[sp_op] = buffer[ip]
-            print(buffer[ip])
+            # print(buffer[ip])
         # загружаем на стек элементы матриц
         # чтение операции с параметром
         elif op == push_fl:
@@ -151,9 +140,8 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
             sp_ma+=1
             matrix_el_st[sp_ma] = arg[0]
             ip += 4
-            print(arg[0])
+            # print(arg[0])
         elif op==determe_in_out:
-            print("op")
             out=ops_st[sp_op]
             sp_op-=1
             in_=ops_st[sp_op]
@@ -201,7 +189,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
         # показываем на следующую инструкцию
         ip+=1
         op = buffer[ip]
-        print()
+        # print()
     # также подсчитаем сколько у наc ядер
     nn_params.nl_count = n_lay
     # находим количество входов
