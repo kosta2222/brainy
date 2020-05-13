@@ -23,3 +23,4 @@ class  NN_params:
         self.alpha_sigmoid = 0.42
         self.alpha_tan = 1.7159
         self.beta_tan = 2 / 3
+        self.mse_treshold = 0.001

@@ -105,7 +105,7 @@ def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug)
     for elem in range(objLay.in_):
         for row in range(objLay.out):
             if nn_params.with_bias:
-               if elem == 1: 
+               if elem == 0:
                   tmp_v+=objLay.matrix[row][elem] * inputs[row]
                else:
                   tmp_v+=objLay.matrix[row][elem] * inputs[elem]

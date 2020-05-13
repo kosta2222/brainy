@@ -48,7 +48,7 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
             logger.info(f"mse {mse}")
         acc = evaluate(nn_params, X_eval, Y_eval)
         logger.debug(f'accuracy {acc}')
-        if acc == accuracy_eval_shureness and mse < 0.001:
+        if acc == accuracy_eval_shureness and mse < nn_params.mse_treshold:
             break
         iteration+=1
     logger.debug("***CV***")
