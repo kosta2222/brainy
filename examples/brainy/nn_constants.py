@@ -1,9 +1,9 @@
 # nn_constants.[py]
 # Параметры статических массивов,количества слоев,количества эпох
-max_in_nn = 40
+max_in_nn = 10000
 max_trainSet_rows = 4
 max_validSet_rows = 10
-max_rows_orOut = 40
+max_rows_orOut = 10
 max_am_layer = 7
 max_am_epoch = 25
 max_am_objMse = max_am_epoch
