@@ -11,6 +11,7 @@ max_stack_matrEl = 256
 max_stack_otherOp = 4
 bc_bufLen = 256
 elems_of_img=10000
+max_spec_elems=10000
 # команды для operations
 RELU = 1
 RELU_DERIV = 2

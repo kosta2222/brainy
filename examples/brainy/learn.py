@@ -31,7 +31,8 @@ def get_essential_gradients(objLay:Lay):
 def calc_hid_zero_lay(zeroLay:Lay,essential_gradients:list):
     for elem in range(zeroLay.in_):
         for row in range(zeroLay.out):
-            zeroLay.errors[elem]+=essential_gradients[row] * zeroLay.matrix[row][elem]
+            zeroLay.errors[elem]+=\
+                essential_gradients[row] * zeroLay.matrix[row][elem]
 def upd_matrix(nn_params:NN_params, objLay:Lay, entered_vals):
     for row in range(objLay.out):
         for elem in range(objLay.in_):

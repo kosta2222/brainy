@@ -98,20 +98,20 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_params.with_bias = False
    nn_params.with_adap_lr = True
    nn_params.lr = 0.01
-   nn_params.act_fu = SIGMOID
+   nn_params.act_fu = RELU
    nn_params.alpha_sigmoid = 0.056
    nn_params.mse_treshold=0.001
    nn_in_amount = 20
    nn_out_amount = 1
-   nn_map = (nn_in_amount, 8, nn_out_amount)
+   nn_map = (nn_in_amount, 10, nn_out_amount)
    initiate_layers(nn_params, nn_map, len(nn_map))
    return nn_params
 def vm(buffer:list, level):
-    nn_in_amount=20
+    nn_in_amount=10000
     nn_out_amount=1
     nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
     nn_params_new = create_nn_params()
-    buffer_ser = [0] * bc_bufLen * 5  # буффер для сериализации матричных элементов и входов
+    buffer_ser = [0] * bc_bufLen * 100  # буффер для сериализации матричных элементов и входов
     say_positive='Понятно. Постараюсь ваполнить вашу просьбу'
     say_negative='Извините ваша просьба неопознана'
     ip=0
@@ -215,6 +215,10 @@ def vm(buffer:list, level):
             X_img/=255
             X_img=np.array(X_img, dtype='float64')
             X_img-=np.mean(X_img, axis=0, dtype='float64')
+            X_img=np.std(X_img, axis=0)
+            print("in make train matr",X_img)
+            Y_img=[[1]]
+            fit(buffer_ser, nn_params, 10, [X_img.tolist()], Y_img, [X_img.tolist()], Y_img, 100)
         elif op == stop:
            return
         else:

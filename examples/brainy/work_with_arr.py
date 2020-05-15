@@ -1,7 +1,8 @@
 from .util import _0_
 def copy_vector(src:list,dest:list,n):
     for i in range(n):
-        dest[i] = src[i]
+        dest[i] = \
+            src[i]
 
 def copy_matrixAsStaticSquare_toRibon(src, dest, in_,out):
       for row in range(out):
