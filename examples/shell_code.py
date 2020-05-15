@@ -16,10 +16,11 @@ fit_ = 4
 predict = 5
 load = 6
 make_train_matr_ = 7
-stop = 8
+make_img = 8
+stop = 9
 X=[]
 Y=[]
-ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load", "make_train_matr"]
+ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load", "make_train_matr","make_img"]
 # X и Y означают двухмернй список обучения и ответов соответственно
 # x_* и y_* - просто списки из этих матриц
 # создать параметры сети
@@ -127,7 +128,7 @@ def vm(buffer:list, level):
     nn_out_amount=1
     nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
     nn_params_new = create_nn_params()
-    buffer_ser = [0] * bc_bufLen * 100  # буффер для сериализации матричных элементов и входов
+    buffer_ser = [0] * 400000  # буффер для сериализации матричных элементов и входов
     say_positive='Понятно. Постараюсь ваполнить вашу просьбу'
     say_negative='Извините ваша просьба неопознана'
     ip=0
@@ -237,7 +238,8 @@ def vm(buffer:list, level):
             Y_img=[[1],[1],[1],[1]]
             fit(buffer_ser, nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 100)
             to_file(nn_params, buffer_ser, nn_params.net, 2, 'img_wei.my')
-            out_nn=answer_nn_direct_on_contrary(nn_params, [1], 1)
+        elif op == make_img:
+            out_nn=answer_nn_direct_on_contrary(nn_params_new, [1], 1)
             p_vec_tested=calc_out_nn(out_nn)
             p_2d_img = make_2d_arr(p_vec_tested)
             new_img = Image.fromarray(np.uint8(p_2d_img))

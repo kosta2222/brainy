@@ -60,8 +60,9 @@ def feed_forwarding_on_contrary(nn_params:NN_params, ok:bool, debug):
         make_hidden_on_contrary(nn_params, nn_params.net[i], get_hidden(nn_params.net[i + 1]), debug)
     if ok:
         for i in range(nn_params.input_neurons):
+            pass
             # print("%d item val %f"%(i + 1,nn_params.net[0].hidden[i]))
-            return nn_params.net[0].hidden
+        return nn_params.net[0].hidden
 def train(nn_params:NN_params,in_:list,targ:list, debug):
     copy_vector(in_,nn_params.inputs,nn_params.input_neurons)
     copy_vector(targ,nn_params.targets,nn_params.outpu_neurons)
@@ -110,21 +111,27 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
       print("el",elem)
       print(__file__)
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug):
+  # try:
     tmp_v = 0
     val = 0
-    for elem in range(objLay.in_):
-        for row in range(objLay.out):
+    for row in range(objLay.out):
+        for elem in range(objLay.in_):
             if nn_params.with_bias:
                if elem == 0:
                   tmp_v+=objLay.matrix[row][elem] * inputs[row]
                else:
-                  tmp_v+=objLay.matrix[row][elem] * inputs[elem]
+                  tmp_v+=objLay.matrix[row][elem]\
+                         * inputs[elem]
             else:
-                tmp_v+=objLay.matrix[row][elem] * inputs[row]
+                tmp_v+=objLay.matrix[row][elem] * inputs[elem]
         objLay.cost_signals[elem] = tmp_v
         val = operations(nn_params.act_fu, tmp_v, 0, 0, 0, "", nn_params)
         objLay.hidden[elem] = val
         tmp_v = 0
+  # except Exception as e:
+  #     print("in make_hid on contr")
+  #     print("el",elem)
+  #     print("elems",objLay.in_)
 def backpropagate(nn_params:NN_params):
     calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
     for i in range(nn_params.nl_count - 1, 0, -1):

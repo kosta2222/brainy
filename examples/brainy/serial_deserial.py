@@ -57,17 +57,23 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
     # print("op_i",ops_name[op_i], val_i_or_fl)
     if op_i == push_fl:
+      try:
         pos_bytecode += 1
-        buffer[pos_bytecode] = st.pack('B', push_fl)
+        buffer[pos_bytecode] = \
+            st.pack('B', push_fl)
         for i in st.pack('<f', val_i_or_fl):
             pos_bytecode+=1
             buffer[pos_bytecode] = i.to_bytes(1, 'little')
+      except Exception as e:
+          print("in push_fl")
+          print("pos bc",pos_bytecode)
     elif op_i == push_i:
         try:
             pos_bytecode+=1
             buffer[pos_bytecode] = st.pack('B', push_i)
-            pos_bytecode+=1
-            buffer[pos_bytecode] = st.pack('<i', val_i_or_fl)
+            for i in st.pack('<i', val_i_or_fl):
+                pos_bytecode+=1
+                buffer[pos_bytecode] = i.to_bytes(1, 'little')
         except Exception as e:
             print("in push_i")
             print("val_i_or_float",val_i_or_fl)
@@ -113,7 +119,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
 
     ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                 'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
-    matrix_el_st = [0] * max_stack_matrEl # стек для временного размещения элементов матриц из файла потом этот стек
+    matrix_el_st = [0] * 400000 # стек для временного размещения элементов матриц из файла потом этот стек
     # сворачиваем в матрицу слоя после команды make_kernel
     ops_st = [0] * max_stack_otherOp      # стек для количества входов и выходов (это целые числа)
     ip = 0
@@ -135,7 +141,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
             v_3 = buffer[ip + 4]
             arg=st.unpack('<i', bytes(list([v_0, v_1, v_2, v_3])))
             sp_op+=1
-            ops_st[sp_op] = arg
+            ops_st[sp_op] = arg[0]
             ip += 4
             # print(buffer[ip])
         # загружаем на стек элементы матриц
@@ -166,6 +172,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
             n_lay+=1
             # зачищаем стеки
             sp_op -= 1
+            sp_op-=1
             sp_ma -= 1
         # пришла команда узнать пользуемся ли биасами
         # надо извлечь параметр
@@ -206,7 +213,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
     # находим количество выходов когда образовали сеть
     nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
 def deserialization(nn_params:NN_params, net:list, fname:str):
-    buffer = [0] * bc_bufLen * 10
+    buffer = [0] * 500000
     buf_str = b''
     with open(fname, 'rb') as f:
         buf_str = f.read()

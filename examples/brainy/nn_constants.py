@@ -3,7 +3,7 @@
 max_in_nn = 10000
 max_trainSet_rows = 4
 max_validSet_rows = 10
-max_rows_orOut = 10
+max_rows_orOut = 20
 max_am_layer = 7
 max_am_epoch = 25
 max_am_objMse = max_am_epoch
