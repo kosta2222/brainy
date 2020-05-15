@@ -63,10 +63,14 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
             pos_bytecode+=1
             buffer[pos_bytecode] = i.to_bytes(1, 'little')
     elif op_i == push_i:
+        try:
             pos_bytecode+=1
             buffer[pos_bytecode] = st.pack('B', push_i)
             pos_bytecode+=1
-            buffer[pos_bytecode] = st.pack('B', val_i_or_fl)
+            buffer[pos_bytecode] = st.pack('<i', val_i_or_fl)
+        except Exception as e:
+            print("in push_i")
+            print("val_i_or_float",val_i_or_fl)
     elif op_i == make_kernel:
             pos_bytecode+=1
             buffer[pos_bytecode] = st.pack('B', make_kernel)
@@ -125,9 +129,14 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
         # чтение операции с параметром
         # print(ops_name[op],end=' ')
         if  op == push_i:
+            v_0 = buffer[ip + 1]
+            v_1 = buffer[ip + 2]
+            v_2 = buffer[ip + 3]
+            v_3 = buffer[ip + 4]
+            arg=st.unpack('<i', bytes(list([v_0, v_1, v_2, v_3])))
             sp_op+=1
-            ip+=1
-            ops_st[sp_op] = buffer[ip]
+            ops_st[sp_op] = arg
+            ip += 4
             # print(buffer[ip])
         # загружаем на стек элементы матриц
         # чтение операции с параметром

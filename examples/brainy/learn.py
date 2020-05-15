@@ -9,9 +9,16 @@ def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list):
     for row in range(objLay.out):
         nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(nn_params.act_fu + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
 def calc_hid_error(nn_params:NN_params, objLay:Lay, essential_gradients:list, entered_vals:list):
+  try:
     for elem in range(objLay.in_):
         for row in range(objLay.out):
-            objLay.errors[elem]+=essential_gradients[row] * objLay.matrix[row][elem]  * operations(nn_params.act_fu + 1, entered_vals[elem], 0, 0, 0, "", nn_params)
+            objLay.errors[elem]+=\
+                essential_gradients[row] * \
+                objLay.matrix[row][elem]  * \
+                operations(nn_params.act_fu + 1, entered_vals[elem], 0, 0, 0, "", nn_params)
+  except Exception as e:
+      print("in calc hid err Exc")
+      print("el",elem)
 def get_min_square_err(out_nn:list,teacher_answ:list,n):
     sum=0
     for row in range(n):
@@ -82,7 +89,8 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
                if elem==0:
                   tmp_v+=objLay.matrix[row][elem]
                else:
-                  tmp_v+=objLay.matrix[row][elem] * inputs[elem]
+                  tmp_v+=objLay.matrix[row][elem]\
+                         * inputs[elem]
 
             else:
                 tmp_v+=objLay.matrix[row][elem] * inputs[elem]
@@ -99,6 +107,7 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
       print(objLay)
       print(e.args)
       print("line {}".format(sys.exc_info()[-1].tb_lineno))
+      print("el",elem)
       print(__file__)
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug):
     tmp_v = 0

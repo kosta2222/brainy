@@ -3,7 +3,7 @@ from brainy.serial_deserial import deserialization
 from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
 from brainy.serial_deserial import to_file
 from brainy.fit import fit
-from brainy.learn import initiate_layers, answer_nn_direct
+from brainy.learn import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary
 import numpy as np
 import os
 from PIL import Image
@@ -25,6 +25,22 @@ ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load",
 # создать параметры сети
 # import pdb
 # pdb.set_trace()
+def calc_out_nn(l_:list):
+    l_tested=[0] * 10000
+    for i in range(len(l_)):
+        val=round(l_[i],1)
+        if val > 0.5 :
+            l_tested[i] = 0
+        else:
+            l_tested[i] = 1
+    return l_tested
+
+def make_2d_arr(_1d_arr:list):
+    matr_make=np.zeros(shape=(100,100))
+    for i in range(100):
+        for j in range(100):
+            matr_make[i][j] = _1d_arr[i * 100 + j]
+    return matr_make
 def make_train_matr(p_:str)->np.ndarray:
     matr=np.zeros(shape=(4, 10000))
     data=None
@@ -95,15 +111,15 @@ def console(prompt, level):
                     break
 def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_params = create_nn_params()
-   nn_params.with_bias = False
+   nn_params.with_bias = True
    nn_params.with_adap_lr = True
    nn_params.lr = 0.01
-   nn_params.act_fu = RELU
+   nn_params.act_fu = SIGMOID
    nn_params.alpha_sigmoid = 0.056
-   nn_params.mse_treshold=0.001
-   nn_in_amount = 20
-   nn_out_amount = 1
-   nn_map = (nn_in_amount, 10, nn_out_amount)
+   nn_params.mse_treshold=0.01
+   # nn_in_amount = 20
+   # nn_out_amount = 1
+   nn_map = (nn_in_amount, 8, nn_out_amount)
    initiate_layers(nn_params, nn_map, len(nn_map))
    return nn_params
 def vm(buffer:list, level):
@@ -204,7 +220,8 @@ def vm(buffer:list, level):
                 print(say_negative)
                 print("Сеть ответила ", nn_ans)
         elif op==load:
-           file_save = "weight_file.my"
+           file_save = steck_str[sp_str]
+           sp_str-=1
            file_load = file_save
            deserialization(nn_params_new, nn_params_new.net, file_load)
         elif op == make_train_matr_:
@@ -215,10 +232,16 @@ def vm(buffer:list, level):
             X_img/=255
             X_img=np.array(X_img, dtype='float64')
             X_img-=np.mean(X_img, axis=0, dtype='float64')
-            X_img=np.std(X_img, axis=0)
+            # X_img=np.std(X_img, axis=0)
             print("in make train matr",X_img)
-            Y_img=[[1]]
-            fit(buffer_ser, nn_params, 10, [X_img.tolist()], Y_img, [X_img.tolist()], Y_img, 100)
+            Y_img=[[1],[1],[1],[1]]
+            fit(buffer_ser, nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 100)
+            to_file(nn_params, buffer_ser, nn_params.net, 2, 'img_wei.my')
+            out_nn=answer_nn_direct_on_contrary(nn_params, [1], 1)
+            p_vec_tested=calc_out_nn(out_nn)
+            p_2d_img = make_2d_arr(p_vec_tested)
+            new_img = Image.fromarray(np.uint8(p_2d_img))
+            new_img.save("img_net.png")
         elif op == stop:
            return
         else:
