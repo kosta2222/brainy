@@ -4,6 +4,7 @@ from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
 from brainy.serial_deserial import to_file
 from brainy.fit import fit
 from brainy.learn import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary
+from brainy.util import make_train_matr, make_2d_arr, calc_out_nn
 import numpy as np
 import os
 from PIL import Image
@@ -26,36 +27,7 @@ ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load",
 # создать параметры сети
 # import pdb
 # pdb.set_trace()
-def calc_out_nn(l_:list):
-    l_tested=[0] * 10000
-    for i in range(len(l_)):
-        val=round(l_[i],1)
-        if val > 0.5 :
-            l_tested[i] = 0
-        else:
-            l_tested[i] = 1
-    return l_tested
 
-def make_2d_arr(_1d_arr:list):
-    matr_make=np.zeros(shape=(100,100))
-    for i in range(100):
-        for j in range(100):
-            matr_make[i][j] = _1d_arr[i * 100 + j]
-    return matr_make
-def make_train_matr(p_:str)->np.ndarray:
-    matr=np.zeros(shape=(4, 10000))
-    data=None
-    img=None
-    for i in os.listdir(p_):
-        ful_p=os.path.join(p_,i)
-        img=Image.open(ful_p)
-        print("img", ful_p)
-        data=list(img.getdata())
-        for row in range(4):
-            for elem in range(10000):
-                matr[row][elem] = data[elem]
-    return matr
-                   
 def create_nn_params():
     return NN_params()
 def console(prompt, level):
@@ -115,9 +87,9 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_params.with_bias = True
    nn_params.with_adap_lr = True
    nn_params.lr = 0.01
-   nn_params.act_fu = TAN
+   nn_params.act_fu = RELU
    nn_params.alpha_sigmoid = 0.056
-   nn_params.mse_treshold=0.0001
+   nn_params.mse_treshold=0.01
    # nn_in_amount = 20
    # nn_out_amount = 1
    nn_map = (nn_in_amount, 8, nn_out_amount)
@@ -231,6 +203,7 @@ def vm(buffer:list, level):
             sp_str-=1
             X_img=make_train_matr(path_s)
             X_img/=255
+            print("in make_train matr X_img",X_img.tolist())
             X_img=np.array(X_img, dtype='float64')
             X_img-=np.mean(X_img, axis=0, dtype='float64')
             X_img=np.std(X_img, axis=0)
