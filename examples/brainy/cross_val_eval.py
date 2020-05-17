@@ -37,6 +37,6 @@ def evaluate(nn_params:NN_params, X_test: list, Y_test: list):
             scores.append(0)
     # print("in eval scores",scores)
     res_acc = sum(scores) / rows * 100
-    print("Acсuracy:%f%s"%(res_acc,"%"))
+    # print("Acсuracy:%f%s"%(res_acc,"%"))
     return res_acc
 

@@ -29,7 +29,7 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
         for i in range(hei_Y):
             x = X[i]
             y = Y[i]
-            logger.debug(f'x: {x} y: {y}')
+            logger.info(f'x: {x} y: {y}')
             train(nn_params, x, y, 1)
             out_nn = nn_params.net[nn_params.nl_count - 1].hidden
             if nn_params.with_adap_lr:
@@ -47,8 +47,10 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
             nn_params.lr = A
             logger.debug(f"learning rate {A}")
         mse = get_min_square_err(out_nn, y, nn_params.outpu_neurons)
+        print("mse:",mse)
         logger.info(f"mse {mse}")
         acc = evaluate(nn_params, X_eval, Y_eval)
+        print("accuracy:",acc)
         logger.debug(f'accuracy {acc}')
         if acc == accuracy_eval_shureness and mse <= nn_params.mse_treshold:
             break

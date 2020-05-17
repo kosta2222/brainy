@@ -50,7 +50,8 @@ def feed_forwarding(nn_params:NN_params,ok:bool, debug):
         make_hidden(nn_params, nn_params.net[i], get_hidden(nn_params.net[i - 1]), debug)
     if ok:
         for i in range(nn_params.outpu_neurons):
-            print("%d item val %f"%(i + 1,nn_params.net[nn_params.nl_count - 1].hidden[i]))
+            pass
+            # print("%d item val %f"%(i + 1,nn_params.net[nn_params.nl_count - 1].hidden[i]))
         return nn_params.net[nn_params.nl_count - 1].hidden
     else:
          backpropagate(nn_params)
