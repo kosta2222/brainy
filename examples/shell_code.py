@@ -84,12 +84,12 @@ def console(prompt, level):
                     break
 def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_params = create_nn_params()
-   nn_params.with_bias = True
+   nn_params.with_bias = False
    nn_params.with_adap_lr = True
    nn_params.lr = 0.01
-   nn_params.act_fu = SIGMOID
+   nn_params.act_fu = TAN
    nn_params.alpha_sigmoid = 0.056
-   nn_params.mse_treshold=0.14
+   nn_params.mse_treshold=0.513
    # nn_in_amount = 20
    # nn_out_amount = 1
    nn_map = (nn_in_amount, 8, nn_out_amount)
@@ -210,10 +210,10 @@ def vm(buffer:list, level):
             print("in make train matr",X_img)
             Y_img=[[1],[1],[1],[1]]
             # Y_img=[[1]]
-            fit(buffer_ser, nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 100)
+            fit(buffer_ser, nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 75)
             to_file(nn_params, buffer_ser, nn_params.net, 2, 'img_wei.my')
-        elif op == make_img:
-            out_nn=answer_nn_direct_on_contrary(nn_params_new, [1], 1)
+        # elif op == make_img:
+            out_nn=answer_nn_direct_on_contrary(nn_params, [1], 1)
             print("in make_img")
             print("out_nn",out_nn)
             p_vec_tested=calc_out_nn(out_nn)
