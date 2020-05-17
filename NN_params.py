@@ -24,3 +24,11 @@ class  NN_params:
         self.alpha_tan = 1.7159
         self.beta_tan = 2 / 3
         self.mse_treshold = 0.001
+    def __str__(self):
+        b_codes = ['', 'RELU', '', 'SIGMOID', '', 'TRESHHOLD_FUNC', '', 'LEAKY_RELU', '', 'TAN']
+        act_fu=b_codes[b_codes.index(self.act_fu)]
+        info=f'with-adap-lr: {self.with_adap_lr}\n with-bias: {self.with_bias}\n'+\
+             +f'act-fu: {act_fu}\n'+\
+             f'alpha-leaky-relu: {self.alpha_leaky_relu} alpha-sigmoid: {self.alpha_sigmoid} alpha-tan: {self.alpha_tan} beta-tan: {self.beta_tan}\n'+\
+             f'mse-treshold: {self.mse_treshold}'
+        return info
