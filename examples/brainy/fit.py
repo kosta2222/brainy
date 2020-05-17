@@ -6,7 +6,7 @@ from .util import get_logger
 X и Y - означает матрицы обучения и ответов соответственно(массив с другими просто массивами)
 x*_ и  y*_ - вектор из этих матриц(просто массив)
 """
-def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, use_logger = 'release'):
+def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, use_logger = 'debug'):
     """
     X_eval и Y_eval нужны потому что X и Y могут быть 'сжаты', а проверять нужно на 'целых' матрицах
     """
@@ -21,9 +21,11 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
     gama = 1.01
     hei_Y = len(Y)
     E_spec = 0
+    print(str(nn_params))
+    logger.debug(str(nn_params))
     is_net_learning = True
     while is_net_learning:
-        logging.info(f'iteration {iteration}')
+        logger.info(f'iteration {iteration}')
         for i in range(hei_Y):
             x = X[i]
             y = Y[i]
@@ -44,11 +46,11 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
                     E_spec_t_minus_1 = E_spec
             nn_params.lr = A
             logger.debug(f"learning rate {A}")
-            mse = get_min_square_err(out_nn, y, nn_params.outpu_neurons)
-            logger.info(f"mse {mse}")
+        mse = get_min_square_err(out_nn, y, nn_params.outpu_neurons)
+        logger.info(f"mse {mse}")
         acc = evaluate(nn_params, X_eval, Y_eval)
         logger.debug(f'accuracy {acc}')
-        if acc == accuracy_eval_shureness and mse < nn_params.mse_treshold:
+        if acc == accuracy_eval_shureness and mse <= nn_params.mse_treshold:
             break
         iteration+=1
     logger.debug("***CV***")

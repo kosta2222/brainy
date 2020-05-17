@@ -3,12 +3,14 @@ import logging
 import numpy as np
 import os
 from PIL import Image
-def get_logger(level):
+def get_logger(level_):
     logger = None
     logger = logging.getLogger(__name__)
-    if level == 'debug':
+    if level_ == 'debug':
+            print("op")
             logging.basicConfig(level=logging.DEBUG, filename='log.txt', filemode='w')
-    elif level == 'release':
+
+    elif level_ == 'release':
         logging.basicConfig(level=logging.INFO, filename='log.txt', filemode='w')
     return logger
 
