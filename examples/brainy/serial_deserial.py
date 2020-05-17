@@ -106,6 +106,7 @@ def dump_buffer(buffer, fname):
   with open(fname,'wb') as f:
        for i in range(len_bytecode):
            f.write(buffer[i])
+  print("File writed")
   pos_bytecode = 0
 def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  ops_st:list,  sp_op):
     out = ops_st[sp_op]
