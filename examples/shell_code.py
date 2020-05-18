@@ -212,8 +212,8 @@ def vm(buffer:list, level):
             # Y_img=[[1]]
             fit(buffer_ser, nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 75)
             to_file(nn_params, buffer_ser, nn_params.net, 2, 'img_wei.my')
-        # elif op == make_img:
-            out_nn=answer_nn_direct_on_contrary(nn_params, [1], 1)
+        elif op == make_img:
+            out_nn=answer_nn_direct_on_contrary(nn_params_new, [1], 1)
             print("in make_img")
             print("out_nn",out_nn)
             p_vec_tested=calc_out_nn(out_nn)

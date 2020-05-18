@@ -1,3 +1,4 @@
+#-*-coding: cp1251-*-
 from unittest import TestCase
 from brainy.learn import initiate_layers
 from brainy.fit import fit
@@ -36,8 +37,12 @@ class Tests(TestCase):
         deserialization(self.nn_params_new,self.nn_params_new.net,'wei_and.my')
         out_nn_dir=answer_nn_direct(self.nn_params_new, [1, 1], 1)
         print("out-nn-dir",out_nn_dir)
+        out_nn_dir_test=answer_nn_direct(self.nn_params, [1, 1], 1)
+        print("out-nn-dir-test",out_nn_dir_test)
         out_nn_contr=answer_nn_direct_on_contrary(self.nn_params_new,[1],1)
         print("out-nn-contr",out_nn_contr)
+        out_nn_contr_test=answer_nn_direct_on_contrary(self.nn_params,[1],1)
+        print("out-nn-contr-test",out_nn_contr_test)
     def test_or(self):
         self.nn_params.with_bias = False
         self.nn_params.with_adap_lr = True
@@ -57,8 +62,8 @@ class Tests(TestCase):
         X_np = np.std(X_np, axis=0)
         Y_np = np.std(Y_np, axis=0)
         fit(self.buffer_ser, self.nn_params, 10, X, Y, X, Y, 100, use_logger='debug')
-        to_file(self.nn_params, self.buffer_ser, self.nn_params.net, 2, 'wei_and.my')
-        deserialization(self.nn_params_new, self.nn_params_new.net, 'wei_and.my')
+        to_file(self.nn_params, self.buffer_ser, self.nn_params.net, 2, 'wei_or.my')
+        deserialization(self.nn_params_new, self.nn_params_new.net, 'wei_or.my')
         out_nn_dir = answer_nn_direct(self.nn_params_new, [1, 1], 1)
         print("out-nn-dir", out_nn_dir)
         out_nn_contr = answer_nn_direct_on_contrary(self.nn_params_new, [1], 1)
@@ -67,5 +72,5 @@ class Tests(TestCase):
 
 if __name__ == '__main__':
     o=Tests()
-    o.main()
-
+    # o.main()
+    o.test_and()

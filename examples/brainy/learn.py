@@ -51,8 +51,8 @@ def feed_forwarding(nn_params:NN_params,ok:bool, debug):
     if ok:
         for i in range(nn_params.outpu_neurons):
             pass
-            # print("%d item val %f"%(i + 1,nn_params.net[nn_params.nl_count - 1].hidden[i]))
-        return nn_params.net[nn_params.nl_count - 1].hidden
+            print("%d item val %f"%(i + 1,nn_params.net[nn_params.nl_count - 1].hidden[i]))
+        return nn_params.net[nn_params.nl_count-1].hidden
     else:
          backpropagate(nn_params)
 def feed_forwarding_on_contrary(nn_params:NN_params, ok:bool, debug):
@@ -91,9 +91,7 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
                if elem==0:
                   tmp_v+=objLay.matrix[row][elem]
                else:
-                  tmp_v+=objLay.matrix[row][elem]\
-                         * inputs[elem]
-
+                  tmp_v+=objLay.matrix[row][elem] * inputs[elem]
             else:
                 tmp_v+=objLay.matrix[row][elem] * inputs[elem]
 

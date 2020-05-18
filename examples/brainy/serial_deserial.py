@@ -57,26 +57,17 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
     # print("op_i",ops_name[op_i], val_i_or_fl)
     if op_i == push_fl:
-      try:
         pos_bytecode += 1
-        buffer[pos_bytecode] = \
-            st.pack('B', push_fl)
+        buffer[pos_bytecode] = st.pack('B', push_fl)
         for i in st.pack('<f', val_i_or_fl):
             pos_bytecode+=1
             buffer[pos_bytecode] = i.to_bytes(1, 'little')
-      except Exception as e:
-          print("in push_fl")
-          print("pos bc",pos_bytecode)
     elif op_i == push_i:
-        try:
+        pos_bytecode+=1
+        buffer[pos_bytecode] = st.pack('B', push_i)
+        for i in st.pack('<i', val_i_or_fl):
             pos_bytecode+=1
-            buffer[pos_bytecode] = st.pack('B', push_i)
-            for i in st.pack('<i', val_i_or_fl):
-                pos_bytecode+=1
-                buffer[pos_bytecode] = i.to_bytes(1, 'little')
-        except Exception as e:
-            print("in push_i")
-            print("val_i_or_float",val_i_or_fl)
+            buffer[pos_bytecode] = i.to_bytes(1, 'little')
     elif op_i == make_kernel:
             pos_bytecode+=1
             buffer[pos_bytecode] = st.pack('B', make_kernel)
