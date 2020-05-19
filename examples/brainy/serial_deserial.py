@@ -85,8 +85,8 @@ def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
         pack_v(buffer, push_i,out)
         copy_matrixAsStaticSquare_toRibon(net[i].matrix, matrix, in_, out)
         matrix_elems = in_ * out
-        for j in range(matrix_elems):
-            pack_v(buffer, push_fl, matrix[j])
+        for elem in range(matrix_elems):
+            pack_v(buffer, push_fl, matrix[elem])
         pack_v(buffer, make_kernel, stub)
     dump_buffer(buffer, fname)
 def dump_buffer(buffer, fname):
@@ -94,26 +94,15 @@ def dump_buffer(buffer, fname):
   pos_bytecode+=1
   buffer[pos_bytecode] = stop.to_bytes(1,"little")
   len_bytecode = pos_bytecode + 1
-  try:
-      with open(fname,'wb') as f:
+  with open(fname,'wb') as f:
            for i in range(len_bytecode):
                f.write(buffer[i])
-      print("File writed")
-      print("buffer",buffer)
-  except Exception as e:
-      print("Exc in dump buf")
-      print(e.args)
-      print("buffer[i]",buffer[i])
-      print("buffer",buffer)
+  print("File writed")
   pos_bytecode = -1
-def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list,  ops_st:list,  sp_op):
-        out = ops_st[sp_op]
-        in_ = ops_st[sp_op - 1]
-        net[lay_pos].out = out
-        net[lay_pos].in_ = in_
+def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list, in_, out):
         for  row in range(out):
             for elem in range(in_):
-                net[lay_pos].matrix[row][elem] = matrix_el_st[row * elem]   # десериализированная матрица
+                net[lay_pos].matrix[row][elem] = matrix_el_st[row * in_ + elem]   # десериализированная матрица
 def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
 
      ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
@@ -166,6 +155,12 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
         # создаем одно ядро в массиве
         # пришла команда создать ядро
         elif op == make_kernel:
+            out=ops_st[sp_op]
+            sp_op-=1
+            in_=ops_st[sp_op]
+            sp_op-=1
+            nn_params.net[n_lay].in_=in_
+            nn_params.net[n_lay].out=out
             make_kernel_f(nn_params, net, n_lay, matrix_el_st, ops_st, sp_op)
             # переходим к следующему индексу ядра
             n_lay+=1
