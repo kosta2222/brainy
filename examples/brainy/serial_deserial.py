@@ -1,13 +1,14 @@
-from .work_with_arr import copy_matrixAsStaticSquare_toRibon
-from .nn_constants import bc_bufLen, max_in_nn, max_rows_orOut, max_stack_matrEl, max_stack_otherOp,\
+from .work_with_arr import to_ribbon
+from .nn_constants import bc_bufLen, max_in_nn_1000, max_rows_orOut_10, max_stack_matrEl, max_stack_otherOp_10,\
     push_i, push_fl, make_kernel, with_bias, stop,\
     RELU, LEAKY_RELU, SIGMOID, TAN,\
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan, determe_in_out
 import struct as st
 from .NN_params import NN_params
-from  .util import calc_list
+from  .util import calc_list, get_logger
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
+loger=get_logger("debug", 'ser.log', __name__)
 def pack_v(buffer:list, op_i, val_i_or_fl):
     """
     Добавляет в buffer буффер байт-комманды и сериализованные матричные числа как байты
@@ -18,7 +19,7 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
     global pos_bytecode
     ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                 'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
-    # print("op_i",ops_name[op_i], val_i_or_fl)
+    loger.debug(f"op_i {ops_name[op_i]}, {val_i_or_fl}")
     if op_i == push_fl:
         pos_bytecode += 1
         buffer[pos_bytecode] = st.pack('B', push_fl)
@@ -57,7 +58,7 @@ def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
     out=0
     with_bias_i = 0
     stub = 0
-    matrix=[0]*(max_in_nn * max_rows_orOut)
+    # matrix=[0]*(max_in_nn * max_rows_orOut)
     if nn_params.with_bias:
         with_bias_i = 1
     else:
@@ -83,10 +84,9 @@ def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
         out=net[i].out
         pack_v(buffer, push_i,in_)
         pack_v(buffer, push_i,out)
-        copy_matrixAsStaticSquare_toRibon(net[i].matrix, matrix, in_, out)
-        matrix_elems = in_ * out
-        for elem in range(matrix_elems):
-            pack_v(buffer, push_fl, matrix[elem])
+        for row in range(out):
+            for elem in range(in_):
+                pack_v(buffer, push_fl,net[i].matrix[row][elem])
         pack_v(buffer, make_kernel, stub)
     dump_buffer(buffer, fname)
 def dump_buffer(buffer, fname):
@@ -104,14 +104,15 @@ def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list, in_
             for elem in range(in_):
                 net[lay_pos].matrix[row][elem] = matrix_el_st[row * in_ + elem]   # десериализированная матрица
 def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
+     loger.debug("*in vm*")
 
      ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
-     matrix_el_st = [0] * 400000 # стек для временного размещения элементов матриц из файла потом этот стек
+     steck_fl = [0] * 400 # стек для временного размещения элементов матриц из файла потом этот стек
         # сворачиваем в матрицу слоя после команды make_kernel
-     ops_st = [0] * max_stack_otherOp      # стек для количества входов и выходов (это целые числа)
+     ops_st = [0] * max_stack_otherOp_10 *2      # стек для количества входов и выходов (это целые числа)
      ip = 0
-     sp_ma = -1
+     sp_fl = -1
      sp_op = -1
      op = -1
      arg = 0
@@ -121,7 +122,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
             # print("ip",ip)
             # загружаем на стек количество входов и выходов ядра
             # чтение операции с параметром
-            # print(ops_name[op],end=' ')
+        loger.debug(ops_name[op])
         if  op == push_i:
                 v_0 = buffer[ip + 1]
                 v_1 = buffer[ip + 2]
@@ -131,6 +132,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
                 sp_op+=1
                 ops_st[sp_op] = arg[0]
                 ip += 4
+                loger.debug(arg[0])
                 # print(buffer[ip])
             # загружаем на стек элементы матриц
             # чтение операции с параметром
@@ -140,18 +142,11 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
                 v_2 = buffer[ip + 3]
                 v_3 = buffer[ip + 4]
                 arg=st.unpack('<f', bytes(list([v_0, v_1, v_2, v_3])))
-                sp_ma+=1
-                matrix_el_st[sp_ma] = arg[0]
+                sp_fl+=1
+                steck_fl[sp_fl] = \
+                    arg[0]
                 ip += 4
-                # print(arg[0])
-        elif op==determe_in_out:
-            out=ops_st[sp_op]
-            sp_op-=1
-            in_=ops_st[sp_op]
-            sp_op-=1
-            # увеличивать индекс слоя n_lay будем в операции make_kernel
-            nn_params.net[n_lay].in_=in_
-            nn_params.net[n_lay].out=out
+                loger.debug(arg[0])
         # создаем одно ядро в массиве
         # пришла команда создать ядро
         elif op == make_kernel:
@@ -161,13 +156,17 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
             sp_op-=1
             nn_params.net[n_lay].in_=in_
             nn_params.net[n_lay].out=out
-            make_kernel_f(nn_params, net, n_lay, matrix_el_st, ops_st, sp_op)
+            # make_kernel_f(nn_params, net, n_lay, matrix_el_st, ops_st, sp_op)
+            com_el_amount=in_ * out
+            for row in range(out):
+                for elem in range(in_):
+                    nn_params.net[n_lay].matrix[row][elem]=\
+                        steck_fl[row * in_ + elem]
+            sp_fl-=com_el_amount
             # переходим к следующему индексу ядра
             n_lay+=1
             # зачищаем стеки
-            sp_op -= 1
-            sp_op-=1
-            sp_ma -= 1
+
         # пришла команда узнать пользуемся ли биасами
         # надо извлечь параметр
         elif op == with_bias:
@@ -199,7 +198,7 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
         # показываем на следующую инструкцию
         ip+=1
         op = buffer[ip]
-        # print()
+
      # также подсчитаем сколько у наc ядер
      nn_params.nl_count = n_lay
      # находим количество входов

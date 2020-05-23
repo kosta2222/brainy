@@ -30,7 +30,7 @@ ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load",
 
 def create_nn_params():
     return NN_params()
-def console(prompt, level):
+def console(prompt, level, log_file):
         buffer = [0] * len_* 2  # байт-код для шелл-кода
         input_ = '<uninitialized>'
         # splitted_cmd и splitted_cmd_src - т.к. работаем со статическим массивом
@@ -60,7 +60,7 @@ def console(prompt, level):
             elif input_== we_run:
                 pos_bytecode+= 1
                 buffer[pos_bytecode] = stop
-                vm(buffer, level)
+                vm(buffer, level, log_file)
                 pos_bytecode = -1
             splitted_cmd_src = input_.split()
             for pos_to_write in range(len(splitted_cmd_src)):
@@ -95,7 +95,7 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_map = (nn_in_amount, 8, nn_out_amount)
    initiate_layers(nn_params, nn_map, len(nn_map))
    return nn_params
-def vm(buffer:list, level):
+def vm(buffer:list, level, log_file):
     nn_in_amount=10000
     nn_out_amount=1
     nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
@@ -172,7 +172,7 @@ def vm(buffer:list, level):
            for row in range(len(Y)):
                for elem in range(nn_out_amount):
                    Y_new_fix[row][elem] = Y[row][elem]
-           fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100, use_logger=level)
+           fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100, log_file, level)
            kernel_amount = nn_params.nl_count
            file_save="weight_file.my"
            to_file(nn_params, buffer_ser, nn_params.net,kernel_amount,file_save)
@@ -238,7 +238,7 @@ if __name__ == '__main__':
     else:
         print("Unrecognized option ",level)
         sys.exit(1)
-    console('>>>', level)
+    console('>>>', level, 'log.txt')
   else:
       print("Program must have option: -release or -debug")
       sys.exit(1)

@@ -51,7 +51,6 @@ def feed_forwarding(nn_params:NN_params,ok:bool, debug):
     if ok:
         for i in range(nn_params.outpu_neurons):
             pass
-            print("%d item val %f"%(i + 1,nn_params.net[nn_params.nl_count - 1].hidden[i]))
         return nn_params.net[nn_params.nl_count-1].hidden
     else:
          backpropagate(nn_params)
@@ -71,7 +70,6 @@ def train(nn_params:NN_params,in_:list,targ:list, debug):
 def answer_nn_direct(nn_params:NN_params,in_:list, debug):
     out_nn = None
     copy_vector(in_,nn_params.inputs,nn_params.input_neurons)
-    # print("in answer_nn in_ vec",in_)
     out_nn=feed_forwarding(nn_params,True, debug)
     return out_nn
 def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
@@ -82,7 +80,6 @@ def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
 # Получить вектор входов, сделать матричный продукт и матричный продукт пропустить через функцию активации,
 # записать этот вектор в параметр слоя сети(hidden)
 def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
-  try:
     tmp_v = 0
     val = 0
     for row in range(objLay.out):
@@ -99,18 +96,7 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
         val = operations(nn_params.act_fu,tmp_v, 0, 0, 0, "", nn_params)
         objLay.hidden[row] = val
         tmp_v = 0
-        # print("in make hid net",nn_params.net)
-        # print(nn_params.net)
-  except Exception as e:
-      import sys
-      print("Exc in make hid")
-      print(objLay)
-      print(e.args)
-      print("line {}".format(sys.exc_info()[-1].tb_lineno))
-      print("el",elem)
-      print(__file__)
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug):
-  # try:
     tmp_v = 0
     val = 0
     for row in range(objLay.out):
@@ -127,10 +113,6 @@ def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug)
         val = operations(nn_params.act_fu, tmp_v, 0, 0, 0, "", nn_params)
         objLay.hidden[elem] = val
         tmp_v = 0
-  # except Exception as e:
-  #     print("in make_hid on contr")
-  #     print("el",elem)
-  #     print("elems",objLay.in_)
 def backpropagate(nn_params:NN_params):
     calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
     for i in range(nn_params.nl_count - 1, 0, -1):

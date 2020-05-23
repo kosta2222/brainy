@@ -7,13 +7,14 @@ from .util import get_logger
 X и Y - означает матрицы обучения и ответов соответственно(массив с другими просто массивами)
 x*_ и  y*_ - вектор из этих матриц(просто массив)
 """
-def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, use_logger = 'debug'):
+def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, log_file, use_logger = 'debug'):
     """
     X_eval и Y_eval нужны потому что X и Y могут быть 'сжаты', а проверять нужно на 'целых' матрицах
     """
-    logger =  get_logger(use_logger)
+    logger =  get_logger(use_logger, log_file, __name__)
     today=d.datetime.today()
     today_s=today.strftime('%x %X')
+    logger.debug('*in fit')
     iteration: int = 0
     A = nn_params.lr
     out_nn:list=None
@@ -24,11 +25,11 @@ def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accur
     gama = 1.01
     hei_Y = len(Y)
     E_spec = 0
-    logger.debug(f'Log started {today_s}')
-    print(str(nn_params))
-    logger.debug(str(nn_params))
-    logger.debug(f'Log started {today_s}')
+    logger.info(f'Log started {today_s}')
     print(today_s)
+    print(str(nn_params))
+    logger.info(str(nn_params))
+
     is_net_learning = True
     while is_net_learning:
         logger.info(f'iteration {iteration}')

@@ -1,17 +1,17 @@
 # nn_constants.[py]
 # Параметры статических массивов,количества слоев,количества эпох
-max_in_nn = 10000
+max_in_nn_1000 = 10000
 max_trainSet_rows = 4
 max_validSet_rows = 10
-max_rows_orOut = 20
+max_rows_orOut_10 = 10
 max_am_layer = 7
 max_am_epoch = 25
 max_am_objMse = max_am_epoch
 max_stack_matrEl = 256
-max_stack_otherOp = 4
+max_stack_otherOp_10 = 4
 bc_bufLen = 256
 elems_of_img=10000
-max_spec_elems=10000
+max_spec_elems_1000=10000
 # команды для operations
 RELU = 1
 RELU_DERIV = 2
