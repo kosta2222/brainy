@@ -1,6 +1,5 @@
 from .cross_val_eval import evaluate
 from .learn import train, get_min_square_err, get_mean
-import logging
 import datetime as d
 from .util import get_logger
 """

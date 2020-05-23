@@ -5,7 +5,7 @@ from .nn_constants import bc_bufLen, max_in_nn_1000, max_rows_orOut_10, max_stac
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan, determe_in_out
 import struct as st
 from .NN_params import NN_params
-from  .util import calc_list, get_logger
+from  .util import  get_logger
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
 loger=get_logger("debug", 'ser.log', __name__)
@@ -58,7 +58,6 @@ def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
     out=0
     with_bias_i = 0
     stub = 0
-    # matrix=[0]*(max_in_nn * max_rows_orOut)
     if nn_params.with_bias:
         with_bias_i = 1
     else:
@@ -99,10 +98,6 @@ def dump_buffer(buffer, fname):
                f.write(buffer[i])
   print("File writed")
   pos_bytecode = -1
-def make_kernel_f(nn_params:NN_params, net:list, lay_pos, matrix_el_st:list, in_, out):
-        for  row in range(out):
-            for elem in range(in_):
-                net[lay_pos].matrix[row][elem] = matrix_el_st[row * in_ + elem]   # десериализированная матрица
 def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
      loger.debug("*in vm*")
 
