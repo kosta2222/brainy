@@ -23,7 +23,9 @@ def fit(nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_s
     gama = 1.01
     hei_Y = len(Y)
     E_spec = 0
-    logger.info(f'Log started {today_s}')
+    logger.info( '------------')
+    logger.info(f'| Log started > {today_s}')
+    logger.info( '------------')
     print(today_s)
     print(str(nn_params))
     logger.info(str(nn_params))
