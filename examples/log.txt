@@ -1,31 +1,22 @@
-DEBUG:brainy.util:Log started 05/23/20 23:57:32
-DEBUG:brainy.util:with-adap-lr: True
+INFO:tests:Log started 05/24/20 16:14:24
+INFO:tests:with-adap-lr: True
 with-bias: False
 act-fu: RELU
 alpha-leaky-relu: 0.01 alpha-sigmoid: 0.056 alpha-tan: 1.7159 beta-tan: 0.6666666666666666
 mse-treshold: 0.0017
-DEBUG:brainy.util:Log started 05/23/20 23:57:32
-INFO:brainy.util:iteration 0
-INFO:brainy.util:x: [1, 0] y: [0]
-DEBUG:brainy.util:learning rate 0.0099
-INFO:brainy.util:x: [0, 1] y: [0]
-DEBUG:brainy.util:learning rate 0.009999000000000001
-INFO:brainy.util:x: [1, 1] y: [1]
-DEBUG:brainy.util:learning rate 0.01009899
-INFO:brainy.util:x: [0, 0] y: [0]
-DEBUG:brainy.util:learning rate 0.010199979900000001
-INFO:brainy.util:mse 0.0
-DEBUG:brainy.util:accuracy 50.0
-INFO:brainy.util:iteration 1
-INFO:brainy.util:x: [1, 0] y: [0]
-DEBUG:brainy.util:learning rate 0.010097980101000001
-INFO:brainy.util:x: [0, 1] y: [0]
-DEBUG:brainy.util:learning rate 0.010097980101000001
-INFO:brainy.util:x: [1, 1] y: [1]
-DEBUG:brainy.util:learning rate 0.010097980101000001
-INFO:brainy.util:x: [0, 0] y: [0]
-DEBUG:brainy.util:learning rate 0.010301979699000001
-INFO:brainy.util:mse 0.0
-DEBUG:brainy.util:accuracy 100.0
-DEBUG:brainy.util:***CV***
-DEBUG:brainy.util:accuracy 100.0
+INFO:tests:iteration 0
+INFO:tests:x: [1, 0] y: [0]
+INFO:tests:x: [0, 1] y: [0]
+INFO:tests:x: [1, 1] y: [1]
+INFO:tests:x: [0, 0] y: [0]
+INFO:tests:mse 0.0
+INFO:tests:accuracy 50.0
+INFO:tests:iteration 1
+INFO:tests:x: [1, 0] y: [0]
+INFO:tests:x: [0, 1] y: [0]
+INFO:tests:x: [1, 1] y: [1]
+INFO:tests:x: [0, 0] y: [0]
+INFO:tests:mse 0.0
+INFO:tests:accuracy 100.0
+INFO:tests:*CV (after batch)*
+INFO:tests:accuracy 100.0

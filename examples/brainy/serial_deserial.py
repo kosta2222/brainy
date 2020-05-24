@@ -9,7 +9,7 @@ from  .util import  get_logger
 import sys
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
-loger=get_logger("debug", 'ser.log', __name__)
+loger=None
 def pack_v(buffer:list, op_i, val_i_or_fl):
     """
     Добавляет в buffer буффер байт-комманды и сериализованные матричные числа как байты
@@ -54,11 +54,14 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
     elif op_i == determe_alpha_and_beta_tan:
         pos_bytecode += 1
         buffer[pos_bytecode] = st.pack('B', determe_alpha_and_beta_tan)
-def to_file(nn_params:NN_params, net:list, kernel_amount, fname):
+def to_file(nn_params:NN_params, net:list, logger, fname):
+    global loger
+    loger=logger
     buffer = [0] * max_spec_elems_1000  # Записываем сетевой байткод сюда подом в файл
     if pos_bytecode == len(buffer):
         print("Static memory error", end=' ')
         print("in buffer-to_file")
+        loger.error("Static memory error in buffer-to_file")
         sys.exit(1)
 
     in_=0
@@ -85,7 +88,7 @@ def to_file(nn_params:NN_params, net:list, kernel_amount, fname):
         pack_v(buffer, push_fl, nn_params.beta_tan)
         pack_v(buffer, determe_alpha_and_beta_tan, stub)
 
-    for i in range(kernel_amount):
+    for i in range(nn_params.nl_count):
         in_=net[i].in_
         out=net[i].out
         pack_v(buffer, push_i,in_)

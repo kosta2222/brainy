@@ -6,11 +6,10 @@ from .util import get_logger
 X и Y - означает матрицы обучения и ответов соответственно(массив с другими просто массивами)
 x*_ и  y*_ - вектор из этих матриц(просто массив)
 """
-def fit(nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, log_file, use_logger = 'debug'):
+def fit(nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, logger):
     """
     X_eval и Y_eval нужны потому что X и Y могут быть 'сжаты', а проверять нужно на 'целых' матрицах
     """
-    logger =  get_logger(use_logger, log_file, __name__)
     today=d.datetime.today()
     today_s=today.strftime('%x %X')
     logger.debug('*in fit')
@@ -57,11 +56,11 @@ def fit(nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_s
         logger.info(f"mse {mse}")
         acc = evaluate(nn_params, X_eval, Y_eval)
         print("accuracy:",acc)
-        logger.debug(f'accuracy {acc}')
+        logger.info(f'accuracy {acc}')
         if acc == accuracy_eval_shureness and mse <= nn_params.mse_treshold:
             break
         iteration+=1
-    logger.debug("***CV***")
+    logger.info("*CV (after batch)*")
     acc=evaluate(nn_params, X_eval, Y_eval)
-    logger.debug(f'accuracy {acc}')
+    logger.info(f'accuracy {acc}')
     # compil_serializ(b_c, nn_params.net,len(nn_map)-1,"wei_wei")
