@@ -1,5 +1,90 @@
 DEBUG:brainy.fit:*in fit
-INFO:brainy.fit:Log started 05/24/20 09:15:50
+INFO:brainy.fit:Log started 05/24/20 09:47:02
+INFO:brainy.fit:with-adap-lr: True
+with-bias: False
+act-fu: RELU
+alpha-leaky-relu: 0.01 alpha-sigmoid: 0.056 alpha-tan: 1.7159 beta-tan: 0.6666666666666666
+mse-treshold: 0.0017
+INFO:brainy.fit:iteration 0
+INFO:brainy.fit:x: [1, 0] y: [0]
+DEBUG:brainy.fit:learning rate 0.0099
+INFO:brainy.fit:x: [0, 1] y: [0]
+DEBUG:brainy.fit:learning rate 0.009999000000000001
+INFO:brainy.fit:x: [1, 1] y: [1]
+DEBUG:brainy.fit:learning rate 0.01009899
+INFO:brainy.fit:x: [0, 0] y: [0]
+DEBUG:brainy.fit:learning rate 0.010199979900000001
+INFO:brainy.fit:mse 0.0
+DEBUG:brainy.fit:accuracy 50.0
+INFO:brainy.fit:iteration 1
+INFO:brainy.fit:x: [1, 0] y: [0]
+DEBUG:brainy.fit:learning rate 0.010097980101000001
+INFO:brainy.fit:x: [0, 1] y: [0]
+DEBUG:brainy.fit:learning rate 0.010097980101000001
+INFO:brainy.fit:x: [1, 1] y: [1]
+DEBUG:brainy.fit:learning rate 0.010097980101000001
+INFO:brainy.fit:x: [0, 0] y: [0]
+DEBUG:brainy.fit:learning rate 0.010301979699000001
+INFO:brainy.fit:mse 0.0
+DEBUG:brainy.fit:accuracy 100.0
+DEBUG:brainy.fit:***CV***
+DEBUG:brainy.fit:accuracy 100.0
+DEBUG:brainy.serial_deserial:op_i push_i, 0
+DEBUG:brainy.serial_deserial:op_i with_bias, 0
+DEBUG:brainy.serial_deserial:op_i push_i, 1
+DEBUG:brainy.serial_deserial:op_i determe_act_func, 0
+DEBUG:brainy.serial_deserial:op_i push_i, 2
+DEBUG:brainy.serial_deserial:op_i push_i, 3
+DEBUG:brainy.serial_deserial:op_i push_fl, 0.227883886015317
+DEBUG:brainy.serial_deserial:op_i push_fl, 0.17773406909385947
+DEBUG:brainy.serial_deserial:op_i push_fl, 0.227883886015317
+DEBUG:brainy.serial_deserial:op_i push_fl, 0.17773406909385947
+DEBUG:brainy.serial_deserial:op_i push_fl, 0.227883886015317
+DEBUG:brainy.serial_deserial:op_i push_fl, 0.17773406909385947
+DEBUG:brainy.serial_deserial:op_i make_kernel, 0
+DEBUG:brainy.serial_deserial:op_i push_i, 3
+DEBUG:brainy.serial_deserial:op_i push_i, 1
+DEBUG:brainy.serial_deserial:op_i push_fl, 0.500156958337027
+DEBUG:brainy.serial_deserial:op_i push_fl, 0.500156958337027
+DEBUG:brainy.serial_deserial:op_i push_fl, 0.500156958337027
+DEBUG:brainy.serial_deserial:op_i make_kernel, 0
+DEBUG:brainy.serial_deserial:*in vm*
+DEBUG:brainy.serial_deserial:push_i
+DEBUG:brainy.serial_deserial:0
+DEBUG:brainy.serial_deserial:with_bias
+DEBUG:brainy.serial_deserial:push_i
+DEBUG:brainy.serial_deserial:1
+DEBUG:brainy.serial_deserial:determe_act_func
+DEBUG:brainy.serial_deserial:push_i
+DEBUG:brainy.serial_deserial:2
+DEBUG:brainy.serial_deserial:push_i
+DEBUG:brainy.serial_deserial:3
+DEBUG:brainy.serial_deserial:push_fl
+DEBUG:brainy.serial_deserial:0.5601515769958496
+DEBUG:brainy.serial_deserial:push_fl
+DEBUG:brainy.serial_deserial:0.5608258843421936
+DEBUG:brainy.serial_deserial:push_fl
+DEBUG:brainy.serial_deserial:0.5601515769958496
+DEBUG:brainy.serial_deserial:push_fl
+DEBUG:brainy.serial_deserial:0.5608258843421936
+DEBUG:brainy.serial_deserial:push_fl
+DEBUG:brainy.serial_deserial:0.5601515769958496
+DEBUG:brainy.serial_deserial:push_fl
+DEBUG:brainy.serial_deserial:0.5608258843421936
+DEBUG:brainy.serial_deserial:make_kernel
+DEBUG:brainy.serial_deserial:push_i
+DEBUG:brainy.serial_deserial:3
+DEBUG:brainy.serial_deserial:push_i
+DEBUG:brainy.serial_deserial:1
+DEBUG:brainy.serial_deserial:push_fl
+DEBUG:brainy.serial_deserial:0.5619171261787415
+DEBUG:brainy.serial_deserial:push_fl
+DEBUG:brainy.serial_deserial:0.5619171261787415
+DEBUG:brainy.serial_deserial:push_fl
+DEBUG:brainy.serial_deserial:0.5619171261787415
+DEBUG:brainy.serial_deserial:make_kernel
+DEBUG:brainy.fit:*in fit
+INFO:brainy.fit:Log started 05/24/20 09:47:02
 INFO:brainy.fit:with-adap-lr: True
 with-bias: False
 act-fu: RELU
