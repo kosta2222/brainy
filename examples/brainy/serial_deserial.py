@@ -1,11 +1,12 @@
 from .work_with_arr import to_ribbon
 from .nn_constants import bc_bufLen, max_in_nn_1000, max_rows_orOut_10, max_stack_matrEl, max_stack_otherOp_10,\
     push_i, push_fl, make_kernel, with_bias, stop,\
-    RELU, LEAKY_RELU, SIGMOID, TAN,\
+    RELU, LEAKY_RELU, SIGMOID, TAN, max_spec_elems_1000,\
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan, determe_in_out
 import struct as st
 from .NN_params import NN_params
 from  .util import  get_logger
+import sys
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
 loger=get_logger("debug", 'ser.log', __name__)
@@ -53,7 +54,13 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
     elif op_i == determe_alpha_and_beta_tan:
         pos_bytecode += 1
         buffer[pos_bytecode] = st.pack('B', determe_alpha_and_beta_tan)
-def to_file(nn_params:NN_params, buffer:list, net:list, kernel_amount, fname):
+def to_file(nn_params:NN_params, net:list, kernel_amount, fname):
+    buffer = [0] * max_spec_elems_1000  # Записываем сетевой байткод сюда подом в файл
+    if pos_bytecode == len(buffer):
+        print("Static memory error", end=' ')
+        print("in buffer-to_file")
+        sys.exit(1)
+
     in_=0
     out=0
     with_bias_i = 0
@@ -201,10 +208,15 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
      # находим количество выходов когда образовали сеть
      nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
 def deserialization(nn_params:NN_params, net:list, fname:str):
-    buffer = [0] * 500000
+    buffer = [0] * max_spec_elems_1000
     buf_str = b''
     with open(fname, 'rb') as f:
         buf_str = f.read()
+        if len(buf_str)==len(buffer):
+            print("Static memory error", end=' ')
+            print("in buffer-deserialization")
+            sys.exit(1)
+
     cn_by = 0
     for i in buf_str:
         buffer[cn_by] = i

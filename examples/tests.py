@@ -19,7 +19,6 @@ class Tests_my(TestCase):
         # self.buffer_ser=[0]*256*2
 
     def test_and(self):
-        buffer_ser=[0]*256*2
         nn_params=NN_params()
         nn_params_new=NN_params()
         nn_params.with_bias = False
@@ -39,8 +38,8 @@ class Tests_my(TestCase):
         # Y_np-=np.mean(Y_np, axis=0, dtype='float64')
         X_np=np.std(X_np, axis=0)
         Y_np=np.std(Y_np, axis=0)
-        fit(buffer_ser,nn_params,10,X,Y,X,Y,100,"test_fit.log", use_logger='debug')
-        to_file(nn_params, buffer_ser,nn_params.net, 2, 'wei_and.my')
+        fit(nn_params,10,X,Y,X,Y,100,"test_fit.log", use_logger='debug')
+        to_file(nn_params,nn_params.net, 2, 'wei_and.my')
         deserialization(nn_params_new,nn_params_new.net,'wei_and.my')
         out_nn_dir=answer_nn_direct(nn_params_new, [1, 1], 1)
         print("out-nn-dir-ser",out_nn_dir)
@@ -52,7 +51,6 @@ class Tests_my(TestCase):
         print("out-nn-contr-native",out_nn_contr_test)
 
     def test_or(self):
-        buffer_ser=[0]*256*2
         nn_params=NN_params()
         nn_params_new=NN_params()
         nn_params.with_bias = False
@@ -72,13 +70,17 @@ class Tests_my(TestCase):
         # Y_np-=np.mean(Y_np, axis=0, dtype='float64')
         X_np = np.std(X_np, axis=0)
         Y_np = np.std(Y_np, axis=0)
-        fit(buffer_ser, nn_params, 10, X, Y, X, Y, 100,'test_fit.log', use_logger='debug')
-        to_file(nn_params, buffer_ser, nn_params.net, 2, 'wei_or.my')
+        fit(nn_params, 10, X, Y, X, Y, 100,'test_fit.log', use_logger='debug')
+        to_file(nn_params, nn_params.net, 2, 'wei_or.my')
         deserialization(nn_params_new, nn_params_new.net, 'wei_or.my')
         out_nn_dir = answer_nn_direct(nn_params_new, [1, 1], 1)
-        print("out-nn-dir", out_nn_dir)
+        print("out-nn-dir-ser", out_nn_dir)
+        out_nn_dir = answer_nn_direct(nn_params, [1, 1], 1)
+        print("out-nn-dir-native", out_nn_dir)
         out_nn_contr = answer_nn_direct_on_contrary(nn_params_new, [1], 1)
-        print("out-nn-contr", out_nn_contr)
+        print("out-nn-contr-ser", out_nn_contr)
+        out_nn_contr = answer_nn_direct_on_contrary(nn_params, [1], 1)
+        print("out-nn-contr-native", out_nn_contr)
 
 if __name__ == '__main__':
     unittest.main()

@@ -6,7 +6,7 @@ from .util import get_logger
 X и Y - означает матрицы обучения и ответов соответственно(массив с другими просто массивами)
 x*_ и  y*_ - вектор из этих матриц(просто массив)
 """
-def fit(b_c:list, nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, log_file, use_logger = 'debug'):
+def fit(nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_shureness:int, log_file, use_logger = 'debug'):
     """
     X_eval и Y_eval нужны потому что X и Y могут быть 'сжаты', а проверять нужно на 'целых' матрицах
     """
