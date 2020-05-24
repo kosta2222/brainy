@@ -1,6 +1,6 @@
 INFO:tests:-in fit-
 INFO:tests:------------
-INFO:tests:| Log started > 05/24/20 16:47:47
+INFO:tests:| Log started > 05/24/20 16:51:10
 INFO:tests:------------
 INFO:tests:with-adap-lr: True
 with-bias: False
@@ -88,7 +88,7 @@ DEBUG:tests:0.5001569390296936
 DEBUG:tests:make_kernel
 INFO:tests:-in fit-
 INFO:tests:------------
-INFO:tests:| Log started > 05/24/20 16:47:47
+INFO:tests:| Log started > 05/24/20 16:51:10
 INFO:tests:------------
 INFO:tests:with-adap-lr: True
 with-bias: False
