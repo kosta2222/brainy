@@ -3,6 +3,8 @@
 *.bak
 *.bash
 *.my
+log.*
+*.log
 .idea/
 venv/
 __pycache__/
