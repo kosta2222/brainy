@@ -231,6 +231,7 @@ if __name__ == '__main__':
   loger=None
   if len(sys.argv)==2:
     level=sys.argv[1]
+    print("level",level)
     if level == '-debug':
         loger=get_logger(level, 'log_cons.log', __name__)
     elif level == '-release':
