@@ -4,7 +4,7 @@ from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
 from brainy.serial_deserial import to_file
 from brainy.fit import fit
 from brainy.learn import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary
-from brainy.util import make_train_matr, make_2d_arr, calc_out_nn
+from brainy.util import make_train_matr, make_2d_arr, calc_out_nn, get_logger
 import numpy as np
 import os
 from PIL import Image
@@ -30,7 +30,7 @@ ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load",
 
 def create_nn_params():
     return NN_params()
-def console(prompt, level, log_file):
+def console(prompt, loger):
         buffer = [0] * len_* 2  # байт-код для шелл-кода
         input_ = '<uninitialized>'
         # splitted_cmd и splitted_cmd_src - т.к. работаем со статическим массивом
@@ -60,7 +60,7 @@ def console(prompt, level, log_file):
             elif input_== we_run:
                 pos_bytecode+= 1
                 buffer[pos_bytecode] = stop
-                vm(buffer, level, log_file)
+                vm(buffer, loger)
                 pos_bytecode = -1
             splitted_cmd_src = input_.split()
             for pos_to_write in range(len(splitted_cmd_src)):
@@ -95,7 +95,7 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_map = (nn_in_amount, 8, nn_out_amount)
    initiate_layers(nn_params, nn_map, len(nn_map))
    return nn_params
-def vm(buffer:list, level, log_file):
+def vm(buffer:list, loger):
     nn_in_amount=10000
     nn_out_amount=1
     nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
@@ -172,10 +172,9 @@ def vm(buffer:list, level, log_file):
            for row in range(len(Y)):
                for elem in range(nn_out_amount):
                    Y_new_fix[row][elem] = Y[row][elem]
-           fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100, log_file, level)
-           kernel_amount = nn_params.nl_count
+           fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100, loger)
            file_save="weight_file.my"
-           to_file(nn_params, buffer_ser, nn_params.net,kernel_amount,file_save)
+           to_file(nn_params, buffer_ser, nn_params.net,loger,file_save)
         elif op == predict:
             float_x = [0] * nn_in_amount
             str_x = steck_str[sp_str]
@@ -203,19 +202,19 @@ def vm(buffer:list, level, log_file):
             sp_str-=1
             X_img=make_train_matr(path_s)
             X_img/=255
-            print("in make_train matr X_img",X_img.tolist())
+            loger.debug("in make_train matr X_img",X_img.tolist())
             X_img=np.array(X_img, dtype='float64')
             X_img-=np.mean(X_img, axis=0, dtype='float64')
             # X_img=np.std(X_img, axis=0)
-            print("in make train matr",X_img)
+            loger.debug("in make train matr",X_img)
             Y_img=[[1],[1],[1],[1]]
             # Y_img=[[1]]
             fit(buffer_ser, nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 75)
-            to_file(nn_params, buffer_ser, nn_params.net, 2, 'img_wei.my')
+            to_file(nn_params,nn_params.net, loger, 'img_wei.my')
         elif op == make_img:
             out_nn=answer_nn_direct_on_contrary(nn_params_new, [1], 1)
-            print("in make_img")
-            print("out_nn",out_nn)
+            loger.debug("in make_img")
+            loger.debug("out_nn",out_nn)
             p_vec_tested=calc_out_nn(out_nn)
             p_2d_img = make_2d_arr(p_vec_tested)
             new_img = Image.fromarray(np.uint8(p_2d_img))
@@ -229,16 +228,17 @@ def vm(buffer:list, level, log_file):
         op = buffer[ip]
 import sys
 if __name__ == '__main__':
+  loger=None
   if len(sys.argv)==2:
     level=sys.argv[1]
     if level == '-debug':
-        pass
+        loger=get_logger(level, 'log_cons.log', __name__)
     elif level == '-release':
-        pass
+        loger=get_logger(level, 'log_cons.log', __name__)
     else:
         print("Unrecognized option ",level)
         sys.exit(1)
-    console('>>>', level, 'log.txt')
+    console('>>>', loger)
   else:
       print("Program must have option: -release or -debug")
       sys.exit(1)
