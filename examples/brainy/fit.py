@@ -12,7 +12,7 @@ def fit(nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_s
     """
     today=d.datetime.today()
     today_s=today.strftime('%x %X')
-    logger.debug('*in fit')
+    logger.info('-in fit-')
     iteration: int = 0
     A = nn_params.lr
     out_nn:list=None

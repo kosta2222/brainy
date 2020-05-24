@@ -1,4 +1,5 @@
-INFO:tests:Log started 05/24/20 16:14:24
+INFO:tests:-in fit-
+INFO:tests:Log started 05/24/20 16:43:07
 INFO:tests:with-adap-lr: True
 with-bias: False
 act-fu: RELU
@@ -6,17 +7,155 @@ alpha-leaky-relu: 0.01 alpha-sigmoid: 0.056 alpha-tan: 1.7159 beta-tan: 0.666666
 mse-treshold: 0.0017
 INFO:tests:iteration 0
 INFO:tests:x: [1, 0] y: [0]
+DEBUG:tests:learning rate 0.0099
 INFO:tests:x: [0, 1] y: [0]
+DEBUG:tests:learning rate 0.009999000000000001
 INFO:tests:x: [1, 1] y: [1]
+DEBUG:tests:learning rate 0.01009899
 INFO:tests:x: [0, 0] y: [0]
+DEBUG:tests:learning rate 0.010199979900000001
 INFO:tests:mse 0.0
 INFO:tests:accuracy 50.0
 INFO:tests:iteration 1
 INFO:tests:x: [1, 0] y: [0]
+DEBUG:tests:learning rate 0.010097980101000001
 INFO:tests:x: [0, 1] y: [0]
+DEBUG:tests:learning rate 0.010097980101000001
 INFO:tests:x: [1, 1] y: [1]
+DEBUG:tests:learning rate 0.010097980101000001
 INFO:tests:x: [0, 0] y: [0]
+DEBUG:tests:learning rate 0.010301979699000001
 INFO:tests:mse 0.0
 INFO:tests:accuracy 100.0
 INFO:tests:*CV (after batch)*
 INFO:tests:accuracy 100.0
+DEBUG:tests:op_i push_i, 0
+DEBUG:tests:op_i with_bias, 0
+DEBUG:tests:op_i push_i, 1
+DEBUG:tests:op_i determe_act_func, 0
+DEBUG:tests:op_i push_i, 2
+DEBUG:tests:op_i push_i, 3
+DEBUG:tests:op_i push_fl, 0.227883886015317
+DEBUG:tests:op_i push_fl, 0.17773406909385947
+DEBUG:tests:op_i push_fl, 0.227883886015317
+DEBUG:tests:op_i push_fl, 0.17773406909385947
+DEBUG:tests:op_i push_fl, 0.227883886015317
+DEBUG:tests:op_i push_fl, 0.17773406909385947
+DEBUG:tests:op_i make_kernel, 0
+DEBUG:tests:op_i push_i, 3
+DEBUG:tests:op_i push_i, 1
+DEBUG:tests:op_i push_fl, 0.500156958337027
+DEBUG:tests:op_i push_fl, 0.500156958337027
+DEBUG:tests:op_i push_fl, 0.500156958337027
+DEBUG:tests:op_i make_kernel, 0
+INFO:tests:File writed
+DEBUG:tests:*in vm*
+DEBUG:tests:push_i
+DEBUG:tests:0
+DEBUG:tests:with_bias
+DEBUG:tests:push_i
+DEBUG:tests:1
+DEBUG:tests:determe_act_func
+DEBUG:tests:push_i
+DEBUG:tests:2
+DEBUG:tests:push_i
+DEBUG:tests:3
+DEBUG:tests:push_fl
+DEBUG:tests:0.22788389027118683
+DEBUG:tests:push_fl
+DEBUG:tests:0.17773406207561493
+DEBUG:tests:push_fl
+DEBUG:tests:0.22788389027118683
+DEBUG:tests:push_fl
+DEBUG:tests:0.17773406207561493
+DEBUG:tests:push_fl
+DEBUG:tests:0.22788389027118683
+DEBUG:tests:push_fl
+DEBUG:tests:0.17773406207561493
+DEBUG:tests:make_kernel
+DEBUG:tests:push_i
+DEBUG:tests:3
+DEBUG:tests:push_i
+DEBUG:tests:1
+DEBUG:tests:push_fl
+DEBUG:tests:0.5001569390296936
+DEBUG:tests:push_fl
+DEBUG:tests:0.5001569390296936
+DEBUG:tests:push_fl
+DEBUG:tests:0.5001569390296936
+DEBUG:tests:make_kernel
+INFO:tests:-in fit-
+INFO:tests:Log started 05/24/20 16:43:07
+INFO:tests:with-adap-lr: True
+with-bias: False
+act-fu: RELU
+alpha-leaky-relu: 0.01 alpha-sigmoid: 0.056 alpha-tan: 1.7159 beta-tan: 0.6666666666666666
+mse-treshold: 0.0017
+INFO:tests:iteration 0
+INFO:tests:x: [1, 0] y: [1]
+DEBUG:tests:learning rate 0.0101
+INFO:tests:x: [0, 1] y: [1]
+DEBUG:tests:learning rate 0.009999
+INFO:tests:x: [1, 1] y: [1]
+DEBUG:tests:learning rate 0.00989901
+INFO:tests:x: [0, 0] y: [0]
+DEBUG:tests:learning rate 0.0099980001
+INFO:tests:mse 0.0
+INFO:tests:accuracy 100.0
+INFO:tests:*CV (after batch)*
+INFO:tests:accuracy 100.0
+DEBUG:tests:op_i push_i, 0
+DEBUG:tests:op_i with_bias, 0
+DEBUG:tests:op_i push_i, 1
+DEBUG:tests:op_i determe_act_func, 0
+DEBUG:tests:op_i push_i, 2
+DEBUG:tests:op_i push_i, 3
+DEBUG:tests:op_i push_fl, 0.5601515473053919
+DEBUG:tests:op_i push_fl, 0.5608258809360127
+DEBUG:tests:op_i push_fl, 0.5601515473053919
+DEBUG:tests:op_i push_fl, 0.5608258809360127
+DEBUG:tests:op_i push_fl, 0.5601515473053919
+DEBUG:tests:op_i push_fl, 0.5608258809360127
+DEBUG:tests:op_i make_kernel, 0
+DEBUG:tests:op_i push_i, 3
+DEBUG:tests:op_i push_i, 1
+DEBUG:tests:op_i push_fl, 0.5619171150294526
+DEBUG:tests:op_i push_fl, 0.5619171150294526
+DEBUG:tests:op_i push_fl, 0.5619171150294526
+DEBUG:tests:op_i make_kernel, 0
+INFO:tests:File writed
+DEBUG:tests:*in vm*
+DEBUG:tests:push_i
+DEBUG:tests:0
+DEBUG:tests:with_bias
+DEBUG:tests:push_i
+DEBUG:tests:1
+DEBUG:tests:determe_act_func
+DEBUG:tests:push_i
+DEBUG:tests:2
+DEBUG:tests:push_i
+DEBUG:tests:3
+DEBUG:tests:push_fl
+DEBUG:tests:0.5601515769958496
+DEBUG:tests:push_fl
+DEBUG:tests:0.5608258843421936
+DEBUG:tests:push_fl
+DEBUG:tests:0.5601515769958496
+DEBUG:tests:push_fl
+DEBUG:tests:0.5608258843421936
+DEBUG:tests:push_fl
+DEBUG:tests:0.5601515769958496
+DEBUG:tests:push_fl
+DEBUG:tests:0.5608258843421936
+DEBUG:tests:make_kernel
+DEBUG:tests:push_i
+DEBUG:tests:3
+DEBUG:tests:push_i
+DEBUG:tests:1
+DEBUG:tests:push_fl
+DEBUG:tests:0.5619171261787415
+DEBUG:tests:push_fl
+DEBUG:tests:0.5619171261787415
+DEBUG:tests:push_fl
+DEBUG:tests:0.5619171261787415
+DEBUG:tests:make_kernel

@@ -106,7 +106,7 @@ def dump_buffer(buffer, fname):
   with open(fname,'wb') as f:
            for i in range(len_bytecode):
                f.write(buffer[i])
-  print("File writed")
+  loger.info("File writed")
   pos_bytecode = -1
 def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
      loger.debug("*in vm*")
@@ -218,6 +218,7 @@ def deserialization(nn_params:NN_params, net:list, fname:str):
         if len(buf_str)==len(buffer):
             print("Static memory error", end=' ')
             print("in buffer-deserialization")
+            loger.error("Static memory error in buffer-deserialization")
             sys.exit(1)
 
     cn_by = 0
