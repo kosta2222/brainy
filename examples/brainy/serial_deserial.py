@@ -11,58 +11,61 @@ import sys
 pos_bytecode=-1  # указатель на элементы байт-кода
 loger=None
 def pack_v(buffer:list, op_i, val_i_or_fl):
-    """
-    Добавляет в buffer буффер байт-комманды и сериализованные матричные числа как байты
-    :param op_i: байт-комманда
-    :param val_i_or_fl: число для серелизации - матричный элемент или количество входов выходов
-    :return: следующий индекс куда можно записать команду stop
-    """
-    global pos_bytecode
-    ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
+     """
+     Добавляет в buffer буффер байт-комманды и сериализованные матричные числа как байты
+     :param op_i: байт-комманда
+     :param val_i_or_fl: число для серелизации - матричный элемент или количество входов выходов
+     :return: следующий индекс куда можно записать команду stop
+     """
+     try:
+        global pos_bytecode
+        ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                 'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
-    loger.debug(f"op_i {ops_name[op_i]}, {val_i_or_fl}")
-    if op_i == push_fl:
-        pos_bytecode += 1
-        buffer[pos_bytecode] = st.pack('B', push_fl)
-        for i in st.pack('<f', val_i_or_fl):
+        loger.debug(f"op_i {ops_name[op_i]}, {val_i_or_fl}")
+        if op_i == push_fl:
+            pos_bytecode += 1
+            buffer[pos_bytecode] = st.pack('B', push_fl)
+            for i in st.pack('<f', val_i_or_fl):
+                pos_bytecode+=1
+                buffer[pos_bytecode] = i.to_bytes(1, 'little')
+        elif op_i == push_i:
             pos_bytecode+=1
-            buffer[pos_bytecode] = i.to_bytes(1, 'little')
-    elif op_i == push_i:
-        pos_bytecode+=1
-        buffer[pos_bytecode] = st.pack('B', push_i)
-        for i in st.pack('<i', val_i_or_fl):
+            buffer[pos_bytecode] = st.pack('B', push_i)
+            for i in st.pack('<i', val_i_or_fl):
+                pos_bytecode+=1
+                buffer[pos_bytecode] = i.to_bytes(1, 'little')
+        elif op_i == make_kernel:
             pos_bytecode+=1
-            buffer[pos_bytecode] = i.to_bytes(1, 'little')
-    elif op_i == make_kernel:
-        pos_bytecode+=1
-        buffer[pos_bytecode] = st.pack('B', make_kernel)
-    elif op_i == with_bias:
-        pos_bytecode+=1
-        buffer[pos_bytecode] = st.pack('B', with_bias)
-    elif op_i == determe_in_out:
-        pos_bytecode+=1
-        buffer[pos_bytecode] = st.pack('B', determe_in_out)
-    elif op_i == determe_act_func:
-        pos_bytecode+=1
-        buffer[pos_bytecode] = st.pack('B', determe_act_func)
-    elif op_i == determe_alpha_leaky_relu:
-        pos_bytecode+=1
-        buffer[pos_bytecode] = st.pack('B', determe_alpha_leaky_relu)
-    elif op_i == determe_alpha_sigmoid:
-        pos_bytecode+=1
-        buffer[pos_bytecode] = st.pack('B', determe_alpha_sigmoid)
-    elif op_i == determe_alpha_and_beta_tan:
-        pos_bytecode += 1
-        buffer[pos_bytecode] = st.pack('B', determe_alpha_and_beta_tan)
+            buffer[pos_bytecode] = st.pack('B', make_kernel)
+        elif op_i == with_bias:
+            pos_bytecode+=1
+            buffer[pos_bytecode] = st.pack('B', with_bias)
+        elif op_i == determe_in_out:
+            pos_bytecode+=1
+            buffer[pos_bytecode] = st.pack('B', determe_in_out)
+        elif op_i == determe_act_func:
+            pos_bytecode+=1
+            buffer[pos_bytecode] = st.pack('B', determe_act_func)
+        elif op_i == determe_alpha_leaky_relu:
+            pos_bytecode+=1
+            buffer[pos_bytecode] = st.pack('B', determe_alpha_leaky_relu)
+        elif op_i == determe_alpha_sigmoid:
+            pos_bytecode+=1
+            buffer[pos_bytecode] = st.pack('B', determe_alpha_sigmoid)
+        elif op_i == determe_alpha_and_beta_tan:
+            pos_bytecode += 1
+            buffer[pos_bytecode] = st.pack('B', determe_alpha_and_beta_tan)
+     except IndexError:
+         print("Static memory error:", end=' ')
+         print("in buffer (where we put bytecode to serelialize net)")
+         print("[init in serial_deserial.tofile()]")
+         loger.debug("Static memory error: in buffer (where we put bytecode to serelialize net)[init in serial_deserial.tofile()])")
+         return
+
 def to_file(nn_params:NN_params, net:list, logger, fname):
     global loger
     loger=logger
-    buffer = [0] * max_spec_elems_1000  # Записываем сетевой байткод сюда подом в файл
-    if pos_bytecode == len(buffer):
-        print("Static memory error", end=' ')
-        print("in buffer-to_file")
-        loger.error("Static memory error in buffer-to_file")
-        sys.exit(1)
+    buffer = [0] * max_spec_elems_1000 *1000  # Записываем сетевой байткод сюда подом в файл
 
     in_=0
     out=0
@@ -108,7 +111,7 @@ def dump_buffer(buffer, fname):
                f.write(buffer[i])
   loger.info("File writed")
   pos_bytecode = -1
-def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
+def deserialization_vm(nn_params:NN_params, buffer:list,loger):
      loger.debug("*in vm*")
 
      ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
@@ -210,21 +213,22 @@ def deserialization_vm(nn_params:NN_params, net:list, buffer:list):
      nn_params.input_neurons = nn_params.net[0].in_ #-1  # -1 зависит от биасов
      # находим количество выходов когда образовали сеть
      nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
-def deserialization(nn_params:NN_params, net:list, fname:str):
-    buffer = [0] * max_spec_elems_1000
+def deserialization(nn_params:NN_params, fname:str, loger):
+    buffer = [0] * max_spec_elems_1000 * 1000
     buf_str = b''
     with open(fname, 'rb') as f:
         buf_str = f.read()
-        if len(buf_str)==len(buffer):
+        if len(buf_str)>=len(buffer):
             print("Static memory error", end=' ')
-            print("in buffer-deserialization")
-            loger.error("Static memory error in buffer-deserialization")
-            sys.exit(1)
+            print("in buffer-deserialization(buffer we read serealized net from file)")
+            print("[init in serial_deserial.deserialization()]")
+            loger.error("Static memory error in buffer-deserialization (buffer we read serealized net from file)[init in serial_deserial.deserialization()]")
+            return
 
     cn_by = 0
     for i in buf_str:
         buffer[cn_by] = i
         cn_by+=1
     # разборка байт-кода
-    deserialization_vm(nn_params, net, buffer)
+    deserialization_vm(nn_params, buffer, loger)
 #----------------------------------------------------------------------

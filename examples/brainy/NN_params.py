@@ -12,7 +12,7 @@ class  NN_params:
         self.input_neurons=0  # количество выходных нейронов
         self.outpu_neurons=0  # количество входных нейронов
         self.nl_count=0  # количество слоев
-        self.inputs=[0]*(max_rows_orOut_10)  # входа сети
+        self.inputs=[0]*(max_in_nn_1000 * 10)  # входа сети
         self.targets=[0]*(max_rows_orOut_10)  # ответы от учителя
         self.out_errors = [0] * (max_rows_orOut_10)  # вектор ошибок слоя
         self.lr=0;  # коэффициент обучения

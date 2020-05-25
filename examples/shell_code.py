@@ -100,7 +100,7 @@ def vm(buffer:list, loger):
     nn_out_amount=1
     nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
     nn_params_new = create_nn_params()
-    buffer_ser = [0] * 500000  # буффер для сериализации матричных элементов и входов
+    # buffer_ser = [0] * 500000  # буффер для сериализации матричных элементов и входов
     say_positive='Понятно. Постараюсь ваполнить вашу просьбу'
     say_negative='Извините ваша просьба неопознана'
     ip=0
@@ -172,9 +172,9 @@ def vm(buffer:list, loger):
            for row in range(len(Y)):
                for elem in range(nn_out_amount):
                    Y_new_fix[row][elem] = Y[row][elem]
-           fit(buffer_ser, nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100, loger)
+           fit(nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100, loger)
            file_save="weight_file.my"
-           to_file(nn_params, buffer_ser, nn_params.net,loger,file_save)
+           to_file(nn_params.net,loger,file_save)
         elif op == predict:
             float_x = [0] * nn_in_amount
             str_x = steck_str[sp_str]
@@ -195,7 +195,7 @@ def vm(buffer:list, loger):
            file_save = steck_str[sp_str]
            sp_str-=1
            file_load = file_save
-           deserialization(nn_params_new, nn_params_new.net, file_load)
+           deserialization(nn_params_new,file_load, loger)
         elif op == make_train_matr_:
             X_img:np.ndarray=None
             path_s=steck_str[sp_str]
@@ -204,12 +204,12 @@ def vm(buffer:list, loger):
             X_img/=255
             loger.debug("in make_train matr X_img",X_img.tolist())
             X_img=np.array(X_img, dtype='float64')
-            X_img-=np.mean(X_img, axis=0, dtype='float64')
+            # X_img-=np.mean(X_img, axis=0, dtype='float64')
             # X_img=np.std(X_img, axis=0)
             loger.debug("in make train matr",X_img)
             Y_img=[[1],[1],[1],[1]]
             # Y_img=[[1]]
-            fit(buffer_ser, nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 75)
+            fit(nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 100, loger)
             to_file(nn_params,nn_params.net, loger, 'img_wei.my')
         elif op == make_img:
             out_nn=answer_nn_direct_on_contrary(nn_params_new, [1], 1)
@@ -233,9 +233,9 @@ if __name__ == '__main__':
     level=sys.argv[1]
     print("level",level)
     if level == '-debug':
-        loger=get_logger(level, 'log_cons.log', __name__)
+        loger=get_logger("debug", 'log_cons.log', __name__)
     elif level == '-release':
-        loger=get_logger(level, 'log_cons.log', __name__)
+        loger=get_logger("release", 'log_cons.log', __name__)
     else:
         print("Unrecognized option ",level)
         sys.exit(1)
