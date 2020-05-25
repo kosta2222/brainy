@@ -62,3 +62,4 @@ def make_train_matr(p_: str) -> np.ndarray:
 def _0_(str_):
     print("Success ->", end = " ")
     print("function",str_)
+    return "Success ->function {}".format(str_)

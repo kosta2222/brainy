@@ -127,86 +127,90 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
      n_lay = 0
      op = buffer[ip]
      while (op != stop):
-            # print("ip",ip)
-            # загружаем на стек количество входов и выходов ядра
-            # чтение операции с параметром
+        # print("ip",ip)
+        # загружаем на стек количество входов и выходов ядра
+        # чтение операции с параметром
         loger.debug(ops_name[op])
-        if  op == push_i:
-                v_0 = buffer[ip + 1]
-                v_1 = buffer[ip + 2]
-                v_2 = buffer[ip + 3]
-                v_3 = buffer[ip + 4]
-                arg=st.unpack('<i', bytes(list([v_0, v_1, v_2, v_3])))
-                sp_op+=1
-                ops_st[sp_op] = arg[0]
-                ip += 4
-                loger.debug(arg[0])
-                # print(buffer[ip])
-            # загружаем на стек элементы матриц
-            # чтение операции с параметром
-        elif op == push_fl:
-                v_0 = buffer[ip + 1]
-                v_1 = buffer[ip + 2]
-                v_2 = buffer[ip + 3]
-                v_3 = buffer[ip + 4]
-                arg=st.unpack('<f', bytes(list([v_0, v_1, v_2, v_3])))
-                sp_fl+=1
-                steck_fl[sp_fl] = \
-                    arg[0]
-                ip += 4
-                loger.debug(arg[0])
-        # создаем одно ядро в массиве
-        # пришла команда создать ядро
-        elif op == make_kernel:
-            out=ops_st[sp_op]
-            sp_op-=1
-            in_=ops_st[sp_op]
-            sp_op-=1
-            nn_params.net[n_lay].in_=in_
-            nn_params.net[n_lay].out=out
-            # make_kernel_f(nn_params, net, n_lay, matrix_el_st, ops_st, sp_op)
-            com_el_amount=in_ * out
-            for row in range(out):
-                for elem in range(in_):
-                    nn_params.net[n_lay].matrix[row][elem]=\
-                        steck_fl[row * in_ + elem]
-            sp_fl-=com_el_amount
-            # переходим к следующему индексу ядра
-            n_lay+=1
-            # зачищаем стеки
-
-        # пришла команда узнать пользуемся ли биасами
-        # надо извлечь параметр
-        elif op == with_bias:
-            is_with_bias = ops_st[sp_op]
-            sp_op-=1
-            if is_with_bias == 1:
-                nn_params.with_bias = True
-            elif is_with_bias == 0:
-                nn_params.with_bias = False
-        elif op == determe_act_func:
-            what_func = ops_st[sp_op]
-            sp_op-=1
-            nn_params.act_fu = what_func
-        elif op == determe_alpha_and_beta_tan:
-            beta = ops_st[sp_op]
-            sp_op-=1
-            alpha = ops_st[sp_op]
-            sp_op-=1
-            nn_params.alpha_tan = alpha
-            nn_params.beta_tan = beta
-        elif op == determe_alpha_sigmoid:
-            alpha = ops_st[sp_op]
-            sp_op-=1
-            nn_params.alpha_sigmoid = alpha
-        elif op == determe_alpha_leaky_relu:
-            alpha = ops_st[sp_op]
-            sp_op-=1
-            nn_params.alpha_leaky_relu = alpha
+        try:
+            if  op == push_i:
+                    v_0 = buffer[ip + 1]
+                    v_1 = buffer[ip + 2]
+                    v_2 = buffer[ip + 3]
+                    v_3 = buffer[ip + 4]
+                    arg=st.unpack('<i', bytes(list([v_0, v_1, v_2, v_3])))
+                    sp_op+=1
+                    ops_st[sp_op] = arg[0]
+                    ip += 4
+                    loger.debug(arg[0])
+                    # print(buffer[ip])
+           # загружаем на стек элементы матриц
+           # чтение операции с параметром
+            elif op == push_fl:
+                    v_0 = buffer[ip + 1]
+                    v_1 = buffer[ip + 2]
+                    v_2 = buffer[ip + 3]
+                    v_3 = buffer[ip + 4]
+                    arg=st.unpack('<f', bytes(list([v_0, v_1, v_2, v_3])))
+                    sp_fl+=1
+                    steck_fl[sp_fl] = \
+                        arg[0]
+                    ip += 4
+                    loger.debug(arg[0])
+            # создаем одно ядро в массиве
+            # пришла команда создать ядро
+            elif op == make_kernel:
+                out=ops_st[sp_op]
+                sp_op-=1
+                in_=ops_st[sp_op]
+                sp_op-=1
+                nn_params.net[n_lay].in_=in_
+                nn_params.net[n_lay].out=out
+                # make_kernel_f(nn_params, net, n_lay, matrix_el_st, ops_st, sp_op)
+                com_el_amount=in_ * out
+                for row in range(out):
+                    for elem in range(in_):
+                        nn_params.net[n_lay].matrix[row][elem]=\
+                            steck_fl[row * in_ + elem]
+                sp_fl-=com_el_amount
+                # переходим к следующему индексу ядра
+                n_lay+=1
+            # пришла команда узнать пользуемся ли биасами
+            # надо извлечь параметр
+            elif op == with_bias:
+                is_with_bias = ops_st[sp_op]
+                sp_op-=1
+                if is_with_bias == 1:
+                    nn_params.with_bias = True
+                elif is_with_bias == 0:
+                    nn_params.with_bias = False
+            elif op == determe_act_func:
+                what_func = ops_st[sp_op]
+                sp_op-=1
+                nn_params.act_fu = what_func
+            elif op == determe_alpha_and_beta_tan:
+                beta = ops_st[sp_op]
+                sp_op-=1
+                alpha = ops_st[sp_op]
+                sp_op-=1
+                nn_params.alpha_tan = alpha
+                nn_params.beta_tan = beta
+            elif op == determe_alpha_sigmoid:
+                alpha = ops_st[sp_op]
+                sp_op-=1
+                nn_params.alpha_sigmoid = alpha
+            elif op == determe_alpha_leaky_relu:
+                alpha = ops_st[sp_op]
+                sp_op-=1
+                nn_params.alpha_leaky_relu = alpha
+        except Exception:
+            print("Probably! static memory error", end=' ')
+            print("in steck_fl (steck where we put float matrix elems)")
+            print("[init in serial_deserial.deserialization_vm()]")
+            loger.error("Probably! static memory error in steck_fl (steck where we put float matrix elems) [init in serial_deserial.deserialization_vm()]")
+            return 
         # показываем на следующую инструкцию
         ip+=1
         op = buffer[ip]
-
      # также подсчитаем сколько у наc ядер
      nn_params.nl_count = n_lay
      # находим количество входов

@@ -87,9 +87,9 @@ def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
    nn_params.with_bias = False
    nn_params.with_adap_lr = True
    nn_params.lr = 0.01
-   nn_params.act_fu = TAN
+   nn_params.act_fu = LEAKY_RELU
    nn_params.alpha_sigmoid = 0.056
-   nn_params.mse_treshold=0.513
+   nn_params.mse_treshold=0.001
    # nn_in_amount = 20
    # nn_out_amount = 1
    nn_map = (nn_in_amount, 8, nn_out_amount)
@@ -202,11 +202,11 @@ def vm(buffer:list, loger):
             sp_str-=1
             X_img=make_train_matr(path_s)
             X_img/=255
-            loger.debug("in make_train matr X_img",X_img.tolist())
+            loger.debug("in make_train matr X_img",str(X_img.tolist()))
             X_img=np.array(X_img, dtype='float64')
             # X_img-=np.mean(X_img, axis=0, dtype='float64')
             # X_img=np.std(X_img, axis=0)
-            loger.debug("in make train matr",X_img)
+            loger.debug("in make train matr",str(X_img))
             Y_img=[[1],[1],[1],[1]]
             # Y_img=[[1]]
             fit(nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 100, loger)
@@ -214,7 +214,8 @@ def vm(buffer:list, loger):
         elif op == make_img:
             out_nn=answer_nn_direct_on_contrary(nn_params_new, [1], 1)
             loger.debug("in make_img")
-            loger.debug("out_nn",out_nn)
+            loger.debug("out_nn",str(out_nn))  # Похоже 10_000 массивы трудно логирует
+            print("out_nn",str(out_nn))
             p_vec_tested=calc_out_nn(out_nn)
             p_2d_img = make_2d_arr(p_vec_tested)
             new_img = Image.fromarray(np.uint8(p_2d_img))
