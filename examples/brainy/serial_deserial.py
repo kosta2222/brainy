@@ -112,7 +112,7 @@ def dump_buffer(buffer, fname):
   loger.info("File writed")
   pos_bytecode = -1
 def deserialization_vm(nn_params:NN_params, buffer:list,loger):
-     loger.debug("*in vm*")
+     loger.debug("- in vm -")
 
      ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
@@ -207,7 +207,7 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
             print("in steck_fl (steck where we put float matrix elems)")
             print("[init in serial_deserial.deserialization_vm()]")
             loger.error("Probably! static memory error in steck_fl (steck where we put float matrix elems) [init in serial_deserial.deserialization_vm()]")
-            return 
+            return
         # показываем на следующую инструкцию
         ip+=1
         op = buffer[ip]
@@ -224,7 +224,7 @@ def deserialization(nn_params:NN_params, fname:str, loger):
         buf_str = f.read()
         if len(buf_str)>=len(buffer):
             print("Static memory error", end=' ')
-            print("in buffer-deserialization(buffer we read serealized net from file)")
+            print("in buffer deserialization(buffer we read serealized net from file)")
             print("[init in serial_deserial.deserialization()]")
             loger.error("Static memory error in buffer-deserialization (buffer we read serealized net from file)[init in serial_deserial.deserialization()]")
             return

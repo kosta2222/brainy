@@ -2,7 +2,20 @@ from .nn_constants import RELU_DERIV, RELU, TRESHOLD_FUNC, TRESHOLD_FUNC_DERIV, 
 SIGMOID, SIGMOID_DERIV, DEBUG, DEBUG_STR, INIT_W_HE, INIT_W_GLOROT_MY, INIT_W_HABR, INIT_W_MY, INIT_W_UNIFORM,\
     TAN, TAN_DERIV, INIT_W_HE_MY
 from .NN_params import NN_params
+from .nn_constants import max_rows_orOut_10
 import math
+
+def softmax_ret_vec(x:list, lay:NN_params.net):
+    out_vec=[0]*max_rows_orOut_10
+    sum_exp=0
+    for row in range(lay.out):
+        sum_exp+=math.exp(x[row])
+    for row in range(lay.out):
+        out_vec[row]=math.exp(x[row]) / sum_exp
+    return out_vec
+
+
+
 ready = False
 f=0
 # операции для функций активаций и их производных

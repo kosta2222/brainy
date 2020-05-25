@@ -6,7 +6,6 @@ from brainy.fit import fit
 from brainy.learn import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary
 from brainy.util import make_train_matr, make_2d_arr, calc_out_nn, get_logger
 import numpy as np
-import os
 from PIL import Image
 len_=10
 push_i = 0
@@ -214,7 +213,7 @@ def vm(buffer:list, loger):
         elif op == make_img:
             out_nn=answer_nn_direct_on_contrary(nn_params_new, [1], 1)
             loger.debug("in make_img")
-            loger.debug("out_nn",str(out_nn))  # Похоже 10_000 массивы трудно логирует
+            # loger.debug("out_nn",str(out_nn))  # Похоже 10_000 массивы трудно логирует
             print("out_nn",str(out_nn))
             p_vec_tested=calc_out_nn(out_nn)
             p_2d_img = make_2d_arr(p_vec_tested)

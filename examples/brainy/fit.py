@@ -1,7 +1,6 @@
 from .cross_val_eval import evaluate
 from .learn import train, get_min_square_err, get_mean
 import datetime as d
-from .util import get_logger
 """
 X и Y - означает матрицы обучения и ответов соответственно(массив с другими просто массивами)
 x*_ и  y*_ - вектор из этих матриц(просто массив)
@@ -23,9 +22,9 @@ def fit(nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_s
     gama = 1.01
     hei_Y = len(Y)
     E_spec = 0
-    logger.info( '------------')
+    logger.info( '--------------')
     logger.info(f'| Log started > {today_s}')
-    logger.info( '------------')
+    logger.info( '--------------')
     print(today_s)
     print(str(nn_params))
     logger.info(str(nn_params))
