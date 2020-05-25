@@ -116,7 +116,7 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
 
      ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
-     steck_fl = [0] * 400 # стек для временного размещения элементов матриц из файла потом этот стек
+     steck_fl = [0] * max_spec_elems_1000 * 1000 # стек для временного размещения элементов матриц из файла потом этот стек
         # сворачиваем в матрицу слоя после команды make_kernel
      ops_st = [0] * max_stack_otherOp_10 *2      # стек для количества входов и выходов (это целые числа)
      ip = 0
