@@ -5,13 +5,13 @@ from .NN_params import NN_params
 from .nn_constants import max_rows_orOut_10
 import math
 
-def softmax_ret_vec(x:list, lay:NN_params.net):
+def softmax_ret_vec(x:list, rows):
     out_vec=[0]*max_rows_orOut_10
     sum_exp=0
-    for row in range(lay.out):
-        sum_exp+=math.exp(x[row])
-    for row in range(lay.out):
-        out_vec[row]=math.exp(x[row]) / sum_exp
+    for i in range(rows):
+        sum_exp+=math.exp(x[i])
+    for i in range(rows):
+        out_vec[i]=math.exp(x[i]) / sum_exp
     return out_vec
 
 
