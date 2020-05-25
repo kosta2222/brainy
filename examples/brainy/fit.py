@@ -48,8 +48,8 @@ def fit(nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_s
                     A = alpha * A_t_minus_1
                 else:
                     A = beta * A_t_minus_1
-                    A_t_minus_1 = A
-                    E_spec_t_minus_1 = E_spec
+                A_t_minus_1 = A
+                E_spec_t_minus_1 = E_spec
             nn_params.lr = A
             logger.debug(f"learning rate {A}")
         mse = get_min_square_err(out_nn, y, nn_params.outpu_neurons)
