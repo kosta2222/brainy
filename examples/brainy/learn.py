@@ -45,7 +45,14 @@ def calc_hid_zero_lay(zeroLay:Lay,essential_gradients:list):
 def upd_matrix(nn_params:NN_params, objLay:Lay, entered_vals):
     for row in range(objLay.out):
         for elem in range(objLay.in_):
-            objLay.matrix[row][elem]-= nn_params.lr * objLay.errors[elem] * entered_vals[elem]
+            if nn_params.with_bias:
+                if elem==0:
+                   objLay.matrix[row][elem]-= nn_params.lr * objLay.errors[elem] * 1
+                else:
+                    objLay.matrix[row][elem]-= nn_params.lr * objLay.errors[elem] * entered_vals[row]
+            else:
+                objLay.matrix[row][elem] -= nn_params.lr * objLay.errors[elem] * entered_vals[row]
+
 def feed_forwarding(nn_params:NN_params,ok:bool, debug):
     make_hidden(nn_params, nn_params.net[0], nn_params.inputs, debug)
     for i in range(1,nn_params.nl_count):
