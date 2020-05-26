@@ -16,6 +16,7 @@ class  NN_params:
         self.targets=[0]*(max_rows_orOut_10)  # ответы от учителя
         self.out_errors = [0] * (max_rows_orOut_10)  # вектор ошибок слоя
         self.lr=0;  # коэффициент обучения
+        self.loss_func=NOP
         self.with_adap_lr = False
         self.with_bias = False
         self.act_fu = SIGMOID

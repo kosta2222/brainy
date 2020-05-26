@@ -1,13 +1,17 @@
 import math
 from .nn_constants import RELU, RELU_DERIV, INIT_W_HE, INIT_W_MY, SIGMOID, SIGMOID_DERIV, TAN, TAN_DERIV, INIT_W_GLOROT_MY,\
-INIT_W_HE_MY, SOFTMAX
+INIT_W_HE_MY, SOFTMAX, CROS_ENTROPY, MODIF_MSE
 from .NN_params import NN_params   # импортруем параметры сети
 from .Lay import Lay   # импортируем слой
 from .work_with_arr import copy_vector
 from .operations import operations, softmax_ret_vec
 def calc_out_error_k1_dCdZ0(nn_params:NN_params,objLay:Lay, targets:list):
-    for row in range(objLay.out):
-        nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(nn_params.act_fu + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
+    if objLay.act_func!=SOFTMAX and nn_params.loss_func==MODIF_MSE:
+      for row in range(objLay.out):
+        nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(objLay.act_fu + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
+    elif objLay.act_func==SOFTMAX and nn_params.loss_func==CROS_ENTROPY:
+        for row in range(objLay.out):
+            nn_params.out_errors[row] = (objLay.hidden[row] - targets[row])
 def calc_hid_error_k2_dXdZ(nn_params:NN_params, objLay:Lay, essential_gradients:list, entered_vals:list):
   try:
     for elem in range(objLay.in_):
