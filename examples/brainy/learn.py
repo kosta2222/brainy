@@ -138,7 +138,7 @@ def backpropagate(nn_params:NN_params):
             calc_hid_error_use_errors_ork1_k2_dXdZ(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.net[i+1].errors)
     calc_hid_zero_lay_use_errors(nn_params.net[0], nn_params.net[1])
     for i in range(nn_params.nl_count - 1, 0, -1):
-        upd_matrix_use_errors_k3_as_dZdW(nn_params, nn_params.net[i],  get_cost_signals(nn_params.net[i - 1]))
+        upd_matrix_use_errors_k3_as_dZdW(nn_params, nn_params.net[i],  get_hidden(nn_params.net[i - 1]))
     upd_matrix_use_errors_k3_as_dZdW(nn_params, nn_params.net[0], nn_params.inputs)
 # заполнить матрицу весов рандомными значениями по He, исходя из количесва входов и выходов,
 # записать результат в вектор слоев(параметр matrix), здесь проблема матрица неправильно заполняется
