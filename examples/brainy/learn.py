@@ -5,10 +5,10 @@ from .NN_params import NN_params   # импортруем параметры с�
 from .Lay import Lay   # импортируем слой
 from .work_with_arr import copy_vector
 from .operations import operations, softmax_ret_vec
-def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list):
+def calc_out_error_k1_dCdZ0(nn_params:NN_params,objLay:Lay, targets:list):
     for row in range(objLay.out):
         nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(nn_params.act_fu + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
-def calc_hid_error(nn_params:NN_params, objLay:Lay, essential_gradients:list, entered_vals:list):
+def calc_hid_error_k2_dZdw(nn_params:NN_params, objLay:Lay, essential_gradients:list, entered_vals:list):
   try:
     for elem in range(objLay.in_):
         for row in range(objLay.out):
@@ -38,11 +38,11 @@ def get_hidden(objLay:Lay):
     return objLay.hidden
 def get_essential_gradients(objLay:Lay):
     return objLay.errors
-def calc_hid_zero_lay(zeroLay:Lay,essential_gradients:list):
+def calc_hid_zero_lay_k1_dCdZ(zeroLay:Lay,essential_gradients:list):
     for elem in range(zeroLay.in_):
         for row in range(zeroLay.out):
             zeroLay.errors[elem]+=essential_gradients[row] * zeroLay.matrix[row][elem]
-def upd_matrix(nn_params:NN_params, objLay:Lay, entered_vals):
+def upd_matrix_use_k1_k2(nn_params:NN_params, objLay:Lay, entered_vals):
     for row in range(objLay.out):
         for elem in range(objLay.in_):
             if nn_params.with_bias:
@@ -126,16 +126,16 @@ def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug)
         objLay.hidden[elem] = val
         tmp_v = 0
 def backpropagate(nn_params:NN_params):
-    calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
+    calc_out_error_k1_dCdZ0(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
     for i in range(nn_params.nl_count - 1, 0, -1):
         if i == nn_params.nl_count - 1:
-           calc_hid_error(nn_params, nn_params.net[i], nn_params.out_errors, get_cost_signals(nn_params.net[i - 1]))
+           calc_hid_error_k2_dZdw(nn_params, nn_params.net[i], nn_params.out_errors, get_cost_signals(nn_params.net[i - 1]))
         else:
-            calc_hid_error(nn_params, nn_params.net[i], get_essential_gradients(nn_params.net[i + 1]), get_cost_signals(nn_params.net[i - 1]))
-    calc_hid_zero_lay(nn_params.net[0], get_essential_gradients(nn_params.net[1]))
+            calc_hid_error_k2_dZdw(nn_params, nn_params.net[i], get_essential_gradients(nn_params.net[i + 1]), get_cost_signals(nn_params.net[i - 1]))
+    calc_hid_zero_lay_k1_dCdZ(nn_params.net[0], get_essential_gradients(nn_params.net[1]))
     for i in range(nn_params.nl_count - 1, 0, -1):
-        upd_matrix(nn_params, nn_params.net[i],  get_cost_signals(nn_params.net[i - 1]))
-    upd_matrix(nn_params, nn_params.net[0], nn_params.inputs)
+        upd_matrix_use_k1_k2(nn_params, nn_params.net[i],  get_cost_signals(nn_params.net[i - 1]))
+    upd_matrix_use_k1_k2(nn_params, nn_params.net[0], nn_params.inputs)
 # заполнить матрицу весов рандомными значениями по He, исходя из количесва входов и выходов,
 # записать результат в вектор слоев(параметр matrix), здесь проблема матрица неправильно заполняется
 def set_io(nn_params:NN_params, objLay:Lay, inputs, outputs):
