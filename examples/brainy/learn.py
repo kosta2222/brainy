@@ -12,17 +12,17 @@ def calc_out_error_k1_dCdZ0(nn_params:NN_params,objLay:Lay, targets:list):
     elif objLay.act_func==SOFTMAX and nn_params.loss_func==CROS_ENTROPY:
         for row in range(objLay.out):
             nn_params.out_errors[row] = (objLay.hidden[row] - targets[row])
-def calc_hid_error_k2_dXdZ(nn_params:NN_params, objLay:Lay, essential_gradients:list, entered_vals:list):
+def calc_hid_error_k2_dXdZ(nn_params:NN_params,prev_lef_lay:Lay, objLay:Lay, past_right_lay:Lay):
   try:
     for elem in range(objLay.in_):
         for row in range(objLay.out):
             if nn_params.with_bias:
                 if elem==0:
-                  objLay.errors[elem]+=essential_gradients[row] * objLay.matrix[row][elem]
+                  objLay.errors[elem]+=past_right_lay.errors[row] * objLay.matrix[row][elem]
                 else:
-                    objLay.errors[elem]+=essential_gradients[row] * objLay.matrix[row][elem]  * operations(nn_params.act_fu + 1, entered_vals[elem], 0, 0, 0, "", nn_params)
+                    objLay.errors[elem]+=past_right_lay.errors[row] * objLay.matrix[row][elem]  * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
             else:
-                objLay.errors[elem] += essential_gradients[row] * objLay.matrix[row][elem] * operations(nn_params.act_fu + 1, entered_vals[elem], 0, 0, 0, "", nn_params)
+                objLay.errors[elem] += past_right_lay.errors[row] * objLay.matrix[row][elem] * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
   except Exception as e:
       print("in calc hid err Exc")
       print("el",elem)
@@ -42,10 +42,10 @@ def get_hidden(objLay:Lay):
     return objLay.hidden
 def get_essential_gradients(objLay:Lay):
     return objLay.errors
-def calc_hid_zero_lay_k1_dCdZ(zeroLay:Lay,essential_gradients:list):
+def calc_hid_zero_lay_k1_dCdZ(zeroLay:Lay,past_right_lay:Lay):
     for elem in range(zeroLay.in_):
         for row in range(zeroLay.out):
-            zeroLay.errors[elem]+=essential_gradients[row] * zeroLay.matrix[row][elem]
+            zeroLay.errors[elem]+=past_right_lay.errors[row] * zeroLay.matrix[row][elem]
 def upd_matrix_use_errors_k3_as_dZdW(nn_params:NN_params, objLay:Lay, entered_vals):
     for row in range(objLay.out):
         for elem in range(objLay.in_):
