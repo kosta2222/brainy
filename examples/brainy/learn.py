@@ -1,10 +1,10 @@
 import math
 from .nn_constants import RELU, RELU_DERIV, INIT_W_HE, INIT_W_MY, SIGMOID, SIGMOID_DERIV, TAN, TAN_DERIV, INIT_W_GLOROT_MY,\
-INIT_W_HE_MY
+INIT_W_HE_MY, SOFTMAX
 from .NN_params import NN_params   # импортруем параметры сети
 from .Lay import Lay   # импортируем слой
 from .work_with_arr import copy_vector
-from .operations import operations
+from .operations import operations, softmax_ret_vec
 def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list):
     for row in range(objLay.out):
         nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(nn_params.act_fu + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
@@ -93,9 +93,12 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
                 tmp_v+=objLay.matrix[row][elem] * inputs[elem]
 
         objLay.cost_signals[row] = tmp_v
-        val = operations(nn_params.act_fu,tmp_v, 0, 0, 0, "", nn_params)
-        objLay.hidden[row] = val
+        if objLay.act_func!=SOFTMAX:
+           val = operations(nn_params.act_fu,tmp_v, 0, 0, 0, "", nn_params)
+           objLay.hidden[row] = val
         tmp_v = 0
+    if objLay.act_func==SOFTMAX:
+        objLay.hidden=softmax_ret_vec(objLay.cost_signals,Lay.out)
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug):
     tmp_v = 0
     val = 0

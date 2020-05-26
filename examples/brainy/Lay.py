@@ -1,4 +1,4 @@
-from .nn_constants import max_in_nn_1000, max_rows_orOut_10, max_spec_elems_1000
+from .nn_constants import max_in_nn_1000, max_rows_orOut_10, max_spec_elems_1000, RELU
 # Слой сети
 class Lay:
     # in_ = None# количество входов слоя
@@ -8,6 +8,7 @@ class Lay:
         self.out = None  # количество выходов слоя
         self.matrix = list([])  # матрица весов
         self.cost_signals = [0] * max_spec_elems_1000 *10 # вектор взвешенного состояния нейронов
+        self.act_func=RELU
         self.hidden = [0] * max_spec_elems_1000 * 10  # вектор после функции активации
         self.errors = [0] * max_spec_elems_1000 * 10 # вектор ошибок слоя
         for row in range(max_rows_orOut_10):# создаем матрицу весов
