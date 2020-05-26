@@ -71,3 +71,5 @@ def operations( op , a, b, c, d, str_, nn_params:NN_params):
         return beta_tan / alpha_tan * (alpha_tan * alpha_tan - f * f)
     elif op == DEBUG_STR:
         print("%s\n"%str_)
+    else:
+        print("Op or function does not support ",op)

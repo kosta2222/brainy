@@ -12,17 +12,17 @@ def calc_out_error_k1_dCdZ0(nn_params:NN_params,objLay:Lay, targets:list):
     elif objLay.act_func==SOFTMAX and nn_params.loss_func==CROS_ENTROPY:
         for row in range(objLay.out):
             nn_params.out_errors[row] = (objLay.hidden[row] - targets[row])
-def calc_hid_error_k2_dXdZ(nn_params:NN_params,prev_lef_lay:Lay, objLay:Lay, past_right_lay:Lay):
+def calc_hid_error_use_errors_ork1_k2_dXdZ(nn_params:NN_params,prev_lef_lay:Lay, objLay:Lay, errors):
   try:
     for elem in range(objLay.in_):
         for row in range(objLay.out):
             if nn_params.with_bias:
                 if elem==0:
-                  objLay.errors[elem]+=past_right_lay.errors[row] * objLay.matrix[row][elem]
+                  objLay.errors[elem]+=errors[row] * objLay.matrix[row][elem]
                 else:
-                    objLay.errors[elem]+=past_right_lay.errors[row] * objLay.matrix[row][elem]  * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
+                    objLay.errors[elem]+=errors[row] * objLay.matrix[row][elem]  * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
             else:
-                objLay.errors[elem] += past_right_lay.errors[row] * objLay.matrix[row][elem] * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
+                objLay.errors[elem] += errors[row] * objLay.matrix[row][elem] * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
   except Exception as e:
       print("in calc hid err Exc")
       print("el",elem)
@@ -42,7 +42,7 @@ def get_hidden(objLay:Lay):
     return objLay.hidden
 def get_essential_gradients(objLay:Lay):
     return objLay.errors
-def calc_hid_zero_lay_k1_dCdZ(zeroLay:Lay,past_right_lay:Lay):
+def calc_hid_zero_lay_use_errors(zeroLay:Lay,past_right_lay:Lay):
     for elem in range(zeroLay.in_):
         for row in range(zeroLay.out):
             zeroLay.errors[elem]+=past_right_lay.errors[row] * zeroLay.matrix[row][elem]
@@ -133,10 +133,10 @@ def backpropagate(nn_params:NN_params):
     calc_out_error_k1_dCdZ0(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
     for i in range(nn_params.nl_count - 1, 0, -1):
         if i == nn_params.nl_count - 1:
-           calc_hid_error_k2_dXdZ(nn_params, nn_params.net[i], nn_params.out_errors, get_cost_signals(nn_params.net[i - 1]))
+           calc_hid_error_use_errors_ork1_k2_dXdZ(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.out_errors)
         else:
-            calc_hid_error_k2_dXdZ(nn_params, nn_params.net[i], get_essential_gradients(nn_params.net[i + 1]), get_cost_signals(nn_params.net[i - 1]))
-    calc_hid_zero_lay_k1_dCdZ(nn_params.net[0], get_essential_gradients(nn_params.net[1]))
+            calc_hid_error_use_errors_ork1_k2_dXdZ(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.net[i+1].errors)
+    calc_hid_zero_lay_use_errors(nn_params.net[0], nn_params.net[1])
     for i in range(nn_params.nl_count - 1, 0, -1):
         upd_matrix_use_errors_k3_as_dZdW(nn_params, nn_params.net[i],  get_cost_signals(nn_params.net[i - 1]))
     upd_matrix_use_errors_k3_as_dZdW(nn_params, nn_params.net[0], nn_params.inputs)
