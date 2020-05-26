@@ -12,10 +12,13 @@ def calc_hid_error(nn_params:NN_params, objLay:Lay, essential_gradients:list, en
   try:
     for elem in range(objLay.in_):
         for row in range(objLay.out):
-            objLay.errors[elem]+=\
-                essential_gradients[row] * \
-                objLay.matrix[row][elem]  * \
-                operations(nn_params.act_fu + 1, entered_vals[elem], 0, 0, 0, "", nn_params)
+            if nn_params.with_bias:
+                if elem==0:
+                  objLay.errors[elem]+=essential_gradients[row] * objLay.matrix[row][elem]
+                else:
+                    objLay.errors[elem]+=essential_gradients[row] * objLay.matrix[row][elem]  * operations(nn_params.act_fu + 1, entered_vals[elem], 0, 0, 0, "", nn_params)
+            else:
+                objLay.errors[elem] += essential_gradients[row] * objLay.matrix[row][elem] * operations(nn_params.act_fu + 1, entered_vals[elem], 0, 0, 0, "", nn_params)
   except Exception as e:
       print("in calc hid err Exc")
       print("el",elem)
