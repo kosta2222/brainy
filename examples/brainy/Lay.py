@@ -1,9 +1,13 @@
 from .nn_constants import max_in_nn_1000, max_rows_orOut_10, max_spec_elems_1000, RELU
-# Слой сети
 class Lay:
+    def __init__(self):
+        self.des='b' #  base
+# Слой сети
+class Dense(Lay):
     # in_ = None# количество входов слоя
     # out = None# количество выходов слоя
     def __init__(self):# конструктор
+        self.des='d'
         self.in_ = None  # количество входов слоя
         self.out = None  # количество выходов слоя
         self.matrix = list([])  # матрица весов

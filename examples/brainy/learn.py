@@ -92,26 +92,27 @@ def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
     return out_nn
 # Получить вектор входов, сделать матричный продукт и матричный продукт пропустить через функцию активации,
 # записать этот вектор в параметр слоя сети(hidden)
-def make_hidden(nn_params, objLay:Lay, inputs:list, debug):
-    tmp_v = 0
-    val = 0
-    for row in range(objLay.out):
-        for elem in range(objLay.in_):
-            if nn_params.with_bias:
-               if elem==0:
-                  tmp_v+=objLay.matrix[row][elem]
-               else:
-                  tmp_v+=objLay.matrix[row][elem] * inputs[elem]
-            else:
-                tmp_v+=objLay.matrix[row][elem] * inputs[elem]
-
-        objLay.cost_signals[row] = tmp_v
-        if objLay.act_func!=SOFTMAX:
-           val = operations(nn_params.act_fu,tmp_v, 0, 0, 0, "", nn_params)
-           objLay.hidden[row] = val
+def make_hidden(nn_params, objLay:Lay, inputs:list):
+    if objLay.des=='d':
         tmp_v = 0
-    if objLay.act_func==SOFTMAX:
-        objLay.hidden=softmax_ret_vec(objLay.cost_signals,Lay.out)
+        val = 0
+        for row in range(objLay.out):
+            for elem in range(objLay.in_):
+                if nn_params.with_bias:
+                   if elem==0:
+                      tmp_v+=objLay.matrix[row][elem]
+                   else:
+                      tmp_v+=objLay.matrix[row][elem] * inputs[elem]
+                else:
+                    tmp_v+=objLay.matrix[row][elem] * inputs[elem]
+
+            objLay.cost_signals[row] = tmp_v
+            if objLay.act_func!=SOFTMAX:
+               val = operations(nn_params.act_fu,tmp_v, 0, 0, 0, "", nn_params)
+               objLay.hidden[row] = val
+            tmp_v = 0
+        if objLay.act_func==SOFTMAX:
+             objLay.hidden=softmax_ret_vec(objLay.cost_signals,Lay.out)
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug):
     tmp_v = 0
     val = 0
@@ -162,3 +163,14 @@ def initiate_layers(nn_params:NN_params,network_map:tuple,size):
             in_ = network_map[i]
         out = network_map[i + 1]
         set_io(nn_params, nn_params.net[i], in_, out)
+
+def cr_lay(loger,nn_params:NN_params, type_='D', in_=0, out=0, act_func=None):
+    i=-1
+    if type_=='D':
+        i+=1
+        nn_params.sp_d+=1
+        dense=nn_params.denses[nn_params.sp_d]
+        nn_params.net[i]=dense
+        nn_params.net[i].in_=in_
+        nn_params.net[i].out=out
+        nn_params.net[i].act_func=act_func

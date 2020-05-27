@@ -1,14 +1,18 @@
 #NN_params.[py]
 from .nn_constants import max_in_nn_1000,max_trainSet_rows,max_validSet_rows,max_rows_orOut_10,\
     max_am_layer,max_am_epoch,max_am_objMse,max_stack_matrEl,max_stack_otherOp_10,bc_bufLen, NOP, SIGMOID
-from .Lay import Lay
+from .Lay import Lay, Dense
 # Параметры сети
 class  NN_params:
     def __init__(self):
         self.net=[]
+        self.denses=[]
         for i in range(max_am_layer):
             ob_lay=Lay()
             self.net.append(ob_lay)  # вектор слоев
+        for i in range(max_am_layer):
+            self.denses.append(Dense())
+        self.sp_d=-1
         self.input_neurons=0  # количество выходных нейронов
         self.outpu_neurons=0  # количество входных нейронов
         self.nl_count=0  # количество слоев
