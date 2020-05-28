@@ -92,7 +92,7 @@ def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
     return out_nn
 # Получить вектор входов, сделать матричный продукт и матричный продукт пропустить через функцию активации,
 # записать этот вектор в параметр слоя сети(hidden)
-def make_hidden(nn_params, objLay:Lay, inputs:list):
+def make_hidden(nn_params, objLay:Lay, inputs:list, loger):
     if objLay.des=='d':
         tmp_v = 0
         val = 0
@@ -113,7 +113,7 @@ def make_hidden(nn_params, objLay:Lay, inputs:list):
             tmp_v = 0
         if objLay.act_func==SOFTMAX:
              objLay.hidden=softmax_ret_vec(objLay.cost_signals,Lay.out)
-def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, debug):
+def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list):
     tmp_v = 0
     val = 0
     for row in range(objLay.out):
@@ -165,12 +165,16 @@ def initiate_layers(nn_params:NN_params,network_map:tuple,size):
         set_io(nn_params, nn_params.net[i], in_, out)
 
 def cr_lay(loger,nn_params:NN_params, type_='D', in_=0, out=0, act_func=None):
-    i=-1
+    i=0
     if type_=='D':
-        i+=1
+        nn_params.sp_l+=1
+        i=nn_params.sp_l
         nn_params.sp_d+=1
         dense=nn_params.denses[nn_params.sp_d]
         nn_params.net[i]=dense
         nn_params.net[i].in_=in_
         nn_params.net[i].out=out
         nn_params.net[i].act_func=act_func
+        loger.debug(nn_params.net[i])
+        # print("",nn_params.net[i])
+        return i

@@ -3,7 +3,10 @@ import logging
 import numpy as np
 import os
 from PIL import Image
+import datetime as d
 def get_logger(level_,fname,module):
+    today=d.datetime.today()
+    today_s=today.strftime('%x %X')
     logger = None
     logger = logging.getLogger(module)
     if level_ == 'debug':
@@ -11,7 +14,7 @@ def get_logger(level_,fname,module):
 
     elif level_ == 'release':
         logging.basicConfig(level=logging.INFO, filename=fname, filemode='w')
-    return logger
+    return logger, today_s
 
 def calc_list(list_:list):
     cn_elem = -1
@@ -63,3 +66,17 @@ def _0_(str_):
     print("Success ->", end = " ")
     print("function",str_)
     return "Success ->function {}".format(str_)
+
+def print_obj(name_obj_s,dict_obj:dict,si=50)->str:
+    si=si
+    res=''
+    for k,v in dict_obj.items():
+        if (not isinstance(v,int)) and (not isinstance(v, float)) and (not isinstance(v, bool)):
+            assert('v_maybe_matrix','v_maybe_matrix')
+            if len(v)>si or (isinstance(v[0], list) and len(v[0])>si):
+               res+=k+' = '+ '<size of {0} [or list[0] ] is greater {1}>\n'.format(type(v), si)
+               continue
+        res+=k+' = '+str(v)
+        res+='\n'
+    return name_obj_s+':\n'+res
+

@@ -1,4 +1,5 @@
 from .nn_constants import max_in_nn_1000, max_rows_orOut_10, max_spec_elems_1000, RELU
+from .util import print_obj
 class Lay:
     def __init__(self):
         self.des='b' #  base
@@ -18,3 +19,5 @@ class Dense(Lay):
         for row in range(max_rows_orOut_10):# создаем матрицу весов
             self.inner_m = list([0] * (max_in_nn_1000*10))  # подготовка матрицы весов,внутренняя матрица
             self.matrix.append(self.inner_m)
+    def __repr__(self):
+        return print_obj('Dense',self.__dict__)

@@ -12,6 +12,7 @@ class  NN_params:
             self.net.append(ob_lay)  # вектор слоев
         for i in range(max_am_layer):
             self.denses.append(Dense())
+        self.sp_l=-1
         self.sp_d=-1
         self.input_neurons=0  # количество выходных нейронов
         self.outpu_neurons=0  # количество входных нейронов
