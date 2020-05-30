@@ -6,6 +6,7 @@ from .Lay import Lay, Dense   # импортируем слой
 from .work_with_arr import copy_vector
 from .operations import operations, softmax_ret_vec
 from .work_with_arr import copy_vector
+import logging
 def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list):
     assert("find_k1_as_dCdZ0","find_k1_as_dCdZ0")
     if objLay.act_func!=SOFTMAX and nn_params.loss_func==MODIF_MSE:
@@ -119,29 +120,31 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, loger):
         if objLay.act_func==SOFTMAX:
             ret_vec=softmax_ret_vec(objLay.cost_signals,objLay.out)
             copy_vector(ret_vec, objLay.hidden, objLay.out )
-def make_hidden_on_contrary(nn_params:NN_params, objLay:Dense, inputs:list, loger):
+def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, loger:logging.Logger):
     tmp_v = 0
     val = 0
     tmp_v=0
-    tmp_v=objLay.in_
-    objLay.in_=objLay.out
-    objLay.out=tmp_v
-    for row in range(objLay.out):
-        for elem in range(objLay.in_):
-            if nn_params.with_bias:
-               if elem == 0:
-                  tmp_v+=objLay.matrix[row][elem]
-               else:
-                  tmp_v+=objLay.matrix[row][elem] * inputs[elem]
-            else:
-                tmp_v+=objLay.matrix[row][elem] * inputs[elem]
-        objLay.cost_signals[row] = tmp_v
-        val = operations(nn_params.act_fu, tmp_v, 0, 0, 0, "", nn_params)
-        objLay.hidden[row] = val
-        tmp_v = 0
-        if objLay.act_func == SOFTMAX:
-               ret_vec = softmax_ret_vec(objLay.cost_signals, objLay.out)
-               copy_vector(ret_vec, objLay.hidden, objLay.out)
+    if objLay.des=='d':
+        tmp_v=objLay.in_
+        objLay.in_=objLay.out
+        objLay.out=tmp_v
+        for row in range(objLay.out):
+            for elem in range(objLay.in_):
+                if nn_params.with_bias:
+                   if elem == 0:
+                      tmp_v+=objLay.matrix[row][elem]
+                   else:
+                      tmp_v+=objLay.matrix[row][elem] * inputs[elem]
+                else:
+                    tmp_v+=objLay.matrix[row][elem] * inputs[elem]
+            objLay.cost_signals[row] = tmp_v
+            val = operations(nn_params.act_fu, tmp_v, 0, 0, 0, "", nn_params)
+            objLay.hidden[row] = val
+            tmp_v = 0
+            if objLay.act_func == SOFTMAX:
+                   loger.debug('op')
+                   ret_vec = softmax_ret_vec(objLay.cost_signals, objLay.out)
+                   copy_vector(ret_vec, objLay.hidden, objLay.out)
 def backpropagate(nn_params:NN_params):
     calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
     for i in range(nn_params.nl_count - 1, 0, -1):
