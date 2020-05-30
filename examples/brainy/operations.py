@@ -5,6 +5,7 @@ from .NN_params import NN_params
 from .nn_constants import max_rows_orOut_10
 import math
 
+
 def softmax_ret_vec(x:list, rows):
     out_vec=[0]*max_rows_orOut_10
     sum_exp=0

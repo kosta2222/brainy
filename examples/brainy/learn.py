@@ -5,6 +5,7 @@ from .NN_params import NN_params   # импортруем параметры с�
 from .Lay import Lay   # импортируем слой
 from .work_with_arr import copy_vector
 from .operations import operations, softmax_ret_vec
+from .work_with_arr import copy_vector
 def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list):
     assert("find_k1_as_dCdZ0","find_k1_as_dCdZ0")
     if objLay.act_func!=SOFTMAX and nn_params.loss_func==MODIF_MSE:
@@ -23,6 +24,14 @@ def get_min_square_err(out_nn:list,teacher_answ:list,n):
     for row in range(n):
         sum+=math.pow((out_nn[row] - teacher_answ[row]),2)
     return sum / n
+def get_cros_entropy(ans, targ, n):
+    E=0
+    for row in range(n):
+        if targ[row]==1:
+            E-=math.log(ans[row],math.e)
+        else:
+            E-=(1-math.log(ans[row],math.e))
+    return E
 def get_mean(l1:list, l2:list, n):
     sum=0
     for row in range(n):
@@ -34,7 +43,7 @@ def get_hidden(objLay:Lay):
     return objLay.hidden
 def get_essential_gradients(objLay:Lay):
     return objLay.errors
-def calc_hid_zero_lay_use_errors(zeroLay:Lay,past_right_lay:Lay):
+def calc_hid_zero_lay(zeroLay:Lay,past_right_lay:Lay):
     for elem in range(zeroLay.in_):
         for row in range(zeroLay.out):
             zeroLay.errors[elem]+=past_right_lay.errors[row] * zeroLay.matrix[row][elem]
@@ -50,10 +59,13 @@ def upd_matrix(nn_params:NN_params, objLay:Lay, entered_vals):
             else:
                 objLay.matrix[row][elem] -= nn_params.lr * objLay.errors[elem] * entered_vals[row]
 
-def feed_forwarding(nn_params:NN_params,ok:bool, debug):
-    make_hidden(nn_params, nn_params.net[0], nn_params.inputs, debug)
-    for i in range(1,nn_params.nl_count):
-        make_hidden(nn_params, nn_params.net[i], get_hidden(nn_params.net[i - 1]), debug)
+def feed_forwarding(nn_params:NN_params,ok:bool, loger):
+    if nn_params.nl_count==1:
+       make_hidden(nn_params, nn_params.net[0], nn_params.inputs, None)
+    else:
+      make_hidden(nn_params, nn_params.net[0], nn_params.inputs, None)
+      for i in range(1,nn_params.nl_count):
+        make_hidden(nn_params, nn_params.net[i], get_hidden(nn_params.net[i - 1]), None)
     if ok:
         for i in range(nn_params.outpu_neurons):
             pass
@@ -105,7 +117,8 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, loger):
                objLay.hidden[row] = val
             tmp_v = 0
         if objLay.act_func==SOFTMAX:
-             objLay.hidden=softmax_ret_vec(objLay.cost_signals,objLay.out)
+            ret_vec=softmax_ret_vec(objLay.cost_signals,objLay.out)
+            copy_vector(ret_vec, objLay.hidden, objLay.out )
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list):
     tmp_v = 0
     val = 0
@@ -130,7 +143,7 @@ def backpropagate(nn_params:NN_params):
            calc_hid_error(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.out_errors)
         else:
             calc_hid_error(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.net[i+1].errors)
-    calc_hid_zero_lay_use_errors(nn_params.net[0], nn_params.net[1])
+    calc_hid_zero_lay(nn_params.net[0], nn_params.net[1])
     for i in range(nn_params.nl_count - 1, 0, -1):
         upd_matrix(nn_params, nn_params.net[i],  get_hidden(nn_params.net[i - 1]))
     upd_matrix(nn_params, nn_params.net[0], nn_params.inputs)
@@ -169,6 +182,7 @@ def cr_lay(loger,nn_params:NN_params, type_='D', in_=0, out=0, act_func=None):
         nn_params.net[i].out=out
         nn_params.net[i].act_func=act_func
         set_io(nn_params,nn_params.net[i],in_,out)
+        nn_params.nl_count+=1
         loger.debug(nn_params.net[i])
         # print("",nn_params.net[i])
         return i

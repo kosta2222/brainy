@@ -17,7 +17,7 @@ def get_logger(level_,fname,module):
     return logger, today_s
 
 def calc_list(list_:list):
-    cn_elem = -1
+    cn_elem = 0
     for i in range(len(list_)):
         elem=list_[i]
         cn_elem+=1
@@ -71,7 +71,7 @@ def print_obj(name_obj_s,dict_obj:dict,si=50)->str:
     si=si
     res=''
     for k,v in dict_obj.items():
-        if (not isinstance(v,int)) and (not isinstance(v, float)) and (not isinstance(v, bool)):
+        if (not isinstance(v,int)) and (not isinstance(v, float)) and (not isinstance(v, bool)) and v!=None:
             assert('v_maybe_matrix','v_maybe_matrix')
             if len(v)>si or (isinstance(v[0], list) and len(v[0])>si):
                res+=k+' = '+ '<size of {0} [or list[0] ] is greater {1}>\n'.format(type(v), si)
