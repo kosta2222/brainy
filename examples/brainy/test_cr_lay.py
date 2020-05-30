@@ -3,7 +3,7 @@ from brainy.learn import cr_lay
 from brainy.nn_constants import RELU, SOFTMAX
 from brainy.NN_params import NN_params
 from brainy.util import get_logger
-from brainy.learn import make_hidden, feed_forwarding
+from brainy.learn import make_hidden, feed_forwarding, feed_forwarding_on_contrary
 
 loger, date= get_logger("debug", "new.log", __name__)
 
@@ -21,4 +21,9 @@ class TestCr_lay(TestCase):
         feed_forwarding(nn_params, True, loger)
         loger.debug(f'hidden[:3] {nn_params.net[i].hidden[:3]}')
         loger.debug(nn_params)
-        # self.fail()
+        nn_params.net[i].hidden[:3]=(0, 0, 0)
+        loger.info('\n---')
+        nn_params.inputs=[0.333,0.333,0.333]
+        feed_forwarding_on_contrary(nn_params,True,loger)
+        loger.debug(nn_params)
+        loger.debug(f'hidden_contr[:3] {nn_params.net[i].hidden[:3]}')
