@@ -4,6 +4,7 @@ import numpy as np
 import os
 from PIL import Image
 import datetime as d
+from functools import wraps
 def get_logger(level_,fname,module):
     today=d.datetime.today()
     today_s=today.strftime('%x %X')
@@ -79,4 +80,11 @@ def print_obj(name_obj_s,dict_obj:dict,si=50)->str:
         res+=k+' = '+str(v)
         res+='\n'
     return name_obj_s+':\n'+res
+
+def tmp_wrap(func):
+    @wraps(func)
+    def tmp(*args, **kwargs):
+        print(func.__name__)
+        return func(*args, **kwargs)
+    return tmp
 

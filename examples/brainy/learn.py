@@ -62,11 +62,11 @@ def upd_matrix(nn_params:NN_params, objLay:Lay, entered_vals):
 
 def feed_forwarding(nn_params:NN_params,ok:bool, loger):
     if nn_params.nl_count==1:
-       make_hidden(nn_params, nn_params.net[0], nn_params.inputs, None)
+       make_hidden(nn_params, nn_params.net[0], nn_params.inputs, loger)
     else:
-      make_hidden(nn_params, nn_params.net[0], nn_params.inputs, None)
+      make_hidden(nn_params, nn_params.net[0], nn_params.inputs, loger)
       for i in range(1,nn_params.nl_count):
-        make_hidden(nn_params, nn_params.net[i], get_hidden(nn_params.net[i - 1]), None)
+        make_hidden(nn_params, nn_params.net[i], get_hidden(nn_params.net[i - 1]), loger)
     if ok:
         for i in range(nn_params.outpu_neurons):
             pass
@@ -98,7 +98,9 @@ def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
     return out_nn
 # Получить вектор входов, сделать матричный продукт и матричный продукт пропустить через функцию активации,
 # записать этот вектор в параметр слоя сети(hidden)
-def make_hidden(nn_params, objLay:Lay, inputs:list, loger):
+def make_hidden(nn_params, objLay:Lay, inputs:list, loger:logging.Logger):
+    loger.debug('make_hidden\n')
+    loger.debug(f'lay {objLay.des}\n')
     if objLay.des=='d':
         tmp_v = 0
         val = 0
@@ -111,15 +113,17 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, loger):
                       tmp_v+=objLay.matrix[row][elem] * inputs[elem]
                 else:
                     tmp_v+=objLay.matrix[row][elem] * inputs[elem]
-
             objLay.cost_signals[row] = tmp_v
             if objLay.act_func!=SOFTMAX:
                val = operations(nn_params.act_fu,tmp_v, 0, 0, 0, "", nn_params)
                objLay.hidden[row] = val
             tmp_v = 0
         if objLay.act_func==SOFTMAX:
+            loger.debug('op')
             ret_vec=softmax_ret_vec(objLay.cost_signals,objLay.out)
             copy_vector(ret_vec, objLay.hidden, objLay.out )
+        loger.debug(f'cost s : {objLay.cost_signals[:10]}\n')
+        loger.debug(f'hid s : {objLay.hidden[:10]}\n')
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, loger:logging.Logger):
     tmp_v = 0
     val = 0
