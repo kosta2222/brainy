@@ -1,6 +1,6 @@
 import math
 from .nn_constants import RELU, RELU_DERIV, INIT_W_HE, INIT_W_MY, SIGMOID, SIGMOID_DERIV, TAN, TAN_DERIV, INIT_W_GLOROT_MY,\
-INIT_W_HE_MY, SOFTMAX, CROS_ENTROPY, MODIF_MSE
+INIT_W_HE_MY, SOFTMAX, CROS_ENTROPY, MODIF_MSE, INIT_W_MY_DEB
 from .NN_params import NN_params   # импортруем параметры сети
 from .Lay import Lay, Dense   # импортируем слой
 from .work_with_arr import copy_vector

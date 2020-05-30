@@ -1,6 +1,6 @@
 from .nn_constants import RELU_DERIV, RELU, TRESHOLD_FUNC, TRESHOLD_FUNC_DERIV, LEAKY_RELU, LEAKY_RELU_DERIV,\
 SIGMOID, SIGMOID_DERIV, DEBUG, DEBUG_STR, INIT_W_HE, INIT_W_GLOROT_MY, INIT_W_HABR, INIT_W_MY, INIT_W_UNIFORM,\
-    TAN, TAN_DERIV, INIT_W_HE_MY
+    TAN, TAN_DERIV, INIT_W_HE_MY, INIT_W_MY_DEB
 from .NN_params import NN_params
 from .nn_constants import max_rows_orOut_10
 import math
@@ -70,7 +70,7 @@ def operations( op , a, b, c, d, str_, nn_params:NN_params):
         return  f
     elif op == TAN_DERIV:
         return beta_tan / alpha_tan * (alpha_tan * alpha_tan - f * f)
-    elif op == DEBUG_STR:
-        print("%s\n"%str_)
+    elif op == INIT_W_MY_DEB:
+        return 2
     else:
         print("Op or function does not support ",op)
