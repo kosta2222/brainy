@@ -11,7 +11,7 @@ def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list):
     assert("find_k1_as_dCdZ0","find_k1_as_dCdZ0")
     if objLay.act_func!=SOFTMAX and nn_params.loss_func==MODIF_MSE:
       for row in range(objLay.out):
-        nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(objLay.act_fu + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
+        nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(objLay.act_func + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
     elif objLay.act_func==SOFTMAX and nn_params.loss_func==CROS_ENTROPY:
         for row in range(objLay.out):
             nn_params.out_errors[row] = (objLay.hidden[row] - targets[row])
@@ -19,7 +19,7 @@ def calc_hid_error(nn_params:NN_params,prev_lef_lay:Lay, objLay:Lay, errors):
     assert("find_drowCdelemW_usingK1_and_prororc_dXdZ","find_drowCdelemW_usingK1_and_prororc_dXdZ")
     for elem in range(objLay.in_):
         for row in range(objLay.out):
-              objLay.errors[elem] += errors[row] * objLay.matrix[row][elem] * operations(prev_lef_lay.act_fu + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
+              objLay.errors[elem] += errors[row] * objLay.matrix[row][elem] * operations(prev_lef_lay.act_func + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
 def get_min_square_err(out_nn:list,teacher_answ:list,n):
     sum=0
     for row in range(n):
@@ -82,14 +82,14 @@ def feed_forwarding_on_contrary(nn_params:NN_params, ok:bool, loger):
             pass
             # print("%d item val %f"%(i + 1,nn_params.net[0].hidden[i]))
         return nn_params.net[0].hidden
-def train(nn_params:NN_params,in_:list,targ:list, debug):
+def train(nn_params:NN_params,in_:list,targ:list, loger):
     copy_vector(in_,nn_params.inputs,nn_params.input_neurons)
     copy_vector(targ,nn_params.targets,nn_params.outpu_neurons)
-    feed_forwarding(nn_params,False, debug)
-def answer_nn_direct(nn_params:NN_params,in_:list, debug):
+    feed_forwarding(nn_params,False, loger)
+def answer_nn_direct(nn_params:NN_params,in_:list, loger):
     out_nn = None
     copy_vector(in_,nn_params.inputs,nn_params.input_neurons)
-    out_nn=feed_forwarding(nn_params,True, debug)
+    out_nn=feed_forwarding(nn_params,True, loger)
     return out_nn
 def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
     out_nn = None

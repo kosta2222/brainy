@@ -1,7 +1,7 @@
 from .learn import answer_nn_direct
 from .NN_params import NN_params
 
-def evaluate(nn_params:NN_params, X_test: list, Y_test: list):
+def evaluate(nn_params:NN_params, X_test: list, Y_test: list,loger):
     scores = []
     out_nn=None
     res_acc = 0
@@ -13,7 +13,7 @@ def evaluate(nn_params:NN_params, X_test: list, Y_test: list):
     for row in range(rows):
         x_test = X_test[row]
         y_test = Y_test[row]
-        out_nn=answer_nn_direct(nn_params, x_test, 1)
+        out_nn=answer_nn_direct(nn_params, x_test, loger)
         for elem in range(wi_y_test):
             elem_of_out_nn = out_nn[elem]
             elem_answer = y_test[elem]
