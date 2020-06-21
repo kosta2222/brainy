@@ -7,19 +7,39 @@ from .work_with_arr import copy_vector
 from .operations import operations, softmax_ret_vec
 from .work_with_arr import copy_vector
 import logging
-def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list):
+def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list, loger:logging.Logger):
     assert("find_k1_as_dCdZ0","find_k1_as_dCdZ0")
     if objLay.act_func!=SOFTMAX and nn_params.loss_func==MODIF_MSE:
+      loger.debug("op mod mse\n")
       for row in range(objLay.out):
         nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(objLay.act_func + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
     elif objLay.act_func==SOFTMAX and nn_params.loss_func==CROS_ENTROPY:
         for row in range(objLay.out):
             nn_params.out_errors[row] = (objLay.hidden[row] - targets[row])
-def calc_hid_error(nn_params:NN_params,prev_lef_lay:Lay, objLay:Lay, errors):
-    assert("find_drowCdelemW_usingK1_and_prororc_dXdZ","find_drowCdelemW_usingK1_and_prororc_dXdZ")
-    for elem in range(objLay.in_):
-        for row in range(objLay.out):
-              objLay.errors[elem] += errors[row] * objLay.matrix[row][elem] * operations(prev_lef_lay.act_func + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
+def calc_hid_error(nn_params:NN_params,prev_left_layer:Lay, current_layer_index:int, next_right_layer_deltas:list, loger:logging.Logger):
+    """
+    Calcs deltas for current layer
+    :param nn_params: Whole ann params
+    :param prev_left_layer: prev_left_layer
+    :param current_layer_index: current layer index that must provide right answer to righter layer or out
+    :param right_deltas or list of tangens if it is out of nn:
+    :param loger: loger
+    :action creates right deltas for this layer
+    """
+    current_layer=nn_params.net[current_layer_index]
+    for elem in range(current_layer.in_):
+         for row in range(current_layer.out):
+              elem_v=current_layer.matrix[row][elem]
+              current_layer.errors[elem] +=elem_v * \
+              next_right_layer_deltas[row] * \
+              operations(prev_left_layer.act_func + 1, prev_left_layer.cost_signals[elem], 0, 0, 0, "", nn_params)
+                      # operations(prev_lef_lay.act_func + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
+    # except Exception as e:
+    #     print("Exc in calc hid err")
+    #     print("obj lay", objLay)
+    #     print("typy obj matr",type(objLay.matrix))
+    #     print("row",row,";elem",elem)
+    #     print("e",e.args)
 def get_min_square_err(out_nn:list,teacher_answ:list,n):
     sum=0
     for row in range(n):
@@ -72,7 +92,7 @@ def feed_forwarding(nn_params:NN_params,ok:bool, loger):
             pass
         return nn_params.net[nn_params.nl_count-1].hidden
     else:
-         backpropagate(nn_params)
+         backpropagate(nn_params, loger)
 def feed_forwarding_on_contrary(nn_params:NN_params, ok:bool, loger):
     make_hidden_on_contrary(nn_params, nn_params.net[nn_params.nl_count - 1 ], nn_params.inputs, loger)
     for i in range(nn_params.nl_count - 2, -1, -1):
@@ -99,8 +119,9 @@ def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
 # Получить вектор входов, сделать матричный продукт и матричный продукт пропустить через функцию активации,
 # записать этот вектор в параметр слоя сети(hidden)
 def make_hidden(nn_params, objLay:Lay, inputs:list, loger:logging.Logger):
-    loger.debug('make_hidden\n')
-    loger.debug(f'lay {objLay.des}\n')
+    loger.debug('-in make_hidden-')
+    loger.debug(f'lay {objLay.des}')
+    loger.debug(f'use func: {objLay.act_func}')
     if objLay.des=='d':
         tmp_v = 0
         val = 0
@@ -115,15 +136,14 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, loger:logging.Logger):
                     tmp_v+=objLay.matrix[row][elem] * inputs[elem]
             objLay.cost_signals[row] = tmp_v
             if objLay.act_func!=SOFTMAX:
-               val = operations(nn_params.act_fu,tmp_v, 0, 0, 0, "", nn_params)
+               val = operations(objLay.act_func,tmp_v, 0, 0, 0, "", nn_params)
                objLay.hidden[row] = val
             tmp_v = 0
         if objLay.act_func==SOFTMAX:
-            loger.debug('op')
             ret_vec=softmax_ret_vec(objLay.cost_signals,objLay.out)
             copy_vector(ret_vec, objLay.hidden, objLay.out )
-        loger.debug(f'cost s : {objLay.cost_signals[:10]}\n')
-        loger.debug(f'hid s : {objLay.hidden[:10]}\n')
+        loger.debug(f'cost s : {objLay.cost_signals[:10]}')
+        loger.debug(f'hid s : {objLay.hidden[:10]}')
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, loger:logging.Logger):
     tmp_v = 0
     val = 0
@@ -149,13 +169,13 @@ def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, loger:
                    loger.debug('op')
                    ret_vec = softmax_ret_vec(objLay.cost_signals, objLay.out)
                    copy_vector(ret_vec, objLay.hidden, objLay.out)
-def backpropagate(nn_params:NN_params):
-    calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets)
+def backpropagate(nn_params:NN_params, loger):
+    calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets, loger)
     for i in range(nn_params.nl_count - 1, 0, -1):
         if i == nn_params.nl_count - 1:
-           calc_hid_error(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.out_errors)
+           calc_hid_error(nn_params, nn_params.net[i-1], i, nn_params.out_errors, loger)
         else:
-            calc_hid_error(nn_params, nn_params.net[i-1], nn_params.net[i], nn_params.net[i+1].errors)
+            calc_hid_error(nn_params, nn_params.net[i-1], i, nn_params.net[i+1].errors, loger)
     calc_hid_zero_lay(nn_params.net[0], nn_params.net[1])
     for i in range(nn_params.nl_count - 1, 0, -1):
         upd_matrix(nn_params, nn_params.net[i],  get_hidden(nn_params.net[i - 1]))
@@ -183,7 +203,7 @@ def initiate_layers(nn_params:NN_params,network_map:tuple,size):
         out = network_map[i + 1]
         set_io(nn_params, nn_params.net[i], in_, out)
 
-def cr_lay(loger,nn_params:NN_params, type_='D', in_=0, out=0, act_func=None):
+def cr_lay(nn_params:NN_params, type_='D', in_=0, out=0, act_func=None, loger=None):
     i=0
     if type_=='D':
         nn_params.sp_l+=1

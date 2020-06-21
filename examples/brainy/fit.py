@@ -62,6 +62,7 @@ def fit(nn_params, epochcs, X:list, Y:list, X_eval:list, Y_eval, accuracy_eval_s
             break
         iteration+=1
     logger.info("*CV (after batch)*")
-    acc=evaluate(nn_params, X_eval, Y_eval)
+    acc=evaluate(nn_params, X_eval, Y_eval, logger)
     logger.info(f'accuracy {acc}')
+    return 0
     # compil_serializ(b_c, nn_params.net,len(nn_map)-1,"wei_wei")

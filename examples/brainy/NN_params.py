@@ -25,7 +25,7 @@ class  NN_params:
         self.loss_func=NOP
         self.with_adap_lr = False
         self.with_bias = False
-        self.act_fu = SIGMOID
+        # self.act_fu = SIGMOID
         self.alpha_leaky_relu = 0.01
         self.alpha_sigmoid = 0.42
         self.alpha_tan = 1.7159

@@ -25,23 +25,23 @@ class Tests_my(TestCase):
         nn_params=NN_params()
         nn_params_new=NN_params()
         i=cr_lay(loger, nn_params, 'D', 2, 3, RELU)
-        i=cr_lay(loger, nn_params, 'D', 3, 1, SIGMOID)
+        i=cr_lay(loger, nn_params, 'D', 3, 1, TAN)
         nn_params.with_bias = False
         nn_params.with_adap_lr = False
         nn_params.lr = 0.01
         nn_params.input_neurons=2
         nn_params.outpu_neurons=1
         # nn_params.act_fu = RELU
-        # nn_params.alpha_sigmoid = 0.056
-        nn_params.mse_treshold = 0.0017
+        nn_params.alpha_sigmoid = 0.56
+        nn_params.mse_treshold = 0.017
         nn_params.loss_func=MODIF_MSE
         # nn_map = (2,3,1)
         # initiate_layers(nn_params, nn_map, len(nn_map))
         X=[[1,0],[0,1],[1,1],[0,0]]
         Y=[[0],[0],[1],[0]]
 
-        X_np=np.array(X, dtype='float64')
-        Y_np=np.array(Y, dtype='float64')
+        X_np=np.array(X, dtype='float32')
+        Y_np=np.array(Y, dtype='float32')
         # X_np-=np.mean(X_np, axis=0, dtype='float64')
         # Y_np-=np.mean(Y_np, axis=0, dtype='float64')
         X_np=np.std(X_np, axis=0)

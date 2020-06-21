@@ -5,18 +5,17 @@ import os
 from PIL import Image
 import datetime as d
 from functools import wraps
-def get_logger(level_,fname,module):
+def get_logger(level_,fname,module,mode='w'):
     today=d.datetime.today()
     today_s=today.strftime('%x %X')
     logger = None
     logger = logging.getLogger(module)
     if level_ == 'debug':
-            logging.basicConfig(level=logging.DEBUG, filename=fname, filemode='w')
+            logging.basicConfig(level=logging.DEBUG, filename=fname, filemode=mode)
 
     elif level_ == 'release':
-        logging.basicConfig(level=logging.INFO, filename=fname, filemode='w')
+        logging.basicConfig(level=logging.INFO, filename=fname, filemode=mode)
     return logger, today_s
-
 def calc_list(list_:list):
     cn_elem = 0
     for i in range(len(list_)):
