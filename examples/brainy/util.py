@@ -5,6 +5,10 @@ import os
 from PIL import Image
 import datetime as d
 from functools import wraps
+from os import listdir
+from PIL import Image
+
+
 def get_logger(level_,fname,module,mode='w'):
     today=d.datetime.today()
     today_s=today.strftime('%x %X')
@@ -16,6 +20,8 @@ def get_logger(level_,fname,module,mode='w'):
     elif level_ == 'release':
         logging.basicConfig(level=logging.INFO, filename=fname, filemode=mode)
     return logger, today_s
+
+
 def calc_list(list_:list):
     cn_elem = 0
     for i in range(len(list_)):
@@ -60,6 +66,40 @@ def make_train_matr(p_: str) -> np.ndarray:
         matr[cn_img] = data
         cn_img+=1
     return matr
+
+def matr_img(path_:str,pixel_amount:int)->tuple:
+    p=listdir(path_)
+    # print("p",p)
+    X=[]
+    Y=[]
+    fold_cont:list=None
+    num_clss=len(p)
+    img:PIL.Image=None
+    data=None
+    for fold_name_i in p:
+        # print("fold_name_i",fold_name_i)
+        fold_name_ind=int(fold_name_i.split('_')[0])
+        p_tmp_ful=os.path.join(path_,fold_name_i)
+        fold_content=listdir(p_tmp_ful)
+        # print("fold_cont",fold_content)
+        rows=len(fold_content)
+        X_t=np.zeros((rows,pixel_amount))
+        Y_t=np.zeros((rows,num_clss))
+        f_index=0
+        for file_name_j in fold_content:
+            Y_t[f_index][fold_name_ind]=1
+            img=Image.open(os.path.join(p_tmp_ful,file_name_j))
+            data=list(img.getdata())
+            X_t[f_index]=data
+            # print("X_t[f_index]",X_t[f_index])
+            print("file name",file_name_j)
+            f_index+=1
+        X_t=X_t.tolist()
+        Y_t=Y_t.tolist()
+        X.extend(X_t)
+        Y.extend(Y_t)
+        # print("X",X)
+    return (X,Y)
 
 
 def _0_(str_):

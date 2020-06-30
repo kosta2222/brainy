@@ -69,20 +69,20 @@ class TestAnn(unittest.TestCase):
         i = cr_lay(nn_params, 'D', 2, 3, RELU, loger)
         i = cr_lay(nn_params, 'D', 3, 1, TAN, loger)
         nn_params.with_bias = False
-        nn_params.with_adap_lr = False
+        nn_params.with_adap_lr = True
         nn_params.lr = 0.01
         nn_params.input_neurons = 2
         nn_params.outpu_neurons = 1
         # nn_params.act_fu = RELU
         nn_params.alpha_sigmoid = 0.56
-        nn_params.mse_treshold = 0.017
+        nn_params.mse_treshold = 0.0001
         nn_params.loss_func = MODIF_MSE
         X = [[1, 0], [0, 1], [1, 1], [0, 0]]
         Y = [[0], [0], [1], [0]]
         X_np = np.array(X, dtype='float32')
         Y_np = np.array(Y, dtype='float32')
         exit_code=-1
-        exit_code=fit(nn_params, 10, X, Y, X, Y, 75, loger)
+        exit_code=fit(nn_params, 10, X, Y, X, Y, 100, loger)
         self.assertEqual(0, exit_code)
         # test_of_fit_train  1-nn_params_obj 2-eps 3-X 4-Y 5-X_eval 6-Y_eval 7-acc_shur
 
@@ -112,6 +112,6 @@ def vm_test():
     vm(p1 + p2, loger, date)
 
 if __name__ == '__main__':
-   # unittest.main()
-   vm_test()
+   unittest.main()
+   # vm_test()
 

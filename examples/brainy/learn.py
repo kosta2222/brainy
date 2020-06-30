@@ -29,15 +29,15 @@ def calc_hid_error(nn_params:NN_params,prev_left_layer:Lay, current_layer_index:
     :param current_layer_index: current layer index that must provide right answer to righter layer or out
     :param right_deltas or list of tangens if it is out of nn:
     :param loger: loger
-    :action creates right deltas for this layer
+    :return right deltas (errors) for this layer
     """
+    errors=None
     current_layer=nn_params.net[current_layer_index]
     for elem in range(current_layer.in_):
          for row in range(current_layer.out):
-              current_layer.errors[elem] +=current_layer.matrix[row][elem] * \
-              next_right_layer_deltas[row] * \
-              operations(prev_left_layer.act_func + 1, prev_left_layer.cost_signals[elem], 0, 0, 0, "", nn_params)
-    return current_layer
+              current_layer.errors[elem] +=current_layer.matrix[row][elem] * next_right_layer_deltas[row] * operations(prev_left_layer.act_func + 1, prev_left_layer.cost_signals[elem], 0, 0, 0, "", nn_params)
+    errors=current_layer.errors
+    return errors
 
 def get_min_square_err(out_nn:list,teacher_answ:list,n:int)->float:
     sum=0
@@ -79,7 +79,9 @@ def calc_hid_zero_lay(zeroLay:Lay,past_right_lay:Lay)->list:
     errors=None
     for elem in range(zeroLay.in_):
         for row in range(zeroLay.out):
-            zeroLay.errors[elem]+=past_right_lay.errors[row] * zeroLay.matrix[row][elem]
+            zeroLay.errors[elem]+=\
+                past_right_lay.errors[row] *\
+                zeroLay.matrix[row][elem]
     errors=zeroLay.errors
     return errors
 
@@ -129,6 +131,8 @@ def feed_forwarding_on_contrary(nn_params:NN_params, ok:bool, loger:logging.Logg
 
 
 def train(nn_params:NN_params,in_:list,targ:list, loger:logging.Logger)->int:
+    print("inp neu",nn_params.input_neurons)
+    print("in_",in_)
     copy_vector(in_,nn_params.inputs,nn_params.input_neurons)
     copy_vector(targ,nn_params.targets,nn_params.outpu_neurons)
     feed_forwarding(nn_params,False, loger)
@@ -152,6 +156,7 @@ def answer_nn_direct_on_contrary(nn_params:NN_params,in_:list, debug):
 # Получить вектор входов, сделать матричный продукт и матричный продукт пропустить через функцию активации,
 # записать этот вектор в параметр слоя сети(hidden)
 def make_hidden(nn_params, objLay:Lay, inputs:list, loger:logging.Logger):
+    hidden=None
     loger.debug('-in make_hidden-')
     loger.debug(f'lay {objLay.des}')
     loger.debug(f'use func: {objLay.act_func}')
@@ -177,6 +182,8 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, loger:logging.Logger):
             copy_vector(ret_vec, objLay.hidden, objLay.out )
         loger.debug(f'cost s : {objLay.cost_signals[:10]}')
         loger.debug(f'hid s : {objLay.hidden[:10]}')
+        hidden=objLay.hidden
+        return hidden
 
 
 def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, loger:logging.Logger):
@@ -206,13 +213,16 @@ def make_hidden_on_contrary(nn_params:NN_params, objLay:Lay, inputs:list, loger:
 
 
 def backpropagate(nn_params:NN_params, loger):
-    calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets, loger)
+    out_errors=None
+    right_deltas=None
+    zero_lay_deltas=None
+    out_errors=calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1],nn_params.targets, loger)
     for i in range(nn_params.nl_count - 1, 0, -1):
         if i == nn_params.nl_count - 1:
-           calc_hid_error(nn_params, nn_params.net[i-1], i, nn_params.out_errors, loger)
+           right_deltas=calc_hid_error(nn_params, nn_params.net[i-1], i,out_errors, loger)
         else:
-            calc_hid_error(nn_params, nn_params.net[i-1], i, nn_params.net[i+1].errors, loger)
-    calc_hid_zero_lay(nn_params.net[0], nn_params.net[1])
+           right_deltas=calc_hid_error(nn_params, nn_params.net[i-1], i, right_deltas, loger)
+    zero_lay_deltas=calc_hid_zero_lay(nn_params.net[0], nn_params.net[1])
     for i in range(nn_params.nl_count - 1, 0, -1):
         upd_matrix(nn_params, nn_params.net[i],  get_hidden(nn_params.net[i - 1]))
     upd_matrix(nn_params, nn_params.net[0], nn_params.inputs)
@@ -224,9 +234,11 @@ def set_io(nn_params:NN_params, objLay:Lay, inputs, outputs)->list:
     matrix=None
     objLay.in_=inputs
     objLay.out=outputs
+    print("matrix els",len(objLay.matrix[0]))
     for row in range(outputs):
         for elem in range(inputs):
-            objLay.matrix[row][elem] = operations(INIT_W_MY, inputs+1, outputs, 0, 0, "", nn_params)
+            objLay.matrix[row]\
+            [elem] = operations(INIT_W_MY, inputs, outputs, 0, 0, "", nn_params)
     matrix=objLay.matrix
     return matrix
 

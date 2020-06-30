@@ -20,11 +20,9 @@ hidden = <size of <class 'list'> [or list[0] ] is greater 50>
 errors = <size of <class 'list'> [or list[0] ] is greater 50>
 inner_m = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-DEBUG:w:Log started 06/21/20 20:46:50
-INFO:w:None
 INFO:w:-in fit-
 INFO:w:--------------
-INFO:w:| Log started > 06/21/20 20:46:50
+INFO:w:| Log started > 01/01/08 00:14:33
 INFO:w:--------------
 INFO:w:NN_params:
 net = [Dense:
@@ -47,7 +45,7 @@ act_func = 9
 hidden = <size of <class 'list'> [or list[0] ] is greater 50>
 errors = <size of <class 'list'> [or list[0] ] is greater 50>
 inner_m = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-, <brainy.Lay.Lay object at 0x0599FF90>, <brainy.Lay.Lay object at 0x0599FFB0>, <brainy.Lay.Lay object at 0x0599FFD0>, <brainy.Lay.Lay object at 0x059E0130>, <brainy.Lay.Lay object at 0x059E0150>]
+, <brainy.Lay.Lay object at 0x059C5B70>, <brainy.Lay.Lay object at 0x059C5B90>, <brainy.Lay.Lay object at 0x059C5AB0>, <brainy.Lay.Lay object at 0x059C5BD0>, <brainy.Lay.Lay object at 0x059C5BF0>]
 denses = [Dense:
 des = d
 in_ = 2
@@ -129,13 +127,13 @@ targets = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 out_errors = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 lr = 0.01
 loss_func = 20
-with_adap_lr = False
+with_adap_lr = True
 with_bias = False
 alpha_leaky_relu = 0.01
 alpha_sigmoid = 0.56
 alpha_tan = 1.7159
 beta_tan = 0.6666666666666666
-mse_treshold = 0.017
+mse_treshold = 0.0001
 
 INFO:w:iteration 0
 INFO:w:x: [1, 0] y: [0]
@@ -149,9 +147,7 @@ DEBUG:w:lay d
 DEBUG:w:use func: 9
 DEBUG:w:cost s : [0.9649485455344546, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0.9731583368680147, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:learning rate 0.0099
 INFO:w:x: [0, 1] y: [0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
@@ -163,23 +159,19 @@ DEBUG:w:lay d
 DEBUG:w:use func: 9
 DEBUG:w:cost s : [0.9567008449478624, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0.9667382678521509, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:learning rate 0.009999000000000001
 INFO:w:x: [1, 1] y: [1]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [1.119709272634074, 1.0907544988839577, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [1.119709272634074, 1.0907544988839577, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [1.119709272634074, 1.0911897844973648, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [1.119709272634074, 1.0911897844973648, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [1.8728183529245785, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [1.4548692139826849, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:cost s : [1.873222124590538, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [1.4549990244912367, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:learning rate 0.01009899
 INFO:w:x: [0, 0] y: [0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
@@ -191,40 +183,38 @@ DEBUG:w:lay d
 DEBUG:w:use func: 9
 DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:learning rate 0.010199979900000001
 INFO:w:mse 0.0
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.5224292575209716, 0.5079518706459134, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5224292575209716, 0.5079518706459134, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.5224310795138659, 0.5081713354455113, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.5224310795138659, 0.5081713354455113, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.8777471002478556, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.9032654202373496, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.8779469261171925, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.9034306530317352, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.5224292575209716, 0.5079518706459134, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5224292575209716, 0.5079518706459134, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.5224310795138659, 0.5081713354455113, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.5224310795138659, 0.5081713354455113, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.8777471002478556, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.9032654202373496, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.8779469261171925, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.9034306530317352, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [1.0448585150419432, 1.0159037412918268, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [1.0448585150419432, 1.0159037412918268, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [1.0448621590277318, 1.0163426708910226, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [1.0448621590277318, 1.0163426708910226, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [1.7554942004957113, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [1.4145497995391394, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [1.755893852234385, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [1.4146962468200215, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
@@ -241,44 +231,38 @@ INFO:w:x: [1, 0] y: [0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.5224292575209716, 0.5079518706459134, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5224292575209716, 0.5079518706459134, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.5224310795138659, 0.5081713354455113, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.5224310795138659, 0.5081713354455113, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.8777471002478556, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.9032654202373496, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:cost s : [0.8779469261171925, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.9034306530317352, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:learning rate 0.010097980101000001
 INFO:w:x: [0, 1] y: [0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.44852726183761293, 0.5079518706459134, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.44852726183761293, 0.5079518706459134, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.4470434269832808, 0.5081713354455113, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.4470434269832808, 0.5081713354455113, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.826421364937652, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.8600606660978217, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:cost s : [0.8255954755039914, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.8593530625970948, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:learning rate 0.010198959902010002
 INFO:w:x: [1, 1] y: [1]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.8970545236752259, 0.8148814198134051, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.8970545236752259, 0.8148814198134051, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.8940868539665616, 0.8133839206206874, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.8940868539665616, 0.8133839206206874, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [1.5215117577386743, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [1.3170417965885604, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:cost s : [1.5187212150603009, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [1.3157283629910526, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:learning rate 0.010300949501030101
 INFO:w:x: [0, 0] y: [0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
@@ -290,40 +274,38 @@ DEBUG:w:lay d
 DEBUG:w:use func: 9
 DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:learning rate 0.010403958996040403
 INFO:w:mse 0.0
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.3220287025036561, 0.28094215057274574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3220287025036561, 0.28094215057274574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.3180900684273898, 0.2777386017544527, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.3180900684273898, 0.2777386017544527, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.6063427168996514, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6581526408260209, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.6021644648067273, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.6540718265614119, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.3220287025036561, 0.28094215057274574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3220287025036561, 0.28094215057274574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.3180900684273898, 0.2777386017544527, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.3180900684273898, 0.2777386017544527, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.6063427168996514, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6581526408260209, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.6021644648067273, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.6540718265614119, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.6440574050073122, 0.5618843011454915, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6440574050073122, 0.5618843011454915, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.6361801368547796, 0.5554772035089054, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.6361801368547796, 0.5554772035089054, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [1.2126854337993027, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [1.1474878110195164, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [1.2043289296134545, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [1.1421838362422956, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
@@ -340,44 +322,38 @@ INFO:w:x: [1, 0] y: [0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.3220287025036561, 0.28094215057274574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3220287025036561, 0.28094215057274574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.3180900684273898, 0.2777386017544527, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.3180900684273898, 0.2777386017544527, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.6063427168996514, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6581526408260209, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:cost s : [0.6021644648067273, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.6540718265614119, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:learning rate 0.010299919406079999
 INFO:w:x: [0, 1] y: [0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.14890186201842595, 0.28094215057274574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.14890186201842595, 0.28094215057274574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.1383547240900356, 0.2777386017544527, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.1383547240900356, 0.2777386017544527, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.5096986668362463, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.561610703126971, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:cost s : [0.5020822436208929, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.5538184770698007, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:learning rate 0.010402918600140799
 INFO:w:x: [1, 1] y: [1]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2978037240368519, 0.16673645432928053, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2978037240368519, 0.16673645432928053, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.2767094481800712, 0.15004307131993738, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.2767094481800712, 0.15004307131993738, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.8115443768817513, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.8472546723032565, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:cost s : [0.7916893303247773, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.8299673692278902, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:learning rate 0.010506947786142206
 INFO:w:x: [0, 0] y: [0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
@@ -389,40 +365,38 @@ DEBUG:w:lay d
 DEBUG:w:use func: 9
 DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
+DEBUG:w:learning rate 0.010401878308280784
 INFO:w:mse 0.0
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.06773828655696049, -0.13327192141074617, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [-0.08564292769616372, -0.14897611612623063, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.2837583559264373, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.32078320961554607, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.06773828655696049, -0.13327192141074617, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [-0.08564292769616372, -0.14897611612623063, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.2837583559264373, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.32078320961554607, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.13547657311392097, -0.26654384282149235, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [-0.17128585539232744, -0.29795223225246126, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.5675167118528746, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.6199012627864864, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
@@ -434,1819 +408,37 @@ DEBUG:w:use func: 9
 DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 INFO:w:accuracy 100.0
-INFO:w:iteration 3
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.06773828655696049, -0.13327192141074617, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.3028486020424798, -0.13327192141074617, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.6056972040849596, -0.7470361262851021, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.5414281013913862, -0.6120975624914574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.5414281013913862, -0.6120975624914574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.0828562027827724, -1.2241951249829148, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 4
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.5414281013913862, -0.6120975624914574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.7549189901585107, -0.6120975624914574, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.5098379803170214, -1.6189210381296277, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.9303743237174762, -0.9849158526237793, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.9303743237174762, -0.9849158526237793, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.8607486474349524, -1.9698317052475587, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 5
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.9303743237174762, -0.9849158526237793, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.0462812123530154, -0.9849158526237793, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-2.092562424706031, -2.1395846035952353, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.097030370756233, -1.1205414602008352, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.097030370756233, -1.1205414602008352, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-2.194060741512466, -2.2410829204016705, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 6
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.097030370756233, -1.1205414602008352, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.0756888788521737, -1.1205414602008352, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-2.1513777577043474, -2.1303436886445675, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.9865392016126159, -0.9760221670827259, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.9865392016126159, -0.9760221670827259, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.9730784032252318, -1.9520443341654519, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 7
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.9865392016126159, -0.9760221670827259, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.8393398624406181, -0.9760221670827259, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.6786797248812362, -1.6096338968148758, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.647139543393528, -0.6126166293603478, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.647139543393528, -0.6126166293603478, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.294279086787056, -1.2252332587206956, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 8
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.647139543393528, -0.6126166293603478, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.4322906486782945, -0.6126166293603478, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.864581297356589, -0.7861517240214051, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.21222160626414352, -0.1730068195965516, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.21222160626414352, -0.1730068195965516, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.42444321252828704, -0.3460136391931032, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.567692609901899, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6200762093160167, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 9
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.21222160626414352, -0.1730068195965516, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.013096350989338978, -0.1730068195965516, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.2838463049509495, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3208803001923722, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.026192701978677957, 0.018778281570212163, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0.018778281570212163, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.5770908739224823, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6294020001844695, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.14927878476373066, 0.17176427653817572, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.14927878476373066, 0.17176427653817572, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.4445238110800437, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.49412445435205343, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.14927878476373066, 0.17176427653817572, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.14927878476373066, 0.17176427653817572, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.4445238110800437, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.49412445435205343, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2985575695274613, 0.34352855307635144, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2985575695274613, 0.34352855307635144, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.8890476221600874, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.9125732063201303, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 10
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.14927878476373066, 0.17176427653817572, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.14927878476373066, 0.17176427653817572, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.4445238110800437, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.49412445435205343, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.25441351924387834, 0.17176427653817572, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.25441351924387834, 0.17176427653817572, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.49228284422650065, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5437552952189564, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.5088270384877567, 0.4831836218670913, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5088270384877567, 0.4831836218670913, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [1.0350096774428514, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [1.0260844264152196, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2869221919066553, 0.2741004835963226, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2869221919066553, 0.2741004835963226, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.5294007556717666, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5816469443003839, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2869221919066553, 0.2741004835963226, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2869221919066553, 0.2741004835963226, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.5294007556717666, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5816469443003839, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.5738443838133106, 0.5482009671926452, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5738443838133106, 0.5482009671926452, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [1.0588015113435332, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [1.0434027882405472, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 50.0
-INFO:w:iteration 11
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2869221919066553, 0.2741004835963226, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2869221919066553, 0.2741004835963226, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.5294007556717666, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5816469443003839, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2379825067576482, 0.2741004835963226, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2379825067576482, 0.2741004835963226, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.4945131668719494, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.546049345757022, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.4759650135152964, 0.3633461217717191, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.4759650135152964, 0.3633461217717191, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.883416479756211, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.9079443361667096, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.10544379356689942, 0.04913434769511077, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.10544379356689942, 0.04913434769511077, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.3054268551202096, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.34463814555251554, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.10544379356689942, 0.04913434769511077, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.10544379356689942, 0.04913434769511077, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.3054268551202096, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.34463814555251554, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.21088758713379885, 0.09826869539022154, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.21088758713379885, 0.09826869539022154, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.6108537102404192, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.6625486568977357, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 12
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.10544379356689942, 0.04913434769511077, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.10544379356689942, 0.04913434769511077, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.3054268551202096, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.34463814555251554, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.09073077043021666, 0.04913434769511077, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0.04913434769511077, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.25597944445115606, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2900135696085842, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.1814615408604333, -0.34638172773367587, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.33010873287921305, -0.41256882631583436, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.33010873287921305, -0.41256882631583436, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.6602174657584261, -0.8251376526316687, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 13
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.33010873287921305, -0.41256882631583436, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.569962843151265, -0.41256882631583436, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.13992568630253, -1.2901208704954072, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.7856315505245796, -0.8607291426210182, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.7856315505245796, -0.8607291426210182, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.5712631010491591, -1.7214582852420364, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 14
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.7856315505245796, -0.8607291426210182, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.9374248404886572, -0.8607291426210182, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.8748496809773143, -1.9523156219891558, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.0112026038893918, -1.0499355743953127, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.0112026038893918, -1.0499355743953127, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-2.0224052077787835, -2.0998711487906254, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 15
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.0112026038893918, -1.0499355743953127, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.991795101880378, -1.0499355743953127, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.983590203760756, -1.9713570138272118, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.8838092452985092, -0.8776926503317372, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.8838092452985092, -0.8776926503317372, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.7676184905970185, -1.7553853006634743, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 16
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.8838092452985092, -0.8776926503317372, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.7045459738976761, -0.8776926503317372, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-1.4090919477953523, -1.3405897012953183, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.47523839574967264, -0.44098727249965564, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.47523839574967264, -0.44098727249965564, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.9504767914993453, -0.8819745449993113, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 17
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.47523839574967264, -0.44098727249965564, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.23568810172300347, -0.44098727249965564, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.234348894582593, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2659194486782342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.47137620344600695, -0.4119850200002905, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.468697789165186, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5193653711321848, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.012457646313411147, 0.017237945409447064, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0.017237945409447064, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.24193760299741368, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.27438522569838353, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.012457646313411147, 0.017237945409447064, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0.017237945409447064, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.24193760299741368, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.27438522569838353, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.024915292626822294, 0.03447589081889413, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0.03447589081889413, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.48387520599482736, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.5350880370174484, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 18
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.012457646313411147, 0.017237945409447064, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0.017237945409447064, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.24193760299741368, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.27438522569838353, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.15449455286743582, 0.017237945409447064, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.15449455286743582, 0.017237945409447064, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.30938219579039083, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.34897795598398595, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.30898910573487165, 0.29696035352955374, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.30898910573487165, 0.29696035352955374, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.7217157601850187, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.767280481399324, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2457178599147919, 0.23970348381213294, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2457178599147919, 0.23970348381213294, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.425297257243671, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.47388080356035933, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2457178599147919, 0.23970348381213294, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2457178599147919, 0.23970348381213294, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.425297257243671, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.47388080356035933, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.4914357198295838, 0.4794069676242659, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.4914357198295838, 0.4794069676242659, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.850594514487342, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.8805982922369894, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 19
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2457178599147919, 0.23970348381213294, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2457178599147919, 0.23970348381213294, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.425297257243671, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.47388080356035933, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.2411711728053166, 0.23970348381213294, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.2411711728053166, 0.23970348381213294, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.4114061852292828, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.4591650948851862, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.4823423456106332, 0.36875523527067017, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.4823423456106332, 0.36875523527067017, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.7537616433583683, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.7963270448308754, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.13807282623710382, 0.0812792710671223, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.13807282623710382, 0.0812792710671223, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.275132875078522, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3112509368807054, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.13807282623710382, 0.0812792710671223, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.13807282623710382, 0.0812792710671223, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.275132875078522, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3112509368807054, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.27614565247420764, 0.1625585421342446, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.27614565247420764, 0.1625585421342446, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.550265750157044, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.602672068452679, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 100.0
-INFO:w:iteration 20
-INFO:w:x: [1, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.13807282623710382, 0.0812792710671223, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.13807282623710382, 0.0812792710671223, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.275132875078522, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.3112509368807054, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 1] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.04475076007026271, 0.0812792710671223, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0.0812792710671223, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.21780825562605072, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.24742163143405213, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [1, 1] y: [1]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.08950152014052543, -0.269805071330806, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.37433699220684313, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.41954291390302584, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:x: [0, 0] y: [0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:op mod mse
-
-DEBUG:w:learning rate 0.01
-INFO:w:mse 0.0
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.2837142178698847, -0.373865993465025, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.18716849610342157, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.21300395123478244, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.2837142178698847, -0.373865993465025, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.18716849610342157, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.21300395123478244, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.5674284357397694, -0.74773198693005, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.37433699220684313, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.41954291390302584, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 1
-DEBUG:w:cost s : [0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:-in make_hidden-
-DEBUG:w:lay d
-DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 75.0
 INFO:w:*CV (after batch)*
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.2837142178698847, -0.373865993465025, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [-0.08564292769616372, -0.14897611612623063, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.18716849610342157, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.21300395123478244, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.2837583559264373, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.32078320961554607, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.2837142178698847, -0.373865993465025, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [-0.08564292769616372, -0.14897611612623063, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0, 0, 0.567141530112327, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.18716849610342157, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.21300395123478244, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.2837583559264373, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.32078320961554607, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
-DEBUG:w:cost s : [-0.5674284357397694, -0.74773198693005, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [-0.17128585539232744, -0.29795223225246126, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0, 0, 1.134283060224654, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 9
-DEBUG:w:cost s : [0.37433699220684313, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DEBUG:w:hid s : [0.41954291390302584, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:cost s : [0.5675167118528746, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DEBUG:w:hid s : [0.6199012627864864, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:-in make_hidden-
 DEBUG:w:lay d
 DEBUG:w:use func: 1
@@ -2257,6 +449,4 @@ DEBUG:w:lay d
 DEBUG:w:use func: 9
 DEBUG:w:cost s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DEBUG:w:hid s : [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-INFO:w:accuracy 75.0
-DEBUG:w:op_i push_i, 0
-DEBUG:w:op_i with_bias, 0
+INFO:w:accuracy 100.0

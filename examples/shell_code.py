@@ -1,26 +1,31 @@
 from brainy.NN_params import NN_params   # импортруем параметры сети
 from brainy.serial_deserial import deserialization
-from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN
+from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN, MODIF_MSE, SOFTMAX, CROS_ENTROPY
 from brainy.serial_deserial import to_file
 from brainy.fit import fit
-from brainy.learn import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary
-from brainy.util import make_train_matr, make_2d_arr, calc_out_nn, get_logger
+from brainy.learn import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary, cr_lay
+from brainy.util import make_train_matr, make_2d_arr, calc_out_nn, get_logger, matr_img
 import numpy as np
 from PIL import Image
 len_=10
-push_i = 0
-push_fl = 1
-push_str = 2
-calc_sent_vecs = 3
-fit_ = 4
-predict = 5
-load = 6
-make_train_matr_ = 7
-make_img = 8
-stop = 9
+stop=0
+push_i = 1
+push_fl = 2
+push_str = 3
+calc_sent_vecs = 4
+fit_ = 5
+predict = 6
+load = 7
+make_train_matr_ = 8
+make_img = 9
+get_mult_class_matr=10
+fit_net=11
+predict_net=12
+determe_X_Y=13
+push_obj=14
 X=[]
 Y=[]
-ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load", "make_train_matr","make_img"]
+ops=["push_i","push_fl", "push_str", "calc_sent_vecs", "fit", "predict" ,"load", "make_train_matr","make_img","get_mult_class_matr"]
 # X и Y означают двухмернй список обучения и ответов соответственно
 # x_* и y_* - просто списки из этих матриц
 # создать параметры сети
@@ -81,24 +86,27 @@ def console(prompt, loger):
                     splitted_cmd[0] = ''
                     splitted_cmd[1] = ''
                     break
-def spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount):
-   nn_params = create_nn_params()
-   nn_params.with_bias = False
-   nn_params.with_adap_lr = True
-   nn_params.lr = 0.01
-   nn_params.act_fu = LEAKY_RELU
-   nn_params.alpha_sigmoid = 0.056
-   nn_params.mse_treshold=0.001
-   # nn_in_amount = 20
-   # nn_out_amount = 1
-   nn_map = (nn_in_amount, 8, nn_out_amount)
-   initiate_layers(nn_params, nn_map, len(nn_map))
-   return nn_params
+def spec_conf_nn_this_for_this_prog(loger):
+        nn_params = NN_params()
+        i = cr_lay(nn_params, 'D', 2, 3, TAN, loger)
+        i = cr_lay(nn_params, 'D', 3, 1,SIGMOID , loger)
+        nn_params.with_bias = True
+        nn_params.with_adap_lr = True
+        nn_params.lr = 0.01
+        nn_params.input_neurons = 2
+        nn_params.outpu_neurons = 1
+        # nn_params.act_fu = RELU
+        nn_params.alpha_sigmoid = 0.056
+        nn_params.mse_treshold = 0.0001
+        nn_params.loss_func = MODIF_MSE
+        return nn_params
 def vm(buffer:list, loger):
     nn_in_amount=10000
     nn_out_amount=1
-    nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
+    # nn_params = spec_conf_nn_this_for_this_prog(nn_in_amount, nn_out_amount)
     nn_params_new = create_nn_params()
+    X_t=None
+    Y_t=None
     # buffer_ser = [0] * 500000  # буффер для сериализации матричных элементов и входов
     say_positive='Понятно. Постараюсь ваполнить вашу просьбу'
     say_negative='Извините ваша просьба неопознана'
@@ -124,6 +132,10 @@ def vm(buffer:list, loger):
             sp_str+= 1
             ip += 1
             steck_str[sp_str] = buffer[ip]
+        elif op==push_obj:
+            sp+=1
+            ip+=1
+            steck[sp]=buffer[ip]
         #  вычисление векторов это еще добавление к тренировочным матрицам
         elif op==calc_sent_vecs:
             ord_as_devided_val = 0.0
@@ -138,6 +150,18 @@ def vm(buffer:list, loger):
                 float_x[cn_char]= round(ord_as_devided_val, 2)
                 cn_char+= 1
             X.append(float_x)
+        elif op==get_mult_class_matr:
+            pix_am=steck[sp]
+            sp-=1
+            path_=steck_str[sp_str]
+            sp_str-=1
+            X_t, Y_t=matr_img(path_,pix_am)
+            X_t=np.array(X_t)
+            Y_t=np.array(Y_t)
+            X_t.astype("float32")
+            Y_t.astype("float32")
+            X_t/=255
+            Y_t/=255
         # elif op == calc_h_vecs:
         #     splited_par_x:list=None
         #     splited_par_y:list=None
@@ -174,6 +198,22 @@ def vm(buffer:list, loger):
            fit(nn_params, 10, X_new_fix, Y_new_fix, X_new_fix, Y_new_fix, 100, loger)
            file_save="weight_file.my"
            to_file(nn_params.net,loger,file_save)
+        elif op==fit_net:
+            nn_params=spec_conf_nn_this_for_this_prog(loger)
+            fit(nn_params, 100, X_t, Y_t, X_t, Y_t, 100, loger)
+        elif op==predict_net:
+            out_nn=answer_nn_direct(nn_params, X_t, loger)
+            print("out nn",out_nn)
+        elif op==determe_X_Y:
+            Y_t=steck[sp]
+            sp-=1
+            X_t=steck[sp]
+            sp-=1
+            if isinstance(X_t, np.ndarray) and isinstance(Y_t, np.ndarray):
+                X_t=X_t.tolist()
+                Y_t=Y_t.tolist()
+            print("in det X t",X_t)
+            print("in det Y t",Y_t)
         elif op == predict:
             float_x = [0] * nn_in_amount
             str_x = steck_str[sp_str]
@@ -208,7 +248,7 @@ def vm(buffer:list, loger):
             loger.debug("in make train matr",str(X_img))
             Y_img=[[1],[1],[1],[1]]
             # Y_img=[[1]]
-            fit(nn_params, 10, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 100, loger)
+            fit(nn_params, 100, X_img.tolist(), Y_img, X_img.tolist(), Y_img, 100, loger)
             to_file(nn_params,nn_params.net, loger, 'img_wei.my')
         elif op == make_img:
             out_nn=answer_nn_direct_on_contrary(nn_params_new, [1], 1)
@@ -233,13 +273,19 @@ if __name__ == '__main__':
     level=sys.argv[1]
     print("level",level)
     if level == '-debug':
-        loger=get_logger("debug", 'log_cons.log', __name__)
+        loger, date=get_logger("release", 'log_cons.log', __name__)
     elif level == '-release':
-        loger=get_logger("release", 'log_cons.log', __name__)
+        loger, date=get_logger("release", 'log_cons.log', __name__)
     else:
         print("Unrecognized option ",level)
         sys.exit(1)
-    console('>>>', loger)
+    X_and=[[1,0],[0,1],[1,1],[0,0]]
+    Y_and=[[0],[0],[1],[0]]
+    p1=(push_str,r'B:\msys64\home\msys_u\code\python\brainy\examples\train_ann\train',push_i,10000,get_mult_class_matr,
+        fit_net,
+        stop)
+    p2=(push_obj,X_and,push_obj,Y_and,determe_X_Y,fit_net,stop)
+    vm(p2, loger)
   else:
       print("Program must have option: -release or -debug")
       sys.exit(1)
