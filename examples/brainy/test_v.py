@@ -69,7 +69,7 @@ class TestAnn(unittest.TestCase):
         nn_params.mse_treshold = 0.017
         nn_params.loss_func = MODIF_MSE
         X = [[1, 0], [0, 1], [1, 1], [0, 0]]
-        Y = [[0], [0], [1], [0]]
+        Y = [[1], [1], [1], [0]]
         X_np = np.array(X, dtype='float32')
         Y_np = np.array(Y, dtype='float32')
         exit_code=-1
@@ -79,7 +79,7 @@ class TestAnn(unittest.TestCase):
 
 
 def vm_test():
-    loger, date=get_logger("debug",__name__,"w")
+    loger, date=get_logger("release",__name__,"w")
     nn_params = NN_params()
     nn_params_new = NN_params()
     i = cr_lay(nn_params, 'D', 2, 3, RELU,loger)
@@ -98,7 +98,7 @@ def vm_test():
     X_np = np.array(X, dtype='float32')
     Y_np = np.array(Y, dtype='float32')
     # test_of_fit_train  1-nn_params_obj 2-eps 3-X 4-Y 5-X_eval 6-Y_eval 7-acc_shur
-    p1 = (test_of_fit_train,(nn_params, 10, X, Y, X, Y, 75))
+    p1 = (test_of_fit_train,(nn_params, 10, X, Y, X, Y, 100))
     vm(p1, loger, date)
 
 if __name__ == '__main__':

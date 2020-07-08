@@ -1,6 +1,6 @@
 #NN_params.[py]
 from .nn_constants import max_in_nn_1000,max_trainSet_rows,max_validSet_rows,max_rows_orOut_10,\
-    max_am_layer,max_am_epoch,max_am_objMse,max_stack_matrEl,max_stack_otherOp_10,bc_bufLen, NOP, SIGMOID
+    max_am_layer,max_am_epoch,max_am_objMse,max_stack_matrEl,max_stack_otherOp_10,bc_bufLen, NOP, SIGMOID, MODIF_MSE
 from .Lay import Lay, Dense
 from .util import print_obj
 # Параметры сети
@@ -21,8 +21,8 @@ class  NN_params:
         self.inputs=[0]*(max_in_nn_1000 * 10)  # входа сети
         self.targets=[0]*(max_rows_orOut_10)  # ответы от учителя
         self.out_errors = [0] * (max_rows_orOut_10)  # вектор ошибок слоя
-        self.lr=0;  # коэффициент обучения
-        self.loss_func=NOP
+        self.lr=0.07;  # коэффициент обучения
+        self.loss_func=MODIF_MSE
         self.with_adap_lr = False
         self.with_bias = False
         # self.act_fu = SIGMOID
@@ -31,6 +31,8 @@ class  NN_params:
         self.alpha_tan = 1.7159
         self.beta_tan = 2 / 3
         self.mse_treshold = 0.001
+        self.with_loss_threshold=False
+        self.acc_shureness=100
 
     def __str__(self):
         # b_codes = ['x', 'RELU', 'x', 'SIGMOID', 'x', 'TRESHHOLD_FUNC', 'x', 'LEAKY_RELU', 'x', 'TAN']
