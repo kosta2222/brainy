@@ -7,14 +7,14 @@ from .util import print_obj
 class  NN_params:
     def __init__(self):
         self.net=[]
-        self.denses=[]
+        # self.denses=[]
         for i in range(max_am_layer):
-            ob_lay=Lay()
+            ob_lay=Dense()
             self.net.append(ob_lay)  # вектор слоев
-        for i in range(max_am_layer):
-            self.denses.append(Dense())
-        self.sp_l=-1
-        self.sp_d=-1
+        # for i in range(max_am_layer):
+        #     self.denses.append(Dense())
+        # self.sp_l=-1
+        # self.sp_d=-1
         self.input_neurons=0  # количество выходных нейронов
         self.outpu_neurons=0  # количество входных нейронов
         self.nl_count=0  # количество слоев

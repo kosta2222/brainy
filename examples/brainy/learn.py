@@ -9,8 +9,8 @@ from .work_with_arr import copy_vector
 import logging
 def calc_out_error(nn_params:NN_params,objLay:Lay, targets:list, loger:logging.Logger):
     assert("find_k1_as_dCdZ0","find_k1_as_dCdZ0")
+    loger.debug('-in calc_out_error-')
     if objLay.act_func!=SOFTMAX and nn_params.loss_func==MODIF_MSE:
-      loger.debug("op mod mse\n")
       for row in range(objLay.out):
         nn_params.out_errors[row] = (objLay.hidden[row] - targets[row]) * operations(objLay.act_func + 1, objLay.cost_signals[row], 0.42, 0, 0, "", nn_params)
     elif objLay.act_func==SOFTMAX and nn_params.loss_func==CROS_ENTROPY:
@@ -29,11 +29,7 @@ def calc_hid_error(nn_params:NN_params,prev_left_layer:Lay, current_layer_index:
     current_layer=nn_params.net[current_layer_index]
     for elem in range(current_layer.in_):
          for row in range(current_layer.out):
-              elem_v=current_layer.matrix[row][elem]
-              current_layer.errors[elem] +=elem_v * \
-              next_right_layer_deltas[row] * \
-              operations(prev_left_layer.act_func + 1, prev_left_layer.cost_signals[elem], 0, 0, 0, "", nn_params)
-                      # operations(prev_lef_lay.act_func + 1, prev_lef_lay.cost_signals[elem], 0, 0, 0, "", nn_params)
+              current_layer.errors[elem] +=current_layer.matrix[row][elem] * next_right_layer_deltas[row] *operations(prev_left_layer.act_func + 1, prev_left_layer.cost_signals[elem], 0, 0, 0, "", nn_params)
     # except Exception as e:
     #     print("Exc in calc hid err")
     #     print("obj lay", objLay)
@@ -206,11 +202,11 @@ def initiate_layers(nn_params:NN_params,network_map:tuple,size):
 def cr_lay(nn_params:NN_params, type_='D', in_=0, out=0, act_func=None, loger=None):
     i=0
     if type_=='D':
-        nn_params.sp_l+=1
-        i=nn_params.sp_l
-        nn_params.sp_d+=1
-        dense=nn_params.denses[nn_params.sp_d]
-        nn_params.net[i]=dense
+        # nn_params.sp_l+=1
+        # i=nn_params.sp_l
+        # nn_params.sp_d+=1
+        # dense=nn_params.denses[nn_params.sp_d]
+        # nn_params.net[i]=dense
         nn_params.net[i].in_=in_
         nn_params.net[i].out=out
         nn_params.net[i].act_func=act_func

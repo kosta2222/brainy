@@ -1,6 +1,6 @@
 from brainy.NN_params import NN_params   # импортруем параметры сети
 from brainy.serial_deserial import deserialization
-from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN, SOFTMAX
+from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN, SOFTMAX, MODIF_MSE, CROS_ENTROPY
 from brainy.serial_deserial import to_file
 from brainy.fit import fit
 from brainy.learn import initiate_layers, answer_nn_direct, answer_nn_direct_on_contrary, cr_lay
@@ -27,11 +27,7 @@ determe_X_eval_Y_eval=15
 def create_nn_params():
     return NN_params()
 def exect(buffer:list, loger:logging.Logger, date:str)->None:
-    #nn_params = spec_conf_nn_this_for_this_prog()
-    # nn_params_new = create_nn_params()
-    # buffer_ser = [0] * 500000  # буффер для сериализации матричных элементов и входов
-    say_positive='Понятно. Постараюсь ваполнить вашу просьбу'
-    say_negative='Извините ваша просьба неопознана'
+    nn_params_new=create_nn_params()
     X_t=None
     Y_t=None
     X_eval=None
@@ -65,7 +61,7 @@ def exect(buffer:list, loger:logging.Logger, date:str)->None:
         elif op==make_net:
            nn_params = create_nn_params() 
            l_tmp=None 
-           acts_di={'s':SIGMOID,'r':RELU,'t':TAN,'S':SOFTMAX,'l':LEAKY_RELU}
+           acts_di={'s':SIGMOID,'r':RELU,'t':TAN,'SO':SOFTMAX,'l':LEAKY_RELU}
            ip += 1
            arg = buffer[ip]
            type_m, denses, inps, acts, use_bi = arg
@@ -97,16 +93,18 @@ def exect(buffer:list, loger:logging.Logger, date:str)->None:
             sp-=1
             sp+=1
             steck[sp]=np.array(st_arg)
-        # fit_net 1-эпохи 2-использовать ли пороговое обучение 3-использовать ли адаптивный lr 4-mse-treshold 5-acc-shureness
+        # fit_net 1-эпохи 2-lr  3-использовать ли адаптивный lr 4-использовать ли пороговое обучение 5-mse-treshold 6-acc-shureness 7-loss-func
         elif op==fit_net:
+            loss_func_di={"mse":MODIF_MSE,"crossentropy":CROS_ENTROPY}
             ip+=1
             arg=buffer[ip]
-            eps,lr, is_wi_adap_lr,is_with_loss_threshold, mse_treshold, acc_shureness=arg
+            eps,lr, is_wi_adap_lr,is_with_loss_threshold, mse_treshold, acc_shureness,loss_func=arg
             nn_params.with_loss_threshold=is_with_loss_threshold
             nn_params.with_adap_lr=is_wi_adap_lr
             nn_params.mse_treshold=mse_treshold
             nn_params.acc_shureness=acc_shureness
             nn_params.lr=lr
+            nn_params.loss_func=loss_func_di.get(loss_func)
             if not X_eval and not Y_eval:
                 X_eval=X_t
                 Y_eval=Y_t
@@ -115,6 +113,7 @@ def exect(buffer:list, loger:logging.Logger, date:str)->None:
             print("X_eval",X_eval)
             print("Y_eval",Y_eval)
             fit(nn_params, eps, X_t, Y_t, X_eval, Y_eval, loger )
+            to_file(nn_params, nn_params.net, loger, "to_file.my")
         elif op==get_mult_class_matr:
             pix_am=steck[sp]
             sp-=1
@@ -127,16 +126,17 @@ def exect(buffer:list, loger:logging.Logger, date:str)->None:
             Y_t.astype('float32')
             X_t/=255    
         elif op == predict:
-            out_nn=answer_nn_direct(nn_params, X_t[0], loger)
+            deserialization(nn_params_new,"to_file.my",loger)
+            out_nn=answer_nn_direct(nn_params_new, X_t, loger)
             print("answer",out_nn)
-        
         elif op == stop:
            return
         else:
             print("Unknown bytecode -> %d"%op)
             return
         ip+= 1
-        op = buffer[ip]
+        op=buffer[ip]
+
 import sys
 if __name__ == '__main__':
   loger=None
@@ -156,14 +156,17 @@ if __name__ == '__main__':
         predict,
         stop)
 
-# fit_net 1-эпохи 2-lr  3-использовать ли адаптивный lr 4-использовать ли пороговое обучение 5-mse-treshold 6-acc-shureness
+# fit_net 1-эпохи 2-lr  3-использовать ли адаптивный lr 4-использовать ли пороговое обучение 5-mse-treshold 6-acc-shureness 7-loss-func
     X_and=[[0,1],[1,0],[0,0],[1,1]]
     Y_and=[[0],[0],[0],[1]]
     p2=(push_obj,X_and,push_obj,Y_and,determe_X_Y,
-        make_net,('S', ('D','D'),(2,3,3,1),('l','t','s'),('usebias_1','usebias_1','usebias_1')),
-        fit_net,(10,0.007,False,True,0.01,100),
+        make_net,('S', ('D','D','D'),(2,3,3,1),('r','r','t'),('usebias_0','usebias_0','usebias_0')),
+        fit_net,(100,0.0001,False,True,0.0001,100,"mse"),
         stop)
-    exect(p2,loger, date)
+    p3=(push_obj,[0,1],push_obj,[[None]],determe_X_Y,
+        predict,
+        stop)
+    exect(p3,loger, date)
   else:
       print("Program must have option: -release or -debug")
       sys.exit(1)

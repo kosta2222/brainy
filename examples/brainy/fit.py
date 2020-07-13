@@ -40,7 +40,7 @@ def fit(nn_params, epochcs, X, Y, X_eval, Y_eval, logger):
             print(f'accuracy {round(acc,0)}')
             logger.info(f'accuracy {round(acc,0)}')
             if nn_params.with_loss_threshold:
-              if round(acc,0) == round(nn_params.acc_shureness,0) and round(mse, 3) <= nn_params.mse_treshold:
+              if round(acc,0) == round(nn_params.acc_shureness,0) and round(mse, 3) <= round(nn_params.mse_treshold, 3):
                 exit_flag=True
                 break
         if exit_flag:
@@ -50,7 +50,7 @@ def fit(nn_params, epochcs, X, Y, X_eval, Y_eval, logger):
                 break
         iteration+=1
         if nn_params.with_adap_lr:
-            error = get_mean(out_nn, y, len(y))
+            error = get_min_square_err(out_nn, y, len(y))
             delta_err = error - gama * error_pr
             if delta_err > 0:
                lr  = alpha * lr

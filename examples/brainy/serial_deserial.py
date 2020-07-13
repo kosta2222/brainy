@@ -5,12 +5,10 @@ from .nn_constants import bc_bufLen, max_in_nn_1000, max_rows_orOut_10, max_stac
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan, determe_in_out
 import struct as st
 from .NN_params import NN_params
-from  .util import  get_logger
-import sys
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
 loger=None
-def pack_v(buffer:list, op_i, val_i_or_fl):
+def pack_v(buffer, op_i, val_i_or_fl,loger):
      """
      Добавляет в buffer буффер байт-комманды и сериализованные матричные числа как байты
      :param op_i: байт-комманда
@@ -62,11 +60,10 @@ def pack_v(buffer:list, op_i, val_i_or_fl):
          loger.debug("Static memory error: in buffer (where we put bytecode to serelialize net)[init in serial_deserial.tofile()])")
          return
 
+
 def to_file(nn_params:NN_params, net:list, logger, fname):
-    global loger
     loger=logger
     buffer = [0] * max_spec_elems_1000 *1000  # Записываем сетевой байткод сюда подом в файл
-
     in_=0
     out=0
     with_bias_i = 0
@@ -75,32 +72,31 @@ def to_file(nn_params:NN_params, net:list, logger, fname):
         with_bias_i = 1
     else:
         with_bias_i = 0
-    pack_v(buffer, push_i, with_bias_i)
-    pack_v(buffer, with_bias, stub)
-    pack_v(buffer, push_i, nn_params.act_fu)
-    pack_v(buffer, determe_act_func, stub)
+    pack_v(buffer, push_i, with_bias_i,logger)
+    pack_v(buffer, with_bias, stub, logger)
     # разбираемся с параметрами активациооных функции - по умолчанию они уже заданы в nn_params
-    if nn_params.act_fu == LEAKY_RELU:
-        pack_v(buffer, push_fl, nn_params.alpha_leaky_relu)
-        pack_v(buffer, determe_alpha_leaky_relu, stub)
-    elif nn_params.act_fu == SIGMOID:
-        pack_v(buffer, push_fl, nn_params.alpha_sigmoid)
-        pack_v(buffer,determe_alpha_sigmoid, stub)
-    elif nn_params.act_fu == TAN:
-        pack_v(buffer, push_fl, nn_params.alpha_tan)
-        pack_v(buffer, push_fl, nn_params.beta_tan)
-        pack_v(buffer, determe_alpha_and_beta_tan, stub)
+    pack_v(buffer, push_fl, nn_params.alpha_leaky_relu, logger)
+    pack_v(buffer, determe_alpha_leaky_relu, stub, logger)
+    pack_v(buffer, push_fl, nn_params.alpha_sigmoid, logger)
+    pack_v(buffer,determe_alpha_sigmoid, stub, logger)
+    pack_v(buffer, push_fl, nn_params.alpha_tan, logger)
+    pack_v(buffer, push_fl, nn_params.beta_tan, logger)
+    pack_v(buffer, determe_alpha_and_beta_tan, stub, logger)
 
     for i in range(nn_params.nl_count):
         in_=net[i].in_
         out=net[i].out
-        pack_v(buffer, push_i,in_)
-        pack_v(buffer, push_i,out)
+        pack_v(buffer, push_i,in_, logger)
+        pack_v(buffer, push_i,out, logger)
+        pack_v(buffer, push_i, nn_params.net[i].act_func,logger)
+        pack_v(buffer, determe_act_func, stub,logger)
         for row in range(out):
             for elem in range(in_):
-                pack_v(buffer, push_fl,net[i].matrix[row][elem])
-        pack_v(buffer, make_kernel, stub)
+                pack_v(buffer, push_fl,net[i].matrix[row][elem],logger)
+        pack_v(buffer, make_kernel, stub,logger)
     dump_buffer(buffer, fname)
+
+
 def dump_buffer(buffer, fname):
   global pos_bytecode
   pos_bytecode+=1
@@ -109,14 +105,14 @@ def dump_buffer(buffer, fname):
   with open(fname,'wb') as f:
            for i in range(len_bytecode):
                f.write(buffer[i])
-  loger.info("File writed")
+  # loger.info("File writed")
   pos_bytecode = -1
 def deserialization_vm(nn_params:NN_params, buffer:list,loger):
      loger.debug("- in vm -")
 
      ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
                     'determe_alpha_sigmoid', 'determe_alpha_and_beta_tan', 'determe_in_out', 'stop']  # отпечатка команд [для отладки]
-     steck_fl = [0] * max_spec_elems_1000 * 1000 # стек для временного размещения элементов матриц из файла потом этот стек
+     steck_fl = [0] * max_spec_elems_1000  # стек для временного размещения элементов матриц из файла потом этот стек
         # сворачиваем в матрицу слоя после команды make_kernel
      ops_st = [0] * max_stack_otherOp_10 *2      # стек для количества входов и выходов (это целые числа)
      ip = 0
@@ -127,11 +123,11 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
      n_lay = 0
      op = buffer[ip]
      while (op != stop):
-        # print("ip",ip)
-        # загружаем на стек количество входов и выходов ядра
-        # чтение операции с параметром
-        loger.debug(ops_name[op])
-        try:
+            # print("ip",ip)
+            # загружаем на стек количество входов и выходов ядра
+            # чтение операции с параметром
+            loger.debug(ops_name[op])
+
             if  op == push_i:
                     v_0 = buffer[ip + 1]
                     v_1 = buffer[ip + 2]
@@ -143,8 +139,8 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
                     ip += 4
                     loger.debug(arg[0])
                     # print(buffer[ip])
-           # загружаем на стек элементы матриц
-           # чтение операции с параметром
+            # загружаем на стек элементы матриц
+            # чтение операции с параметром
             elif op == push_fl:
                     v_0 = buffer[ip + 1]
                     v_1 = buffer[ip + 2]
@@ -152,28 +148,42 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
                     v_3 = buffer[ip + 4]
                     arg=st.unpack('<f', bytes(list([v_0, v_1, v_2, v_3])))
                     sp_fl+=1
-                    steck_fl[sp_fl] = \
-                        arg[0]
+                    steck_fl[sp_fl] = arg[0]
                     ip += 4
                     loger.debug(arg[0])
             # создаем одно ядро в массиве
             # пришла команда создать ядро
             elif op == make_kernel:
+              try:
+                loger.debug("-in make kernel-")
+                what_func=ops_st[sp_op]
+                sp_op-=1
+                loger.debug(f"what_func  {what_func}")
                 out=ops_st[sp_op]
                 sp_op-=1
+                loger.debug(f"out {out}")
                 in_=ops_st[sp_op]
                 sp_op-=1
+                loger.debug(f"in_ {in_}")
                 nn_params.net[n_lay].in_=in_
                 nn_params.net[n_lay].out=out
+                nn_params.net[n_lay].act_func=what_func
                 # make_kernel_f(nn_params, net, n_lay, matrix_el_st, ops_st, sp_op)
                 com_el_amount=in_ * out
+                matrix=[[0,0],[0,0],[0,0]]
                 for row in range(out):
                     for elem in range(in_):
                         nn_params.net[n_lay].matrix[row][elem]=\
                             steck_fl[row * in_ + elem]
+                        # matrix[row][elem]=steck_fl[row * in_ + elem]
+                loger.debug(f'matrix {matrix}')
                 sp_fl-=com_el_amount
                 # переходим к следующему индексу ядра
                 n_lay+=1
+              except Exception as e:
+                  loger.debug(f'steck fl {steck_fl}')
+                  loger.debug(f'{e.args}')
+                  loger.debug(f'matrix {matrix}')
             # пришла команда узнать пользуемся ли биасами
             # надо извлечь параметр
             elif op == with_bias:
@@ -183,34 +193,26 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
                     nn_params.with_bias = True
                 elif is_with_bias == 0:
                     nn_params.with_bias = False
-            elif op == determe_act_func:
-                what_func = ops_st[sp_op]
-                sp_op-=1
-                nn_params.act_fu = what_func
             elif op == determe_alpha_and_beta_tan:
-                beta = ops_st[sp_op]
-                sp_op-=1
-                alpha = ops_st[sp_op]
-                sp_op-=1
+                beta = steck_fl[sp_fl]
+                sp_fl-=1
+                alpha = steck_fl[sp_op]
+                sp_fl-=1
                 nn_params.alpha_tan = alpha
                 nn_params.beta_tan = beta
             elif op == determe_alpha_sigmoid:
-                alpha = ops_st[sp_op]
-                sp_op-=1
+                alpha = steck_fl[sp_op]
+                sp_fl-=1
                 nn_params.alpha_sigmoid = alpha
             elif op == determe_alpha_leaky_relu:
-                alpha = ops_st[sp_op]
-                sp_op-=1
+                alpha = steck_fl[sp_op]
+                sp_fl-=1
                 nn_params.alpha_leaky_relu = alpha
-        except Exception:
-            print("Probably! static memory error", end=' ')
-            print("in steck_fl (steck where we put float matrix elems)")
-            print("[init in serial_deserial.deserialization_vm()]")
-            loger.error("Probably! static memory error in steck_fl (steck where we put float matrix elems) [init in serial_deserial.deserialization_vm()]")
-            return
-        # показываем на следующую инструкцию
-        ip+=1
-        op = buffer[ip]
+            # показываем на следующую инструкцию
+            # loger.debug(f'steck fl {steck_fl}')
+            ip+=1
+            op = buffer[ip]
+
      # также подсчитаем сколько у наc ядер
      nn_params.nl_count = n_lay
      # находим количество входов
@@ -218,7 +220,7 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
      # находим количество выходов когда образовали сеть
      nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
 def deserialization(nn_params:NN_params, fname:str, loger):
-    buffer = [0] * max_spec_elems_1000 * 1000
+    buffer = [0] * max_spec_elems_1000
     buf_str = b''
     with open(fname, 'rb') as f:
         buf_str = f.read()

@@ -1,5 +1,7 @@
 from .util import _0_
 def copy_vector(src:list,dest:list,n):
+    print("n",n)
+    print("in_",src)
     len_=0
     for i in range(n):
         dest[i] =\
