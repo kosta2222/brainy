@@ -1,4 +1,5 @@
-#----------------------дебаг, хелп функции--------------------------------------
+#-*-coding:utf-8-*-
+#----------------------РґРµР±Р°Рі, С…РµР»Рї С„СѓРЅРєС†РёРё--------------------------------------
 import logging
 import numpy as np
 import os
@@ -8,6 +9,7 @@ from functools import wraps
 from PIL import Image
 import PIL
 from os import listdir
+import math
 
 
 def get_logger(level_,fname,module,mode='w'):
@@ -21,6 +23,32 @@ def get_logger(level_,fname,module,mode='w'):
     elif level_ == 'release':
         logging.basicConfig(level=logging.INFO, filename=fname, filemode=mode)
     return logger, today_s
+
+
+def convert_to_fur(data:list)->list:
+    """
+    Нахождение амплитуд сигнала
+    data: сигнал
+    return список 
+    """
+    n=len(data)
+    dst=[None] * n
+    matr=np.zeros((n, n))   
+    i=0
+    for row in range(n):
+        k=0
+        arg=2 * math.pi * i * k / n   
+        for elem in range(n):   
+            matr[row][elem]=math.cos(arg)
+            k+=1
+        i+=1   
+    for row in range(n):
+        tmp_v=0
+        for elem in range(n):
+            tmp_v+=matr[row][elem] * data[elem]
+            tmp_v/=n
+        dst[row]=tmp_v
+    return dst 
 
 
 def calc_list(list_:list):

@@ -4,7 +4,7 @@ from .nn_constants import bc_bufLen, max_in_nn_1000, max_rows_orOut_10, max_stac
     RELU, LEAKY_RELU, SIGMOID, TAN, max_spec_elems_1000,\
     determe_act_func, determe_alpha_leaky_relu, determe_alpha_sigmoid, determe_alpha_and_beta_tan, determe_in_out
 import struct as st
-from .NN_params import NN_params
+from .NN_params import Nn_params
 #----------------------сериализации/десериализации------------------------------
 pos_bytecode=-1  # указатель на элементы байт-кода
 loger=None
@@ -61,7 +61,7 @@ def pack_v(buffer, op_i, val_i_or_fl,loger):
          return
 
 
-def to_file(nn_params:NN_params, net:list, logger, fname):
+def to_file(nn_params:Nn_params, net, logger, fname):
     loger=logger
     buffer = [0] * max_spec_elems_1000 *1000  # Записываем сетевой байткод сюда подом в файл
     in_=0
@@ -107,7 +107,7 @@ def dump_buffer(buffer, fname):
                f.write(buffer[i])
   # loger.info("File writed")
   pos_bytecode = -1
-def deserialization_vm(nn_params:NN_params, buffer:list,loger):
+def deserialization_vm(nn_params:Nn_params, buffer:list,loger):
      loger.debug("- in vm -")
 
      ops_name = ['', 'push_i', 'push_fl', 'make_kernel', 'with_bias', 'determe_act_func', 'determe_alpha_leaky_relu',
@@ -219,7 +219,7 @@ def deserialization_vm(nn_params:NN_params, buffer:list,loger):
      nn_params.input_neurons = nn_params.net[0].in_ #-1  # -1 зависит от биасов
      # находим количество выходов когда образовали сеть
      nn_params.outpu_neurons=nn_params.net[nn_params.nl_count-1].out
-def deserialization(nn_params:NN_params, fname:str, loger):
+def deserialization(nn_params:Nn_params, fname:str, loger):
     buffer = [0] * max_spec_elems_1000
     buf_str = b''
     with open(fname, 'rb') as f:

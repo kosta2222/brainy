@@ -1,7 +1,7 @@
 from .nn_constants import RELU_DERIV, RELU, TRESHOLD_FUNC, TRESHOLD_FUNC_DERIV, LEAKY_RELU, LEAKY_RELU_DERIV,\
 SIGMOID, SIGMOID_DERIV, DEBUG, DEBUG_STR, INIT_W_HE, INIT_W_GLOROT_MY, INIT_W_HABR, INIT_W_MY, INIT_W_UNIFORM,\
     TAN, TAN_DERIV, INIT_W_HE_MY, INIT_W_MY_DEB
-from .NN_params import NN_params
+from .NN_params import Nn_params
 from .nn_constants import max_rows_orOut_10
 import math
 
@@ -20,7 +20,7 @@ def softmax_ret_vec(x:list, rows):
 ready = False
 f=0
 # операции для функций активаций и их производных
-def operations( op , a, b, c, d, str_, nn_params:NN_params):
+def operations( op , a, b, c, d, str_, nn_params:Nn_params):
     global ready, f
     alpha_leaky_relu = nn_params.alpha_leaky_relu
     alpha_sigmoid = nn_params.alpha_sigmoid
