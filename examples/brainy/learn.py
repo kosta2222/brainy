@@ -10,7 +10,6 @@ import logging
 import numpy as np
 
 def calc_out_error(nn_params:Nn_params,objLay:Lay, out_nn, targets:list,loger:logging.Logger):
-                assert("find_k1_as_dCdZ0","find_k1_as_dCdZ0")
                 loger.debug('-in calc_out_error-')
                 if objLay.act_func!=SOFTMAX and nn_params.loss_func==MODIF_MSE:
                   for row in range(objLay.out):
@@ -95,11 +94,10 @@ def calc_hid_zero_lay(zeroLay:Lay,errors,loger):
     return zeroLay.errors
 
 def upd_matrix(nn_params:Nn_params, objLay:Lay, koef, entered_vals , lr, loger):
-    assert ("here_use_dZ0rowdWrow","here_use_dZ0rowdWrow")
     for row in range(objLay.out):
         for elem in range(objLay.in_):
             tmp_v=objLay.matrix[row][elem]
-            if nn_params.with_bias:
+            if objLay.wi_bias:
                 if elem==0:
                     tmp_v-= lr * koef[elem]  * 1
                 else:
@@ -116,12 +114,9 @@ def feed_forwarding(nn_params:Nn_params,ok:bool, loger):
       make_hidden(nn_params, nn_params.net[0], nn_params.inputs, loger)
       for i in range(1,nn_params.nl_count):
         make_hidden(nn_params, nn_params.net[i], get_hidden(nn_params.net[i - 1]), loger)
-    if ok:
-        for i in range(nn_params.outpu_neurons):
-            pass
-        return nn_params.net[nn_params.nl_count-1].hidden
-    else:
-         backpropagate(nn_params, loger)
+
+    return get_hidden(nn_params.net[nn_params.nl_count-1])
+   
 def feed_forwarding_on_contrary(nn_params:Nn_params, ok:bool, loger):
     make_hidden_on_contrary(nn_params, nn_params.net[nn_params.nl_count - 1 ], nn_params.inputs, loger)
     for i in range(nn_params.nl_count - 2, -1, -1):
@@ -153,7 +148,7 @@ def make_hidden(nn_params, objLay:Lay, inputs:list, loger:logging.Logger):
         for row in range(objLay.out):
             tmp_v=0
             for elem in range(objLay.in_):
-                if nn_params.with_bias:
+                if objLay.wi_bias:
                    if elem==0:
                       tmp_v+=objLay.matrix[row][elem]
                    else:
@@ -182,7 +177,7 @@ def make_hidden_on_contrary(nn_params:Nn_params, objLay:Lay, inputs:list, loger:
         objLay.out=tmp_v
         for row in range(objLay.out):
             for elem in range(objLay.in_):
-                if nn_params.with_bias:
+                if objLay.wi_bias:
                    if elem == 0:
                       tmp_v+=objLay.matrix[row][elem]
                    else:
@@ -202,7 +197,6 @@ def backpropagate(nn_params:Nn_params, out_nn, targets, inputs, lr, loger):
     loger.debug('-in backpropagate-')
     delta=calc_out_error(nn_params, nn_params.net[nn_params.nl_count - 1], out_nn, targets, loger)
     if nn_params.nl_count == 1:
-        loger.debug('op')
         calc_hid_zero_lay(nn_params.net[0], delta, loger)
     else:    
       for i in range(nn_params.nl_count - 1, 0, -1):
@@ -212,7 +206,6 @@ def backpropagate(nn_params:Nn_params, out_nn, targets, inputs, lr, loger):
             calc_hid_error(nn_params, nn_params.net[i-1], i, nn_params.net[i+1].errors, loger)
         calc_hid_zero_lay(nn_params.net[0], nn_params.net[1].errors, loger)
     if nn_params.nl_count == 1:
-        loger.debug('op upd_matr 1')
         upd_matrix(nn_params, nn_params.net[0], nn_params.net[0].errors, inputs, lr, loger)
     else:    
       for i in range(nn_params.nl_count - 1, 0, -1):
@@ -222,19 +215,16 @@ def backpropagate(nn_params:Nn_params, out_nn, targets, inputs, lr, loger):
 
 
 
-def cr_lay(nn_params:Nn_params, type_='D', in_=0, out=0, act_func=None, loger=None):
-    loger.debug('-in cr_lay-')
-    
-    
-    #i=-1
+def cr_lay(nn_params:Nn_params, type_='D', in_=0, out=0, act_func=None, wi_bias=True, loger=None):
+    loger.debug('-in cr_lay-')    
     if type_=='D':
         nn_params.sp_d+=1
         nn_params.net[nn_params.sp_d].in_=in_
         nn_params.net[nn_params.sp_d].out=out
         nn_params.net[nn_params.sp_d].act_func=act_func
-        #for i in range(nn_params.sp_d):
-        if nn_params.with_bias:
-                        in_+=1        
+        if wi_bias:
+             in_+=1
+             nn_params.net[nn_params.sp_d].wi_bias=True
         for row in range(out):
               for elem in range(in_):
                  #nn_params.net[i].matrix[row][elem] = operations(INIT_W_MY, in_, out, 0, 0, "", nn_params)  

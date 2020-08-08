@@ -84,7 +84,7 @@ def exect(buffer:list, loger:logging.Logger, date:str)->None:
                   nn_params.with_bias=use_bias_
                   nn_params.input_neurons=inps[0]
                   nn_params.outpu_neurons=inps[-1]
-                  nn_params=cr_lay(nn_params, 'D', inps[i],inps[i+1], acts_di.get(acts[i]), loger)
+                  nn_params=cr_lay(nn_params, 'D', inps[i],inps[i+1], acts_di.get(acts[i]), use_bias_, loger)
            loger.debug(f'nn_params {nn_params}')
                   
         elif op==determe_X_Y:
@@ -111,10 +111,7 @@ def exect(buffer:list, loger:logging.Logger, date:str)->None:
             arg=buffer[ip]
             eps, l_r_, with_adap_lr, ac_, mse_, loss_f, wi_loss_threshold, loger=arg
             nn_params.with_loss_threshold=wi_loss_threshold
-            #nn_params.with_adap_lr=is_wi_adap_lr
-            #nn_params.mse_treshold=mse_
-            #nn_params.acc_shureness=acc_shureness
-            #nn_params.lr=l_r
+            
             nn_params.loss_func=loss_func_di.get(loss_f)
             if not X_eval and not Y_eval:
                 X_eval=X_t
@@ -124,7 +121,6 @@ def exect(buffer:list, loger:logging.Logger, date:str)->None:
             print("X_eval",X_eval)
             print("Y_eval",Y_eval)
             fit(nn_params, X_t, Y_t, X_eval, Y_eval, eps, l_r_, with_adap_lr, ac_, mse_, loger )
-            #to_file(nn_params, nn_params.net,loger, "to_file.my")
         elif op==get_mult_class_matr:
             pix_am=steck[sp]
             sp-=1
@@ -177,7 +173,7 @@ if __name__ == '__main__':
     Y_or=[[1],[1],[0],[1]]
     Y_xor=[[1],[1],[0],[0]]
     p2=(push_obj,X,push_obj,Y_or,determe_X_Y,push_obj,X,push_obj,Y_or,determe_X_eval_Y_eval,
-        make_net,('S', ('D'),(2,1),('r'),('usebias_0','usebias_0','usebias_0')),
+        make_net,('S', ('D'),(2,1),('r'),('usebias_1','usebias_1','usebias_1')),
         fit_net,(3000, 0.01,False, 100, 0.1, "mse", True, loger),
         stop)
     p3=(push_obj,[0,1],push_obj,[[None]],determe_X_Y,
