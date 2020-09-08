@@ -18,18 +18,11 @@ class  Nn_params:
         self.inputs=[0]*(max_rows_orOut_10 )  # входа сети
         self.targets=[0]*(max_rows_orOut_10)  # ответы от учителя
         self.out_errors = [0] * (max_rows_orOut_10)  # вектор ошибок слоя
-        self.lr=0.07;  # коэффициент обучения
         self.loss_func=MODIF_MSE
-        self.with_adap_lr = False
-        self.with_bias = False
-        # self.act_fu = SIGMOID
         self.alpha_leaky_relu = 0.01
         self.alpha_sigmoid = 0.42
         self.alpha_tan = 1.7159
         self.beta_tan = 2 / 3
-        self.mse_treshold = 0.001
-        self.with_loss_threshold=False
-        self.acc_shureness=100
 
     #def __str__(self):
         # b_codes = ['x', 'RELU', 'x', 'SIGMOID', 'x', 'TRESHHOLD_FUNC', 'x', 'LEAKY_RELU', 'x', 'TAN']
