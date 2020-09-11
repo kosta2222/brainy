@@ -37,7 +37,6 @@ nn_params_new = None
 
 
 def exec_(buffer, loger, date):
-    # nn_params=Nn_params()
     X_t = None
     Y_t = None
     X_eval = None
@@ -70,7 +69,7 @@ def exec_(buffer, loger, date):
             nn_params = Nn_params()
 
             acts_di = {'s': SIGMOID, 'r': RELU,
-                       't': TAN, 'SO': SOFTMAX, 'l': LEAKY_RELU,'tr': TRESHOLD_FUNC }
+                       't': TAN, 'SO': SOFTMAX, 'l': LEAKY_RELU, 'tr': TRESHOLD_FUNC}
             ip += 1
             arg = buffer[ip]
             type_m, denses, inps, acts, use_bi = arg
@@ -86,7 +85,7 @@ def exec_(buffer, loger, date):
                     nn_params.input_neurons = inps[0]
                     nn_params.outpu_neurons = inps[-1]
                     nn_params = cr_lay(nn_params, 'D',
-                                       inps[i], inps[i+1],
+                                       inps[i], inps[i + 1],
                                        acts_di.get(acts[i]), use_bias_, loger)
 
         elif op == determe_X_Y:
@@ -111,7 +110,7 @@ def exec_(buffer, loger, date):
             ip += 1
             arg = buffer[ip]
             eps, l_r_, with_adap_lr, ac_, mse_, loss_f, with_loss_threshold, loger = arg
-            nn_params.alpha_sigmoid = 2
+            nn_params.alpha_sigmoid = 1.7159
 
             nn_params.loss_func = loss_func_di.get(loss_f)
             if not X_eval and not Y_eval:
@@ -173,13 +172,23 @@ if __name__ == '__main__':
         X_my = [[0, 1], [0, 0]]
 
         Y_my = [[1], [0]]
-        p2 = (push_obj, X, push_obj, Y_and, determe_X_Y, push_obj, X, push_obj, Y_and, determe_X_eval_Y_eval,
-              make_net, ('S', ('D', 'D'), (2, 2, 1), ('tr', 'tr'),
-                         ('usebias_0', 'usebias_0')),
-              fit_net, (100, 0.1, False, 100, 0, "mse", True, loger),
-              stop)
+        and_p = (push_obj, X, push_obj, Y_and, determe_X_Y, push_obj, X, push_obj, Y_and, determe_X_eval_Y_eval,
+                 make_net, ('S', ('D', 'D'), (2, 2, 1), ('tr', 'tr'),
+                            ('usebias_0', 'usebias_0')),
+                 fit_net, (100, 0.1, False, 100, 0, "mse", True, loger),
+                 stop)
+        and_p_long = (push_obj, X, push_obj, Y_and, determe_X_Y, push_obj, X, push_obj, Y_and, determe_X_eval_Y_eval,
+                      make_net, ('S', ('D', 'D', 'D'), (2, 4, 4, 1), ('tr', 'tr', 'tr'),
+                                 ('usebias_0', 'usebias_0', 'usebias_0')),
+                      fit_net, (100, 0.1, False, 100, 0, "mse", True, loger),
+                      stop)
+        xor_p = (push_obj, X, push_obj, Y_xor, determe_X_Y, push_obj, X, push_obj, Y_xor, determe_X_eval_Y_eval,
+                 make_net, ('S', ('D', 'D'), (2, 8, 1), ('tr', 'tr'),
+                            ('usebias_0', 'usebias_0')),
+                 fit_net, (100, 0.1, True, 100, 0, "mse", True, loger),
+                 stop)
 
-        exec_(p2, loger, date)
+        exec_(xor_p, loger, date)
     else:
         print("Program must have option: -release or -debug")
         sys.exit(-2)

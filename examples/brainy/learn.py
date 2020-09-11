@@ -1,6 +1,6 @@
 import math
-from .nn_constants import RELU, RELU_DERIV, INIT_W_HE, INIT_W_MY, SIGMOID, SIGMOID_DERIV, TAN, TAN_DERIV, INIT_W_GLOROT_MY,\
-    INIT_W_HE_MY, SOFTMAX, CROS_ENTROPY, MODIF_MSE, INIT_W_MY_DEB, INIT_W_HE_MY, INIT_RANDN
+from .nn_constants import RELU, RELU_DERIV, INIT_W_MY, SIGMOID, SIGMOID_DERIV, TAN, TAN_DERIV,\
+    SOFTMAX, CROS_ENTROPY, MODIF_MSE, INIT_RANDN
 from .NN_params import Nn_params   # импортруем параметры сети
 from .Lay import Lay, Dense   # импортируем слой
 from .work_with_arr import copy_vector
@@ -11,14 +11,13 @@ import numpy as np
 
 
 def calc_out_error(nn_params: Nn_params, targets: list, loger: logging.Logger):
-    loger.debug('-in calc_out_error-')
     layer = nn_params.net[nn_params.nl_count-1]
     out = layer.out
     if layer.act_func != SOFTMAX and nn_params.loss_func == MODIF_MSE:
         tmp_v = 0
         for row in range(out):
             tmp_v += (layer.hidden[row] - targets[row]) * operations(
-                layer.act_func+1, layer.hidden[row], 0.42, 0, 0, "", nn_params)
+                layer.act_func+1, layer.hidden[row], nn_params)
         nn_params.out_errors[row] = tmp_v
 
     elif layer.act_func == SOFTMAX and nn_params.loss_func == CROS_ENTROPY:
@@ -30,28 +29,30 @@ def calc_out_error(nn_params: Nn_params, targets: list, loger: logging.Logger):
 
 def calc_hid_error(nn_params: Nn_params, layer_ind: int, errors_next: list, layer_hidden: list, loger: logging.Logger):
     layer = nn_params.net[layer_ind]
-    for elem in range(layer.in_):
+    for row in range(layer.out):
         tmp_v = 0
-        for row in range(layer.out):
-            tmp_v += layer.matrix[row][elem] * errors_next[elem] * operations(
-                layer.act_func + 1, layer_hidden[elem], 0, 0, 0, "", nn_params)
-        layer.errors[elem] = tmp_v
+        for elem in range(layer.in_):
+            tmp_v += layer.matrix[row][elem] * errors_next[row] * operations(
+                layer.act_func + 1, layer_hidden[row], nn_params)
+        layer.errors[row] = tmp_v
 
 
 def upd_matrix(nn_params: Nn_params, layer_ind, errors_next, inputs, lr, loger):
     layer = nn_params.net[layer_ind]
     for row in range(layer.out):
+        error_next = errors_next[row]
         for elem in range(layer.in_):
             if layer.with_bias:
                 if elem == 0:
-                    layer.matrix[row][elem] -= lr * errors_next[elem] * 1
+                    layer.matrix[row][elem] -= lr * error_next * 1
                 else:
                     layer.matrix[row][elem] -= lr * \
-                        errors_next[elem] * inputs[row]
+                        error_next * inputs[elem]
 
             else:
                 layer.matrix[row][elem] -= lr * \
-                    errors_next[elem] * inputs[row]
+                    error_next *\
+                    inputs[elem]
 
 
 def backpropagate(nn_params: Nn_params, out_nn, targets, inputs, lr, loger):
@@ -101,7 +102,7 @@ def get_err(diff: list):
     sum = 0
     for row in range(len(diff)):
         sum += diff[row] * diff[row]
-    return sum 
+    return sum
 
 
 def get_mse(out_nn, teacher, n):
@@ -178,7 +179,7 @@ def make_hidden(nn_params, layer_ind, inputs: list, loger: logging.Logger):
             layer.cost_signals[row] = tmp_v
 
             if layer.act_func != SOFTMAX:
-                val = operations(layer.act_func, tmp_v, 0, 0, 0, "", nn_params)
+                val = operations(layer.act_func, tmp_v, nn_params)
                 layer.hidden[row] = val
 
         if layer.act_func == SOFTMAX:
@@ -204,7 +205,7 @@ def make_hidden_on_contrary(nn_params: Nn_params, objLay: Lay, inputs: list, log
                 else:
                     tmp_v += objLay.matrix[row][elem] * inputs[elem]
             objLay.cost_signals[row] = tmp_v
-            val = operations(nn_params.act_fu, tmp_v, 0, 0, 0, "", nn_params)
+            val = operations(nn_params.act_fu, tmp_v, nn_params)
             objLay.hidden[row] = val
             tmp_v = 0
             if objLay.act_func == SOFTMAX:
@@ -227,7 +228,7 @@ def cr_lay(nn_params: Nn_params, type_='D', in_=0, out=0, act_func=None, with_bi
         for row in range(out):
             for elem in range(in_):
                 layer.matrix[row][elem] = operations(
-                    INIT_W_MY, in_, out, 0, 0, "", nn_params)
+                    INIT_W_MY, 0, nn_params)
 
         nn_params.nl_count += 1
         return nn_params

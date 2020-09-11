@@ -1,6 +1,6 @@
 from .nn_constants import RELU_DERIV, RELU, TRESHOLD_FUNC, TRESHOLD_FUNC_DERIV, LEAKY_RELU, LEAKY_RELU_DERIV,\
-    SIGMOID, SIGMOID_DERIV, DEBUG, DEBUG_STR, INIT_W_HE, INIT_W_GLOROT_MY, INIT_W_HABR, INIT_W_MY, INIT_W_UNIFORM,\
-    TAN, TAN_DERIV, INIT_W_HE_MY, INIT_W_MY_DEB, INIT_W_HE, INIT_RANDN
+    SIGMOID, SIGMOID_DERIV, INIT_W_MY,\
+    TAN, TAN_DERIV, INIT_RANDN, INIT_W_CONST, INIT_W_RANDOM
 from .NN_params import Nn_params
 from .nn_constants import max_rows_orOut_10
 import math
@@ -24,60 +24,59 @@ y = 0
 np.random.randn()
 
 
-def operations(op, a, b, c, d, str_, nn_params: Nn_params):
+def operations(op, x, nn_params: Nn_params):
     global ready, y
     alpha_leaky_relu = nn_params.alpha_leaky_relu
     alpha_sigmoid = nn_params.alpha_sigmoid
     alpha_tan = nn_params.alpha_tan
     beta_tan = nn_params.beta_tan
     if op == RELU:
-        if (a <= 0):
+        if (x <= 0):
             return 0
         else:
-            return a
+            return x
     elif op == RELU_DERIV:
-        if (a <= 0):
+        if (x <= 0):
             return 0
         else:
             return 1
     elif op == TRESHOLD_FUNC:
-        if (a > 0.5):
+        if (x > 0.5):
             return 1
         else:
             return 0
     elif op == TRESHOLD_FUNC_DERIV:
         return 1
     elif op == LEAKY_RELU:
-        if (a <= 0):
+        if (x <= 0):
             return alpha_leaky_relu
         else:
             return 1
     elif op == LEAKY_RELU_DERIV:
-        if (a <= 0):
+        if (x <= 0):
             return alpha_leaky_relu
         else:
             return 1
     elif op == SIGMOID:
-        y = 1 / (1 + math.exp(- alpha_sigmoid * a))
+        y = 1 / (1 + math.exp(- alpha_sigmoid * x))
         return y
     elif op == SIGMOID_DERIV:
-
         return (alpha_sigmoid * y * (1 - y))
-    elif op == INIT_W_HE_MY:
+    elif op == INIT_W_MY:
         if ready:
             ready = False
-            return -math.sqrt(2 / a) * 0.567141530112327
+            return -0.567141530112327
         ready = True
-        return math.sqrt(2 / a) * 0.567141530112327
-    elif op == INIT_W_MY:
+        return 0.567141530112327
+    elif op == INIT_W_RANDOM:
         return random.random()
     elif op == TAN:
-        f = alpha_tan * math.tanh(beta_tan * a)
+        f = alpha_tan * math.tanh(beta_tan * x)
         return f
     elif op == TAN_DERIV:
         return beta_tan / alpha_tan * (alpha_tan * alpha_tan - y * y)
-    elif op == INIT_W_MY_DEB:
-        return 2
+    elif op == INIT_W_CONST:
+        return 0.567141530112327
     elif op == INIT_RANDN:
         return np.random.randn()
     else:

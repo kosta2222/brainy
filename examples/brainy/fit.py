@@ -56,21 +56,25 @@ def fit(nn_params: Nn_params, X, Y, X_test, Y_test, eps, l_r_, with_adap_lr, wit
             y = Y[retrive_ind]
             #y = convert_to_fur(y)
             out_nn = feed_forwarding(nn_params, x, loger)
-            loger.debug(f'out_nn: {out_nn}')
-
-            loger.info(f'mse: {mse}')
-            # print("out nn", out_nn)
             error += get_err(calc_diff(out_nn, y, nn_params.outpu_neurons))
-            if with_adap_lr:
-                delta_error = error - gama * error_pr
-                if delta_error > 0:
-                    l_r = alpha * l_r
-                else:
-                    l_r = beta * l_r
-                error_pr = error
+            # if with_adap_lr:
+            #     delta_error = error - gama * error_pr
+            #     if delta_error > 0:
+            #         l_r = alpha * l_r
+            #     else:
+            #         l_r = beta * l_r
+            #     error_pr = error
             backpropagate(nn_params, out_nn, y, x, 0.01, loger)
             ac = evaluate_new(nn_params, X_test, Y_test, loger)
             print("acc", ac)
+
+        if with_adap_lr:
+            delta_error = error - gama * error_pr
+            if delta_error > 0:
+                l_r = alpha * l_r
+            else:
+                l_r = beta * l_r
+            error_pr = error            
 
         if exit_flag:
             break
