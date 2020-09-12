@@ -5,7 +5,7 @@ from brainy.serial_deserial import deserialization
 from brainy.nn_constants import bc_bufLen, RELU, LEAKY_RELU, SIGMOID, TAN, SOFTMAX, MODIF_MSE, CROS_ENTROPY, TRESHOLD_FUNC
 from brainy.serial_deserial import to_file
 from brainy.fit import fit
-from brainy.learn import answer_nn_direct, cr_lay
+from brainy.learn import answer_nn_direct, cr_lay, feed_forwarding_back
 from brainy.util import make_train_matr, make_2d_arr, calc_out_nn, get_logger, matr_img
 import numpy as np
 from PIL import Image
@@ -118,6 +118,8 @@ def exec_(buffer, loger, date):
                 Y_eval = Y_t
             fit(nn_params, X_t, Y_t, X_eval, Y_eval, eps, l_r_,
                 with_adap_lr, with_loss_threshold, ac_, mse_, loger)
+
+            print("back", feed_forwarding_back(nn_params, [1], loger))
         elif op == get_mult_class_matr:
             pix_am = steck[sp]
             sp -= 1
@@ -144,7 +146,6 @@ def exec_(buffer, loger, date):
 
 if __name__ == '__main__':
     loger = None
-#   print("len(sys.argv)",len(sys.argv))
     if len(sys.argv) == 2:
         level = sys.argv[1]
         # level='-release'

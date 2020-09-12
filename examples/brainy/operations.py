@@ -81,3 +81,6 @@ def operations(op, x, nn_params: Nn_params):
         return np.random.randn()
     else:
         print("Op or function does not support ", op)
+
+
+
