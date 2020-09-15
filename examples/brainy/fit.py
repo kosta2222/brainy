@@ -1,6 +1,7 @@
 from .cross_val_eval import evaluate_new
-from .learn import backpropagate, get_mse, feed_forwarding, get_mean, get_err, calc_diff
+from .learn import backpropagate, get_mse, feed_forwarding, get_mean, get_err, calc_diff, get_cros_entropy
 from .NN_params import Nn_params
+from .nn_constants import MODIF_MSE, CROS_ENTROPY
 from .util import convert_to_fur
 import matplotlib.pyplot as plt
 
@@ -13,10 +14,6 @@ def plot_gr(_file: str, errors: list, epochs: list, name_gr: str, logger) -> Non
     ax.plot(epochs, errors,
             label="learning",
             )
-    # plt.plot(errors,label="errors")
-    # plt.plot(history.history['acc'],label="Доля верных ответов на обучающем наборе")
-    # if 'val_acc' in history.history: # Если работаем с val_acc
-    #     plt.plot(history.history['val_acc'],label='Доля верных ответов на проверочном наборе')
     plt.xlabel('Эпоха обучения')
     plt.ylabel('loss')
     ax.legend()
@@ -36,35 +33,22 @@ def fit(nn_params: Nn_params, X, Y, X_test, Y_test, eps, l_r_, with_adap_lr, wit
     net_is_running = True
     it = 0
     exit_flag = False
-    mse = 0
-    out_nn = None
     eps_l = []
     errs_l = []
 
-    #loger.info(f'Log Started: {date}')
-
     while net_is_running:
         print("ep:", it)
-        loger.info(f'ep: {it}')
         error = 0
         for retrive_ind in range(len(X)):
             x = X[retrive_ind]
-            # print(f'x prost: {x}', end=' ')
-            #x = convert_to_fur(x)
-            # print(f'x fur: {x}')
-            # x = np.array(x)
             y = Y[retrive_ind]
-            #y = convert_to_fur(y)
             out_nn = feed_forwarding(nn_params, x, loger)
-            error += get_err(calc_diff(out_nn, y, nn_params.outpu_neurons))
-            # if with_adap_lr:
-            #     delta_error = error - gama * error_pr
-            #     if delta_error > 0:
-            #         l_r = alpha * l_r
-            #     else:
-            #         l_r = beta * l_r
-            #     error_pr = error
-            backpropagate(nn_params, out_nn, y, x, 0.01, loger)
+            if nn_params.loss_func == MODIF_MSE:
+                error += get_err(calc_diff(out_nn, y, nn_params.outpu_neurons))
+            elif nn_params.loss_func == CROS_ENTROPY:
+                print("op")
+                error=get_cros_entropy(out_nn, y, nn_params.outpu_neurons)    
+            backpropagate(nn_params, out_nn, y, x, l_r_, loger)
             ac = evaluate_new(nn_params, X_test, Y_test, loger)
             print("acc", ac)
 
@@ -74,7 +58,7 @@ def fit(nn_params: Nn_params, X, Y, X_test, Y_test, eps, l_r_, with_adap_lr, wit
                 l_r = alpha * l_r
             else:
                 l_r = beta * l_r
-            error_pr = error            
+            error_pr = error
 
         if exit_flag:
             break
@@ -83,7 +67,7 @@ def fit(nn_params: Nn_params, X, Y, X_test, Y_test, eps, l_r_, with_adap_lr, wit
         errs_l.append(error)
         it += 1
         if with_loss_threshold:
-            if error == mse_:
+            if error <= mse_:
                 break
         else:
             if it == eps:

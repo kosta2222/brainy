@@ -119,7 +119,7 @@ def exec_(buffer, loger, date):
             fit(nn_params, X_t, Y_t, X_eval, Y_eval, eps, l_r_,
                 with_adap_lr, with_loss_threshold, ac_, mse_, loger)
 
-            print("back", feed_forwarding_back(nn_params, [1], loger))
+            print("back", feed_forwarding_back(nn_params, [1, 1], loger))
         elif op == get_mult_class_matr:
             pix_am = steck[sp]
             sp -= 1
@@ -169,10 +169,11 @@ if __name__ == '__main__':
         Y_and = [[0], [0], [0], [1]]
         Y_or = [[1], [1], [0], [1]]
         Y_xor = [[1], [1], [0], [0]]
+        X_long = [[0, 1], [1, 0], [0, 0], [1, 1],
+                  [0, 1], [1, 0], [0, 0], [1, 1]]
+        Y_xor_long = [[1], [1], [0], [0], [1], [1], [0], [0]]
+        Y_and_so = [[0, 0], [0, 0], [0, 0], [1, 0]]
 
-        X_my = [[0, 1], [0, 0]]
-
-        Y_my = [[1], [0]]
         and_p = (push_obj, X, push_obj, Y_and, determe_X_Y, push_obj, X, push_obj, Y_and, determe_X_eval_Y_eval,
                  make_net, ('S', ('D', 'D'), (2, 2, 1), ('tr', 'tr'),
                             ('usebias_0', 'usebias_0')),
@@ -183,13 +184,19 @@ if __name__ == '__main__':
                                  ('usebias_0', 'usebias_0', 'usebias_0')),
                       fit_net, (100, 0.1, False, 100, 0, "mse", True, loger),
                       stop)
-        xor_p = (push_obj, X, push_obj, Y_xor, determe_X_Y, push_obj, X, push_obj, Y_xor, determe_X_eval_Y_eval,
-                 make_net, ('S', ('D', 'D'), (2, 8, 1), ('tr', 'tr'),
+        xor_p = (push_obj, X_long, push_obj, Y_xor_long, determe_X_Y, push_obj, X_long, push_obj, Y_xor_long, determe_X_eval_Y_eval,
+                 make_net, ('S', ('D', 'D'), (2, 8, 1), ('t', 't'),
                             ('usebias_0', 'usebias_0')),
-                 fit_net, (100, 0.1, True, 100, 0, "mse", True, loger),
+                 fit_net, (100, 0.1, False, 100, 0.001, "mse", True, loger),
                  stop)
 
-        exec_(xor_p, loger, date)
+        and_p_sm = (push_obj, X, push_obj, Y_and_so, determe_X_Y, push_obj, X, push_obj, Y_and_so, determe_X_eval_Y_eval,
+                    make_net, ('S', ('D', 'D'), (2, 2, 2), ('tr', 'SO'),
+                               ('usebias_0', 'usebias_0')),
+                    fit_net, (100, 0.1, False, 100, 0, "crossentropy", True, loger),
+                    stop)
+
+        exec_(and_p_sm, loger, date)
     else:
         print("Program must have option: -release or -debug")
         sys.exit(-2)

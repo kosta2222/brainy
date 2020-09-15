@@ -39,7 +39,6 @@ def make_hidden(nn_params, layer_ind, inputs: list, loger: logging.Logger):
 def make_hidden_back(nn_params, layer_ind, inputs: list, loger: logging.Logger):
     layer = nn_params.net[layer_ind]
     if layer.des == 'd':
-        val = 0
         for elem in range(layer.in_):
             tmp_v = 0
             for row in range(layer.out):
@@ -142,6 +141,7 @@ def backpropagate(nn_params: Nn_params, out_nn, targets, inputs, lr, loger):
     j = nn_params.nl_count
     layer_last = nn_params.net[j - 1]
     for i in range(j - 1, 0, - 1):
+        print("ind",i)
         layer = nn_params.net[i]
         layer_next = nn_params.net[j + 1]
         if i == j - 1:
