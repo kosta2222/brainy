@@ -1,0 +1,18 @@
+﻿Made the brainy.net_com_ class in Python.In C#, it was rewritten into the Brainy class.netcon(The Python application
+uses the clr package to use C# from Python)
+
+
+Output for XOR:
+
+Model 2 layers with biases, TAN activation functions(SIGMOID also works on this first layer), SIGMOID
+layers=(2, 7, 1) learning_rate=0.1 mean_square_error_threshold=0.001(output by error)
+
+error 0.000999624094947558
+ep 3169
+
+Graphic saved
+output vector elem -> ( 0.000000 )  expected vector elem -> ( 0.000000 ) -Vecs are equal-
+output vector elem -> ( 0.000000 )  expected vector elem -> ( 0.000000 ) -Vecs are equal-
+output vector elem -> ( 1.000000 )  expected vector elem -> ( 1.000000 ) -Vecs are equal-
+output vector elem -> ( 1.000000 )  expected vector elem -> ( 1.000000 ) -Vecs are equal-
+acc 100.0

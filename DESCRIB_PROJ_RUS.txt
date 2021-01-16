@@ -1,6 +1,11 @@
-﻿Сделан класс brainy.net_con_.На C# переписан в класс Brainy.NetCon
+﻿Сделан класс brainy.net_con_ на Python.На C# переписан в класс Brainy.NetCon(В Python приложении 
+используется пакет clr чтобы использовать C# из Python)
+
 
 Вывод для XOR:
+
+Модель 2 слоя с биассами, функции активации TAN(SIGMOID тоже работает на этом первом слое), SIGMOID
+слои=(2, 7, 1) learning_rate=0.1 mean_square_error_treshold=0.001(выход по ошибке) 
 
 error 0.000999624094947558
 ep 3169
