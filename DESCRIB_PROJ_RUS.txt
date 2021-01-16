@@ -1,0 +1,13 @@
+﻿Сделан класс brainy.net_con_.На C# переписан в класс Brainy.NetCon
+
+Вывод для XOR:
+
+error 0.000999624094947558
+ep 3169
+
+Graphic saved
+output vector elem -> ( 0.000000 )  expected vector elem -> ( 0.000000 ) -Vecs are equal-
+output vector elem -> ( 0.000000 )  expected vector elem -> ( 0.000000 ) -Vecs are equal-
+output vector elem -> ( 1.000000 )  expected vector elem -> ( 1.000000 ) -Vecs are equal-
+output vector elem -> ( 1.000000 )  expected vector elem -> ( 1.000000 ) -Vecs are equal-
+acc 100.0

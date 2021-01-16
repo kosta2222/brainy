@@ -1,9 +1,8 @@
 from .learn import answer_nn_direct
-from .NN_params import Nn_params
-from .util import convert_to_fur
+from .nn_params_ import Nn_params
 
 
-def evaluate_new(nn_params, X_test, Y_test, loger):
+def evaluate(nn_params, X_test, Y_test):
     """
     Оценка набора в процентах
     X_test: матрица обучающего набора X

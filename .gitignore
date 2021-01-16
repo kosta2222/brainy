@@ -12,3 +12,4 @@ Makefile
 build/
 dist/
 nbproject/
+.vscode/
